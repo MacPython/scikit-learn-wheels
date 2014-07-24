@@ -1,0 +1,36 @@
+language:
+- objective-c
+env:
+  global: LATEST_TAG=1
+  matrix:
+  - VERSION=2.7.8 NUMPY_VERSION=1.6.0
+  - VERSION=3.3.5 NUMPY_VERSION=1.7.1
+  - VERSION=3.4.1 NUMPY_VERSION=1.7.1
+install:
+- source terryfy/travis_tools.sh
+- get_python_environment macpython $VERSION venv
+# Compile our own numpy from source (using Accelerate)
+- pip install numpy==$NUMPY_VERSION --no-use-wheel
+- pip install cython wheel six
+- if [ -n "$LATEST_TAG" ]; then checkout_closest_tag scikit-learn; fi
+- cd scikit-learn
+- python setup.py bdist_wheel
+- rename_wheels dist
+- pip install dist/*.whl
+- cd ..
+script:
+- if [ "${VERSION:0:3}" != "3.3" ]; then pip install -U numpy; fi
+- pip install nose scipy
+- mkdir tmp_for_test
+- cd tmp_for_test
+- nosetests --exe -v sklearn
+- cd ..
+before_deploy: cd scikit-learn/dist
+deploy:
+  provider: cloudfiles
+  username: travis-worker
+  api_key:
+    secure: UU0osuD0FCpEMQtMICaNDUKGLtRw0VlzKXQvkr/gflehQ8V2o3sI6BhULmxnmnwkIfI3P2uQj0pUKKbrJAaKcUbyYgH4d/LikbBPec0P8fARe6F44b7SJNHggQ0OPVRoq1edTypKVz709B0SLCgVPjT9OOG2XoMztSu0+mQOP6s=
+  region: ORD
+  container: wheels
+  skip_cleanup: true
