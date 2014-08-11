@@ -4,7 +4,13 @@ Scikit-learn wheel builder
 
 Repository to build scikit-learn wheels.
 
-To update:
+The usual behavior of the repo is to build the wheel corresponding to the most
+recent git tag (see `git-closest-tag
+<https://github.com/MacPython/terryfy/blob/master/git-closest-tag>`_.
+
+To build a particular commit instead:
+
+* comment out the line ``global: LATEST_TAG=1`` in the ``.travis.yml`` file.
 
 * Update scikit-learn submodule with version you want to build:
 
