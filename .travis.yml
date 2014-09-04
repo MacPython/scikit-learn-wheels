@@ -1,7 +1,7 @@
 language:
 - objective-c
 env:
-  global: LATEST_TAG=1
+  #global: LATEST_TAG=1
   matrix:
   - VERSION=2.7.8 NUMPY_VERSION=1.6.0
   - VERSION=3.3.5 NUMPY_VERSION=1.7.1
@@ -14,11 +14,6 @@ install:
 - pip install cython wheel six
 - if [ -n "$LATEST_TAG" ]; then checkout_closest_tag scikit-learn; fi
 - cd scikit-learn
-# Cherry pick fix of warnings - see
-# https://github.com/scikit-learn/scikit-learn/issues/3537
-- if ! $(git merge-base --is-ancestor 69af355 HEAD); then
-     git cherry-pick 69af355;
-  fi
 - python setup.py bdist_wheel
 - rename_wheels dist
 - pip install dist/*.whl

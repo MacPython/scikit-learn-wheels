@@ -14,8 +14,10 @@ To build a particular commit instead:
 
 * Update scikit-learn submodule with version you want to build:
 
-    * cd sckit-learn && git pull && git checkout DESIRED_TAG
-    * cd .. && git add scikit-learn
+    * git submodule init
+    * git submodule update
+    * (cd sickit-learn && git pull && git checkout DESIRED_TAG)
+    * git add scikit-learn
 
 * Check minimum numpy versions to build against in ``.travis.yml`` file.  You
   need to build against the earliest numpy that scikit-learn is compatible with;
