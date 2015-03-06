@@ -16,7 +16,7 @@ To build a particular commit instead:
 
     * git submodule init
     * git submodule update
-    * (cd sickit-learn && git pull && git checkout DESIRED_TAG)
+    * (cd scikit-learn && git pull && git checkout DESIRED_TAG)
     * git add scikit-learn
 
 * Check minimum numpy versions to build against in ``.travis.yml`` file.  You
