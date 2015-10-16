@@ -12,7 +12,7 @@ install:
 - get_python_environment macpython $VERSION venv
 # Compile our own numpy from source (using Accelerate)
 - pip install numpy==$NUMPY_VERSION --no-use-wheel
-- pip install cython wheel six scipy
+- pip install cython wheel six nose scipy
 - if [ -n "$LATEST_TAG" ]; then checkout_closest_tag scikit-learn; fi
 - cd scikit-learn
 - python setup.py bdist_wheel
