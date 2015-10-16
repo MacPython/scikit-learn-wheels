@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/MacPython/scikit-learn-wheels.svg?branch=master)](https://travis-ci.org/MacPython/scikit-learn-wheels)
+.. image:: https://travis-ci.org/MacPython/scikit-learn-wheels.svg?branch=master
+    :target: https://travis-ci.org/MacPython/scikit-learn-wheels
 
 ##########################
 Scikit-learn wheel builder
