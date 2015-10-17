@@ -15,6 +15,8 @@ install:
 - pip install cython wheel six nose scipy
 - if [ -n "$LATEST_TAG" ]; then checkout_closest_tag scikit-learn; fi
 - cd scikit-learn
+- export CFLAGS="-Wno-unreachable-code"
+- export CXXFLAGS="-Wunreachable-code"
 - python setup.py bdist_wheel
 - rename_wheels dist
 - pip install dist/*.whl
