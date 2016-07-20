@@ -1,6 +1,6 @@
-[submodule "terryfy"]
-	path = terryfy
-	url = https://github.com/MacPython/terryfy.git
 [submodule "scikit-learn"]
 	path = scikit-learn
 	url = git://github.com/scikit-learn/scikit-learn.git
+[submodule "multibuild"]
+	path = multibuild
+	url = https://github.com/matthew-brett/multibuild.git

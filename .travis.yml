@@ -1,38 +1,112 @@
-language:
-- objective-c
 env:
-  #global: LATEST_TAG=1
-  matrix:
-  - VERSION=2.7.8 NUMPY_VERSION=1.6.1
-  - VERSION=3.3.5 NUMPY_VERSION=1.7.1
-  - VERSION=3.4.1 NUMPY_VERSION=1.7.1
-  - VERSION=3.5.0 NUMPY_VERSION=1.7.1
+  global:
+      - REPO_DIR="scikit-learn"
+      - BUILD_COMMIT=0.17.1
+      - PLAT=x86_64
+      - UNICODE_WIDTH=32
+      - NP_BUILD_DEP="numpy==1.6.1"
+      - NP_TEST_DEP="numpy==1.7.1"
+      - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+      # Following generated with
+      # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
+      - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
+
+language: python
+# Default Python version is usually 2.7
+python: 3.5
+sudo: required
+dist: trusty
+services: docker
+
+matrix:
+  exclude:
+      # Exclude the default Python 3.5 build
+      - python: 3.5
+  include:
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - UNICODE_WIDTH=16
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - PLAT=i686
+        - UNICODE_WIDTH=16
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.3
+        - NP_BUILD_DEP=numpy==1.7.1
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.3
+        - NP_BUILD_DEP=numpy==1.7.1
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - NP_BUILD_DEP=numpy==1.8.1
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - NP_BUILD_DEP=numpy==1.8.1
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_TEST_DEP=numpy==1.9.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_TEST_DEP=numpy==1.9.3
+    - os: osx
+      language: objective-c
+      env: MB_PYTHON_VERSION=2.7
+    - os: osx
+      language: objective-c
+      env:
+        - MB_PYTHON_VERSION=3.3
+        - NP_TEST_DEP=numpy==1.7.1
+    - os: osx
+      language: objective-c
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - NP_TEST_DEP=numpy==1.8.1
+    - os: osx
+      language: objective-c
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_TEST_DEP=numpy==1.9.3
+
+before_install:
+    - BUILD_DEPENDS="$NP_BUILD_DEP Cython"
+    - TEST_DEPENDS="$NP_TEST_DEP nose scipy"
+    - source multibuild/common_utils.sh
+    - source multibuild/travis_steps.sh
+    - before_install
+
 install:
-- source terryfy/travis_tools.sh
-- get_python_environment macpython $VERSION venv
-# Compile our own numpy from source (using Accelerate)
-- pip install numpy==$NUMPY_VERSION --no-use-wheel
-- pip install -U cython wheel six nose scipy
-- if [ -n "$LATEST_TAG" ]; then checkout_closest_tag scikit-learn; fi
-- cd scikit-learn
-- export CFLAGS="-Wno-unreachable-code"
-- export CXXFLAGS="-Wunreachable-code"
-- python setup.py bdist_wheel
-- rename_wheels dist
-- pip install dist/*.whl
-- cd ..
+    # Maybe get and clean and patch source
+    - clean_code $REPO_DIR $BUILD_COMMIT
+    - build_wheel $REPO_DIR $PLAT
+
 script:
-- if [ "${VERSION:0:3}" != "3.3" ]; then pip install -U numpy; fi
-- mkdir tmp_for_test
-- cd tmp_for_test
-- nosetests --exe -v sklearn
-- cd ..
-before_deploy: cd scikit-learn/dist
-deploy:
-  provider: cloudfiles
-  username: travis-worker
-  api_key:
-    secure: "YH0FqgMPfVmrqtJWxv614aiQxpBp3Gs+O47wj2lnAvFnb23IEWHrtqI6BAtpcRiZCY4WuvYprPv0nn7Lo9bJQYK25BS01/oEf3s67RUslnnWluBb5vcWzajoaQcweJRrSBDuuQeYpVs8XR5Dld0kMKsodbZVzAtThqywHCI+nBQ="
-  region: ORD
-  container: wheels
-  skip_cleanup: true
+    - install_run $PLAT
+
+after_success:
+    # Upload wheels to Rackspace container
+    - pip install wheelhouse-uploader
+    - python -m wheelhouse_uploader upload --local-folder
+          ${TRAVIS_BUILD_DIR}/wheelhouse/
+          --no-update-index
+          wheels
