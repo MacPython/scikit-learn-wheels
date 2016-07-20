@@ -7,6 +7,8 @@ env:
       - NP_BUILD_DEP="numpy==1.6.1"
       - NP_TEST_DEP="numpy==1.7.1"
       - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+      # Last version for which there are 3.3 wheels
+      - SCIPY_VERSION=0.17.0
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
@@ -89,8 +91,8 @@ matrix:
         - NP_TEST_DEP=numpy==1.9.3
 
 before_install:
-    - BUILD_DEPENDS="$NP_BUILD_DEP Cython scipy"
-    - TEST_DEPENDS="$NP_TEST_DEP nose scipy"
+    - BUILD_DEPENDS="$NP_BUILD_DEP Cython scipy==$SCIPY_VERSION"
+    - TEST_DEPENDS="$NP_TEST_DEP nose scipy==$SCIPY_VERSION"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
