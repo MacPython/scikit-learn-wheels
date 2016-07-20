@@ -6,7 +6,7 @@ function pre_build {
     # Runs in the root directory of this repository.
     if [ -n "$IS_OSX" ]; then
         # Compile our own numpy from source (using Accelerate)
-        pip install numpy==$NP_BUILD_DEP --no-use-wheel
+        pip install $NP_BUILD_DEP --no-use-wheel
     fi
 }
 
