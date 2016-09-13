@@ -1,5 +1,7 @@
 .. image:: https://travis-ci.org/MacPython/scikit-learn-wheels.svg?branch=master
     :target: https://travis-ci.org/MacPython/scikit-learn-wheels
+.. image:: https://ci.appveyor.com/api/projects/status/0vgnsltgf2ghhbr2/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/sklearn-wheels/scikit-learn-wheels
 
 ##########################
 Scikit-learn wheel builder
