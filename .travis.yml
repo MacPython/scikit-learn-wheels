@@ -4,11 +4,11 @@ env:
       - BUILD_COMMIT=0.19b1
       - PLAT=x86_64
       - UNICODE_WIDTH=32
-      - NP_BUILD_DEP="numpy==1.6.1"
-      - NP_TEST_DEP="numpy==1.7.1"
+      - NP_BUILD_DEP="numpy==1.8.2"
+      - NP_TEST_DEP="numpy==1.13.1"
+      - SCIPY_BUILD_DEP="scipy"
+      - SCIPY_TEST_DEP="scipy"
       - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
-      # Pin scipy dependency for compatibility with older numpy.
-      - SCIPY_DEP="scipy==0.17.0"
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
@@ -43,79 +43,53 @@ matrix:
         - UNICODE_WIDTH=16
     - os: linux
       env:
-        - MB_PYTHON_VERSION=3.3
-        - NP_BUILD_DEP=numpy==1.7.1
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.3
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.7.1
-        # Last version for which there are 3.3 wheels
-        - SCIPY_DEP="scipy==0.17.0"
-    - os: linux
-      env:
         - MB_PYTHON_VERSION=3.4
-        - NP_BUILD_DEP=numpy==1.7.1
         - NP_TEST_DEP=numpy==1.9.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.4
         - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.7.1
         - NP_TEST_DEP=numpy==1.9.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
         - NP_BUILD_DEP=numpy==1.9.3
-        - NP_TEST_DEP=numpy==1.11.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.9.3
-        - NP_TEST_DEP=numpy==1.11.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP=numpy==1.11.3
-        - NP_TEST_DEP=numpy==1.11.3
-        - SCIPY_DEP=scipy
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.11.3
-        - NP_TEST_DEP=numpy==1.11.3
-        - SCIPY_DEP=scipy
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=2.7
-        - NP_BUILD_DEP=numpy==1.7.1
-        - NP_TEST_DEP=numpy==1.7.1
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.4
-        - NP_BUILD_DEP=numpy==1.7.1
-        - NP_TEST_DEP=numpy==1.9.3
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.5
         - NP_BUILD_DEP=numpy==1.9.3
-        - NP_TEST_DEP=numpy==1.11.3
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP=numpy==1.11.3
-        - NP_TEST_DEP=numpy==1.11.3
-        - SCIPY_DEP=scipy
 
 before_install:
-    - BUILD_DEPENDS="$NP_BUILD_DEP Cython $SCIPY_DEP"
-    - TEST_DEPENDS="$NP_TEST_DEP nose $SCIPY_DEP"
+    - BUILD_DEPENDS="$NP_BUILD_DEP Cython $SCIPY_BUILD_DEP"
+    - TEST_DEPENDS="$NP_TEST_DEP nose $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
