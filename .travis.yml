@@ -25,67 +25,67 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - PLAT=i686
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.9.3
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=2.7
+##        - UNICODE_WIDTH=16
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=2.7
+##        - PLAT=i686
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=2.7
+##        - PLAT=i686
+##        - UNICODE_WIDTH=16
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=3.4
+##        - NP_TEST_DEP=numpy==1.9.3
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=3.4
+##        - PLAT=i686
+##        - NP_TEST_DEP=numpy==1.9.3
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.5
+#        - NP_BUILD_DEP=numpy==1.9.3
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.5
+#        - PLAT=i686
+#        - NP_BUILD_DEP=numpy==1.9.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP=numpy==1.11.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.11.3
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.4
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP=numpy==1.11.3
+##    - os: linux
+##      env:
+##        - MB_PYTHON_VERSION=3.6
+##        - PLAT=i686
+##        - NP_BUILD_DEP=numpy==1.11.3
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+##    - os: osx
+##      language: generic
+##      env:
+##        - MB_PYTHON_VERSION=3.4
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=3.5
+#        - NP_BUILD_DEP=numpy==1.9.3
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=3.6
+#        - NP_BUILD_DEP=numpy==1.11.3
 
 before_install:
     - BUILD_DEPENDS="$NP_BUILD_DEP Cython $SCIPY_BUILD_DEP"
@@ -108,4 +108,4 @@ after_success:
     - python -m wheelhouse_uploader upload --local-folder
           ${TRAVIS_BUILD_DIR}/wheelhouse/
           --no-update-index
-          wheels
+          sklearn-dev-wheels
