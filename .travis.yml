@@ -1,7 +1,7 @@
 env:
   global:
       - REPO_DIR="scikit-learn"
-      - BUILD_COMMIT=master
+      - BUILD_COMMIT=0.19.1
       - PLAT=x86_64
       - UNICODE_WIDTH=32
       - NP_BUILD_DEP="numpy==1.8.2"
@@ -12,6 +12,8 @@ env:
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       - secure: "UjWb9aqEcay0q0yJyLkCSKx8oJNkknrOpYBiPXdXb0VzVjRkcLqaoJZOZxYxmSLtjRlCiW20WY2fVpfNGuv6ggQB/uOvJBxtJK6deFqeGLv15v3/2jlj5xo0IVR0Dn1gi3seuQ3KaHUW0BqS0kr6yePgyKxCTDMCDB/ufQjdBRLVgCFqmm5DzkKaNssj6tvHAbQD3335vYKtJuhX0kamOna+FovZNODTyskCiaNMaJOZitMwH78c/oEfKS8k4jZGv2zHw5GykHtOIuWwaFhtd+O6PnFNeJbhTHGRldVwqSxZLcTJUc/hh8VnbeOCiXxVk1ru3kyD3es6Aj1r/VVrpnOyVEcYFEvkrRytRQC+QBIe5l5kvNVecJXTyGYC3DMn6Z7HDivkRxo4WK7ETcZjDwyfFSnwGlmyXMFRon+nC49Ag5SeK49QOONTlJduZAbx+/NgruGm/qbYb5S3whAvh3Q/3ut3QxPzrlA+V96FCjRlvzavifFgKvFxQEWPGXb57ITjLwSATBsjnMnxrhAWCd+vQcqdc0nZdGbd+D5HgaCVB51kix9L279p3J3ngc5GXn4bUSHWTzRejNHZt4VPtNyAfBYZ2RbA4uwpaLteH57cDg6CkYe3AVQGMAT0wiZhp3XRQSnzUstljo9VXkqknT+nl5hUBbSGqOcSaraCtAY="
+      # Commit when running from daily branch
+      - DAILY_COMMIT=master
 
 language: python
 # Default Python version is usually 2.7
@@ -25,69 +27,76 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
-#    - os: linux
-#      env:
-#        - MB_PYTHON_VERSION=2.7
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=2.7
-##        - UNICODE_WIDTH=16
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=2.7
-##        - PLAT=i686
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=2.7
-##        - PLAT=i686
-##        - UNICODE_WIDTH=16
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=3.4
-##        - NP_TEST_DEP=numpy==1.9.3
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=3.4
-##        - PLAT=i686
-##        - NP_TEST_DEP=numpy==1.9.3
-#    - os: linux
-#      env:
-#        - MB_PYTHON_VERSION=3.5
-#        - NP_BUILD_DEP=numpy==1.9.3
-#    - os: linux
-#      env:
-#        - MB_PYTHON_VERSION=3.5
-#        - PLAT=i686
-#        - NP_BUILD_DEP=numpy==1.9.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - UNICODE_WIDTH=16
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=2.7
+        - PLAT=i686
+        - UNICODE_WIDTH=16
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - NP_TEST_DEP=numpy==1.9.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - PLAT=i686
+        - NP_TEST_DEP=numpy==1.9.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - NP_BUILD_DEP=numpy==1.9.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.9.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP=numpy==1.11.3
-##    - os: linux
-##      env:
-##        - MB_PYTHON_VERSION=3.6
-##        - PLAT=i686
-##        - NP_BUILD_DEP=numpy==1.11.3
-#    - os: osx
-#      language: generic
-#      env:
-#        - MB_PYTHON_VERSION=2.7
-##    - os: osx
-##      language: generic
-##      env:
-##        - MB_PYTHON_VERSION=3.4
-#    - os: osx
-#      language: generic
-#      env:
-#        - MB_PYTHON_VERSION=3.5
-#        - NP_BUILD_DEP=numpy==1.9.3
-#    - os: osx
-#      language: generic
-#      env:
-#        - MB_PYTHON_VERSION=3.6
-#        - NP_BUILD_DEP=numpy==1.11.3
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.11.3
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=2.7
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.4
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.5
+        - NP_BUILD_DEP=numpy==1.9.3
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - NP_BUILD_DEP=numpy==1.11.3
 
 before_install:
+    - if [ "$TRAVIS_BRANCH" == "daily" ]; then
+          CONTAINER="sklearn-dev-wheels";
+          BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+      else
+          CONTAINER="wheels";
+          UPLOAD_ARGS="--no-update-index";
+      fi
     - BUILD_DEPENDS="$NP_BUILD_DEP Cython $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP nose pytest $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
@@ -108,4 +117,5 @@ after_success:
     - python -m wheelhouse_uploader upload --local-folder
           ${TRAVIS_BUILD_DIR}/wheelhouse/
           --no-update-index
-          sklearn-dev-wheels
+          $UPLOAD_ARGS
+          $CONTAINER
