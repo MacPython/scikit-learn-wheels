@@ -1,6 +1,6 @@
 numpy==1.14.5
 scipy==1.1.0
-cython==0.27.3
+cython==0.28.4
 nose
 nose-timer
 wheel
