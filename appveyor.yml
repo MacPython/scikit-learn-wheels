@@ -95,7 +95,7 @@ test_script:
   - "mkdir empty_folder"
   - "cd empty_folder"
 
-  - "pytest sklearn"
+  - "pytest --pyargs sklearn"
 
   # Move back to the project folder
   - "cd .."
