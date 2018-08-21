@@ -9,6 +9,7 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script interpreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C ..\\appveyor\\run_with_env.cmd"
+    CMD_IN_ENV_DEEP: "cmd /E:ON /V:ON /C ..\\..\\appveyor\\run_with_env.cmd"
     WHEELHOUSE_UPLOADER_USERNAME: sklearn-appveyor
     WHEELHOUSE_UPLOADER_SECRET:
       secure: P1/NpWGueg+26XlcS0P6kIKO1KbRw67S6ltwEjxb+vgf0F+zfNT6FRaMPKfHSXiR
@@ -94,8 +95,7 @@ test_script:
   # installed library.
   - "mkdir empty_folder"
   - "cd empty_folder"
-
-  - "%CMD_IN_ENV% pytest --pyargs sklearn"
+  - "%CMD_IN_ENV_DEEP% pytest --pyargs sklearn"
 
   # Move back to the project folder
   - "cd .."
