@@ -94,8 +94,7 @@ test_script:
   # Change to a non-source folder to make sure we run the tests on the
   # installed library.
   - "mkdir empty_folder"
-  - "cd empty_folder"
-  - "%CMD_IN_ENV_DEEP% pytest --pyargs sklearn"
+  - "%CMD_IN_ENV_DEEP% \"cd empty_folder\" & \"pytest --pyargs sklearn\""
 
   # Move back to the project folder
   - "cd .."
