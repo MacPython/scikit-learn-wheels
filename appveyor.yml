@@ -95,7 +95,7 @@ test_script:
   # installed library.
   - "mkdir empty_folder"
   - "cd empty_folder"
-  - "%CMD_IN_ENV_DEEP% python -c "import sys; print(sys.path)"
+  - "%CMD_IN_ENV_DEEP% python -c \"import sys; print(sys.path)\""
   - "%CMD_IN_ENV_DEEP% pytest --pyargs sklearn"
 
   # Move back to the project folder
