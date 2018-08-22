@@ -85,7 +85,7 @@ install:
   - ps: "ls dist"
 
   # Install the generated wheel package to test it
-  - "pip install --pre --no-index --find-links dist/ scikit-learn"
+  - "pip install --verbose --pre --no-index --find-links dist/ scikit-learn"
 
 # Not a .NET project, we build scikit-learn in the install step instead
 build: false
