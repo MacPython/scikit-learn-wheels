@@ -93,7 +93,9 @@ test_script:
   # Remove the source dir to make sure we run the tests on the
   # installed library.
   - "rd /s /q \"sklearn\""
-  - "%CMD_IN_ENV% pytest --pyargs sklearn"
+  # remove setup.cfg so as to not force --doctest-modules
+  - "del setup.cfg"
+  - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
 
   # Move back to the project folder
   - "cd .."
