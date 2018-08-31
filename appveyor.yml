@@ -97,9 +97,6 @@ test_script:
   - "del setup.cfg"
   - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
 
-  # Move back to the project folder
-  - "cd .."
-
 artifacts:
   # Archive the generated wheel package in the ci.appveyor.com build report.
   - path: dist\*
