@@ -18,7 +18,6 @@ environment:
     SKLEARN_SKIP_NETWORK_TESTS: 1
     # Minimum numpy version
     NP_BUILD_DEP: "1.10.4"
-    NP_TEST_DEP: "1.10.4"
 
   matrix:
     - PYTHON: "C:\\Python27"
@@ -40,36 +39,30 @@ environment:
     - PYTHON: "C:\\Python35"
       PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "32"
-      NP_TEST_DEP: "1.11.3"
 
     - PYTHON: "C:\\Python35-x64"
       PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "64"
-      NP_TEST_DEP: "1.11.3"
 
     - PYTHON: "C:\\Python36"
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "32"
       NP_BUILD_DEP: "1.12.1"
-      NP_TEST_DEP: "1.12.1"
 
     - PYTHON: "C:\\Python36-x64"
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.12.1"
-      NP_TEST_DEP: "1.12.1"
 
     - PYTHON: "C:\\Python37"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "32"
       NP_BUILD_DEP: "1.14.5"
-      NP_TEST_DEP: "1.14.5"
 
     - PYTHON: "C:\\Python37-x64"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.14.5"
-      NP_TEST_DEP: "1.14.5"
 
 
 install:
@@ -108,7 +101,7 @@ test_script:
   # installed library.
   - "rd /s /q \"sklearn\""
   # Install the library version for testing
-  - "%CMD_IN_ENV% pip install --timeout=60 numpy==%NP_TEST_DEP%"
+  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy
   # remove setup.cfg so as to not force --doctest-modules
   - "del setup.cfg"
   - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
