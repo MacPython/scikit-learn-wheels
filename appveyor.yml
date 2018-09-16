@@ -101,7 +101,7 @@ test_script:
   # installed library.
   - "rd /s /q \"sklearn\""
   # Install the library version for testing
-  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy
+  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy"
   # remove setup.cfg so as to not force --doctest-modules
   - "del setup.cfg"
   - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
