@@ -100,10 +100,14 @@ test_script:
   # Remove the source dir to make sure we run the tests on the
   # installed library.
   - "rd /s /q \"sklearn\""
-  # Install the library version for testing
-  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy"
   # remove setup.cfg so as to not force --doctest-modules
   - "del setup.cfg"
+  # Install the newest version of numpy for the tests: the goal is to ensure
+  # that the scikit-learn wheels are binary compatible both with the old numpy
+  # version against which they were built and the newest numpy version at the
+  # time of the release, that is the version of numpy that users are most
+  # likely to use.
+  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy"
   - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
 
 artifacts:
