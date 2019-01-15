@@ -4,7 +4,7 @@ env:
       - BUILD_COMMIT=0.20.2
       - PLAT=x86_64
       - UNICODE_WIDTH=32
-      - NP_BUILD_DEP="numpy==1.8.2"
+      - NP_BUILD_DEP="numpy==1.11.3"
       - NP_TEST_DEP="numpy==1.13.1"
       - SCIPY_BUILD_DEP="scipy"
       - SCIPY_TEST_DEP="scipy"
@@ -26,38 +26,13 @@ matrix:
   include:
     - os: linux
       env:
-        - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - PLAT=i686
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
         - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_BUILD_DEP=numpy==1.11.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
         - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_BUILD_DEP=numpy==1.11.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
@@ -81,16 +56,8 @@ matrix:
     - os: osx
       language: generic
       env:
-        - MB_PYTHON_VERSION=2.7
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.4
-    - os: osx
-      language: generic
-      env:
         - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
+        - NP_BUILD_DEP=numpy==1.11.3
     - os: osx
       language: generic
       env:
@@ -104,11 +71,13 @@ matrix:
         - NP_TEST_DEP=numpy==1.14.5
 
 before_install:
-    - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.4 $SCIPY_BUILD_DEP"
+    - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.5 $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP pytest $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
+    # OpenMP is not present on osx by default
+    - if [[ $TRAVIS_OS_NAME = "osx" ]]; then enable_openmp; fi
 
 install:
     # Maybe get and clean and patch source
