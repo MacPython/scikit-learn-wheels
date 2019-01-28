@@ -16,10 +16,12 @@ function run_tests {
 function enable_openmp {
     # Install OpenMP
     brew install libomp
-    ls /usr/local/opt/libomp/include
-    ls /usr/local/opt/libomp/lib
     export CC="clang -Xpreprocessor -fopenmp"
     export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
     export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
     export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
+}
+
+function disable_system_openmp {
+    brew uninstall libomp
 }

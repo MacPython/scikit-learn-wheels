@@ -83,6 +83,7 @@ install:
     # Maybe get and clean and patch source
     - clean_code $REPO_DIR $BUILD_COMMIT
     - build_wheel $REPO_DIR $PLAT
+    - disable_system_openmp
 
 script:
     - install_run $PLAT
