@@ -8,10 +8,11 @@ env:
       - NP_TEST_DEP="numpy==1.13.1"
       - SCIPY_BUILD_DEP="scipy"
       - SCIPY_TEST_DEP="scipy"
-      - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+      - DAILY_COMMIT=master
+      # - WHEELHOUSE_UPLOADER_USERNAME=7fcdbdc39999
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
-      - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
+      # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
 
 language: python
 # Default Python version is usually 2.7
@@ -24,86 +25,93 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - PLAT=i686
-        - NP_TEST_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.9.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP=numpy==1.11.3
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.11.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=2.7
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=2.7
+    #     - UNICODE_WIDTH=16
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=2.7
+    #     - PLAT=i686
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=2.7
+    #     - PLAT=i686
+    #     - UNICODE_WIDTH=16
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.4
+    #     - NP_TEST_DEP=numpy==1.9.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.4
+    #     - PLAT=i686
+    #     - NP_TEST_DEP=numpy==1.9.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - NP_BUILD_DEP=numpy==1.9.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - PLAT=i686
+    #     - NP_BUILD_DEP=numpy==1.9.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - NP_BUILD_DEP=numpy==1.11.3
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - PLAT=i686
+    #     - NP_BUILD_DEP=numpy==1.11.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
         - NP_BUILD_DEP=numpy==1.14.5
         - NP_TEST_DEP=numpy==1.14.5
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.14.5
-        - NP_TEST_DEP=numpy==1.14.5
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.4
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP=numpy==1.9.3
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP=numpy==1.11.3
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=numpy==1.14.5
-        - NP_TEST_DEP=numpy==1.14.5
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - PLAT=i686
+    #     - NP_BUILD_DEP=numpy==1.14.5
+    #     - NP_TEST_DEP=numpy==1.14.5
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=2.7
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.4
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - NP_BUILD_DEP=numpy==1.9.3
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - NP_BUILD_DEP=numpy==1.11.3
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - NP_BUILD_DEP=numpy==1.14.5
+    #     - NP_TEST_DEP=numpy==1.14.5
 
 before_install:
+    - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
+          CONTAINER="scikit-learn-nightly-wheels";
+          BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+      else
+          CONTAINER=wheels;
+          UPLOAD_ARGS="--no-update-index";
+      fi
     - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.4 $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP pytest $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
@@ -123,5 +131,6 @@ after_success:
     - pip install wheelhouse-uploader
     - python -m wheelhouse_uploader upload --local-folder
           ${TRAVIS_BUILD_DIR}/wheelhouse/
-          --no-update-index
-          wheels
+          --provider BACKBLAZE_B2
+          $UPLOAD_ARGS
+          $CONTAINER
