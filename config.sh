@@ -16,8 +16,9 @@ function run_tests {
 function enable_openmp {
     # Install OpenMP
     brew install libomp
-    export CC="clang -Xpreprocessor -fopenmp"
+    export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
     export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
+    export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
     export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
     export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
 }
