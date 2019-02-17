@@ -18,7 +18,6 @@ environment:
     SKLEARN_SKIP_NETWORK_TESTS: 1
     # Minimum numpy version
     NP_BUILD_DEP: "1.10.4"
-    BUILD_COMMIT: master
     DAILY_COMMIT: master
 
   matrix:
