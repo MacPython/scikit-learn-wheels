@@ -88,7 +88,7 @@ install:
   # Install Python (from the official .msi of http://python.org) and pip when
   # not already installed.
   - ps: >-
-      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { exit 0 }
+      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { Exit }
   - "powershell ./appveyor/install.ps1"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "python -m pip install -U pip"
@@ -119,7 +119,7 @@ build: false
 
 test_script:
   - ps: >-
-      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { exit 0 }
+      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { Exit }
   # Remove the source dir to make sure we run the tests on the
   # installed library.
   - "rd /s /q \"sklearn\""
@@ -139,7 +139,7 @@ artifacts:
 
 on_success:
   - ps: >-
-      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { exit 0 }
+      if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { Exit }
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
