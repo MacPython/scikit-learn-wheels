@@ -10,6 +10,7 @@ env:
       - SCIPY_TEST_DEP="scipy"
       - DAILY_COMMIT=master
       - WHEELHOUSE_UPLOADER_USERNAME=thomasjpfan
+      - DAILY_SKIP=false
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
@@ -29,28 +30,34 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=2.7
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=2.7
         - UNICODE_WIDTH=16
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=2.7
         - PLAT=i686
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=2.7
         - PLAT=i686
         - UNICODE_WIDTH=16
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.4
         - NP_TEST_DEP=numpy==1.9.3
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.4
         - PLAT=i686
         - NP_TEST_DEP=numpy==1.9.3
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
@@ -107,11 +114,14 @@ matrix:
 
 before_install:
     - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
-          CONTAINER="my-pre-release";
-          BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+        CONTAINER="my-pre-release";
+        BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+        if [ "$DAILY_SKIP" == "true" ]; then
+          exit 1
+        fi
       else
-          CONTAINER=wheels;
-          UPLOAD_ARGS="--no-update-index";
+        CONTAINER=wheels;
+        UPLOAD_ARGS="--no-update-index";
       fi
     - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.5 $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP pytest $SCIPY_TEST_DEP"

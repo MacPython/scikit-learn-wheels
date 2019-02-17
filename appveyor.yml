@@ -19,23 +19,28 @@ environment:
     # Minimum numpy version
     NP_BUILD_DEP: "1.10.4"
     DAILY_COMMIT: master
+    DAILY_SKIP: "false"
 
   matrix:
     - PYTHON: "C:\\Python27"
       PYTHON_VERSION: "2.7.11"
       PYTHON_ARCH: "32"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python27-x64"
       PYTHON_VERSION: "2.7.11"
       PYTHON_ARCH: "64"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python34"
       PYTHON_VERSION: "3.4.5"
       PYTHON_ARCH: "32"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python34-x64"
       PYTHON_VERSION: "3.4.5"
       PYTHON_ARCH: "64"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python35"
       PYTHON_VERSION: "3.5.2"
@@ -72,6 +77,7 @@ init:
       if ($env:APPVEYOR_REPO_BRANCH -eq "nightly") {
         $env:CONTAINER = "my-pre-release"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
+        if ($env:DAILY_SKIP -eq "true") { exit 1 }
       } else {
         $env:CONTAINER = "wheels"
         $env:UPLOAD_ARGS = "--no-update-index"
