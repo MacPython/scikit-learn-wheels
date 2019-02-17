@@ -117,7 +117,7 @@ before_install:
         CONTAINER="my-pre-release";
         BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
         if [ "$DAILY_SKIP" == "true" ]; then
-          exit 1
+          exit 1;
         fi
       else
         CONTAINER=wheels;
