@@ -9,10 +9,11 @@ env:
       - SCIPY_BUILD_DEP="scipy"
       - SCIPY_TEST_DEP="scipy"
       - DAILY_COMMIT=master
-      - WHEELHOUSE_UPLOADER_USERNAME=0017fcdbdc399990000000010
+      - WHEELHOUSE_UPLOADER_USERNAME=thomasjpfan
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
+      - secure: "hjQG3C3gkQy+eF/mGMPMet/xj3cxvcUG5mOmdVqmCShbg6vvbPo1nl/lQPBVv3HOD5f5yL+Z8OVAauBa1QwopNlsprEYAnT4kQiN9odWNUsbc9eAJZi0UaY9JHYOTynCdTaY/4/UOld1Gp4kRLs2Pw70zorbNk+19cstp4WWN42An4/AeIeZZIh0EtDRnUDmLrE8FsK3KPzrX5MsrQAnSY6ig6ppiNJKjrQaySk7URDiQyahSaAXbBe/A4EHndWORKQn7USFsojagS8rXxpwigjrrWdIiYcA7XYXOzNgO1H3+Re11WjjTtd1+1LdTGwQFPy1uAsKOBZ1XW9r6sCu7JxiUv86lZZtew+YlU/tWlHBaNvcC/GQoMG/8TCY406EOrOI18soFEet/NRl6D5zmWgw9uNfusvynZ96xFWPljo/XKQ/KHrPyLsRDlgQdDM7p1ymlnFaWPqvbVlIfGD4FJOYdeOL1yMbKgHHU0lX03hpcUMvPnykkocw2RhCa380+5zbm6Rfqip5LOFq0rBiSNUfaNWQK3ypciuM1dXjo+IVSE8GfGV+zZ8Bg0rPJLXOngi4boHmMBYPdcx0XtcNTOw7Opay+ZqWeoFHe3rGdfgqYB3F3sesb+U5eRko3lLKyhwwhM0Cu8ivT6nn3f07zZ77jJHZmq6NwKdFpqx+48c="
 
 language: python
 # Default Python version is usually 2.7
