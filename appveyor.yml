@@ -20,7 +20,6 @@ environment:
     NP_BUILD_DEP: "1.10.4"
     DAILY_COMMIT: master
     DAILY_SKIP: "false"
-    DAILY_BRANCH: "nightly"
 
   matrix:
     - PYTHON: "C:\\Python27"
@@ -77,10 +76,9 @@ init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
   - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) {
+      if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
         $env:CONTAINER = "my-pre-release"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
-        if ($env:DAILY_SKIP -eq "true") { exit 0 }
       } else {
         $env:CONTAINER = "wheels"
         $env:UPLOAD_ARGS = "--no-update-index"
@@ -89,7 +87,7 @@ init:
 install:
   # Install Python (from the official .msi of http://python.org) and pip when
   # not already installed.
-  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) { exit 0 } }
+  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq "master") {exit 0} }
   - "powershell ./appveyor/install.ps1"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "python -m pip install -U pip"
@@ -119,7 +117,7 @@ install:
 build: false
 
 test_script:
-  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) { exit 0 } }
+  - if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { exit 0 }
   # Remove the source dir to make sure we run the tests on the
   # installed library.
   - "rd /s /q \"sklearn\""
@@ -138,7 +136,7 @@ artifacts:
   - path: dist\*
 
 on_success:
-  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) { exit 0 } }
+  - if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq "master") { exit 0 }
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
