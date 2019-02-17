@@ -107,7 +107,7 @@ matrix:
 
 before_install:
     - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
-          CONTAINER="scikit-learn-nightly-wheels";
+          CONTAINER="pre-release";
           BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
       else
           CONTAINER=wheels;
@@ -133,6 +133,5 @@ after_success:
     - pip install wheelhouse-uploader
     - python -m wheelhouse_uploader upload --local-folder
           ${TRAVIS_BUILD_DIR}/wheelhouse/
-          --provider BACKBLAZE_B2
           $UPLOAD_ARGS
           $CONTAINER
