@@ -107,7 +107,7 @@ matrix:
 
 before_install:
     - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
-          CONTAINER="pre-release";
+          CONTAINER=my-pre-release;
           BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
       else
           CONTAINER=wheels;
