@@ -46,10 +46,12 @@ environment:
     - PYTHON: "C:\\Python35"
       PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "32"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python35-x64"
       PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "64"
+      DAILY_SKIP: "true"
 
     - PYTHON: "C:\\Python36"
       PYTHON_VERSION: "3.6.0"
@@ -87,7 +89,7 @@ init:
 install:
   # Install Python (from the official .msi of http://python.org) and pip when
   # not already installed.
-  - if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) { exit 0 }
+  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) {exit 0} }
   - "powershell ./appveyor/install.ps1"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "python -m pip install -U pip"
@@ -117,7 +119,7 @@ install:
 build: false
 
 test_script:
-  - if ($env:DAILY_SKIP -eq "true" -and $env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) { exit 0 }
+  - if ($env:DAILY_SKIP -eq "true") {if ($env:APPVEYOR_REPO_BRANCH -eq $env:DAILY_BRANCH) {exit 0} }
   # Remove the source dir to make sure we run the tests on the
   # installed library.
   - "rd /s /q \"sklearn\""

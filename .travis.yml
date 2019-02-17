@@ -63,11 +63,13 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.5
         - NP_BUILD_DEP=numpy==1.9.3
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.9.3
+        - DAILY_SKIP=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
@@ -92,15 +94,18 @@ matrix:
       language: generic
       env:
         - MB_PYTHON_VERSION=2.7
+        - DAILY_SKIP=true
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.4
+        - DAILY_SKIP=true
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.5
         - NP_BUILD_DEP=numpy==1.9.3
+        - DAILY_SKIP=true
     - os: osx
       language: generic
       env:
