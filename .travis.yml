@@ -13,7 +13,7 @@ env:
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
-      - secure: gRemmWg6xE4JQJBZbGppXla6PD31zIgjDwiU+di9wYBEM7AQPF+f1kEaSzfy0V/zPyZ7/emSqphRQ3+9cLg7UYDUNT/ibLLZDRG5UL/1Nxys/4ST4WtKUGEkNbmAZ9taAP6h9qn6pBfqpsiE6OatrTiJvANMhZ2lxfPRMUOM6cxIJ/NuG65ivkudF+JYemdXvNVIhV8u47kajaZrhoelrbb5ZDBp66HQVQKFaBO+tYHS24JhVbahEHM+2LNkkPzZybn5Q6psdAdXtC8OuM5u+GjdBmFsU80c59oNL/ZtLrPehc2CzQCc0woLxlz8cSUdRy+gbKy/lYWSnrOjuKAGUlws/yAwCGQNoCMfPju5PORoBOqY20Bv9+P6EYZAcXDYzIvGYEZaCJaXqk67AwOHOsbSwn1Vnl7GOlGGJYUGVLzj1k6eiM32SkPFYyRwkdXovjPwKwOllS186Y6Sxw0Vovu+WrrXmlbpMkCuqdudW+ZRO3/7nltAcm3Eq1duwSIiXL1LCTZJhOxDYKfqvrLpDidk2QFseU2GOzXrQRb4+uceVEopBcg1v0ySKCEXXK8XJhkeSvNm6REpSh8GK41jXpj1O/wezC01cTCBxzxs3/HaQkNIQLP3tj6EEJT/AfZmlnrFeb4s72yFTgg82268JfiE7kwApD4zYJGuSk2Hdpw=
+    #   - secure: gRemmWg6xE4JQJBZbGppXla6PD31zIgjDwiU+di9wYBEM7AQPF+f1kEaSzfy0V/zPyZ7/emSqphRQ3+9cLg7UYDUNT/ibLLZDRG5UL/1Nxys/4ST4WtKUGEkNbmAZ9taAP6h9qn6pBfqpsiE6OatrTiJvANMhZ2lxfPRMUOM6cxIJ/NuG65ivkudF+JYemdXvNVIhV8u47kajaZrhoelrbb5ZDBp66HQVQKFaBO+tYHS24JhVbahEHM+2LNkkPzZybn5Q6psdAdXtC8OuM5u+GjdBmFsU80c59oNL/ZtLrPehc2CzQCc0woLxlz8cSUdRy+gbKy/lYWSnrOjuKAGUlws/yAwCGQNoCMfPju5PORoBOqY20Bv9+P6EYZAcXDYzIvGYEZaCJaXqk67AwOHOsbSwn1Vnl7GOlGGJYUGVLzj1k6eiM32SkPFYyRwkdXovjPwKwOllS186Y6Sxw0Vovu+WrrXmlbpMkCuqdudW+ZRO3/7nltAcm3Eq1duwSIiXL1LCTZJhOxDYKfqvrLpDidk2QFseU2GOzXrQRb4+uceVEopBcg1v0ySKCEXXK8XJhkeSvNm6REpSh8GK41jXpj1O/wezC01cTCBxzxs3/HaQkNIQLP3tj6EEJT/AfZmlnrFeb4s72yFTgg82268JfiE7kwApD4zYJGuSk2Hdpw=
 
 language: python
 # Default Python version is usually 2.7
@@ -107,7 +107,7 @@ matrix:
 
 before_install:
     - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
-          CONTAINER=my-pre-release;
+          CONTAINER="my-pre-release";
           BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
       else
           CONTAINER=wheels;
