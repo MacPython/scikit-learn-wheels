@@ -11,6 +11,7 @@ env:
       - DAILY_COMMIT=master
       - WHEELHOUSE_UPLOADER_USERNAME=thomasjpfan
       - DAILY_SKIP=false
+      - DAILY_BRANCH=nightly
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
@@ -113,11 +114,11 @@ matrix:
         - NP_TEST_DEP=numpy==1.14.5
 
 before_install:
-    - if [ "$TRAVIS_BRANCH" == "nightly" ]; then
+    - if [ "$TRAVIS_BRANCH" == "$DAILY_BRANCH" ]; then
         CONTAINER="my-pre-release";
         BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
         if [ "$DAILY_SKIP" == "true" ]; then
-          exit 1;
+          exit 0;
         fi
       else
         CONTAINER=wheels;
@@ -130,6 +131,9 @@ before_install:
     - before_install
 
 install:
+    - if [ "$TRAVIS_BRANCH" == "$DAILY_BRANCH" && "$DAILY_SKIP" == "true" ]; then
+        exit 0;
+      fi
     # Maybe get and clean and patch source
     - clean_code $REPO_DIR $BUILD_COMMIT
     - build_wheel $REPO_DIR $PLAT
@@ -139,6 +143,9 @@ script:
     - echo "PASS"
 
 after_success:
+    - if [ "$TRAVIS_BRANCH" == "$DAILY_BRANCH" && "$DAILY_SKIP" == "true" ]; then
+        exit 0;
+      fi
     # Upload wheels to Rackspace container
     - pip install wheelhouse-uploader
     - python -m wheelhouse_uploader upload --local-folder
