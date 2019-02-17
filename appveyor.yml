@@ -88,7 +88,7 @@ install:
   # Install Python (from the official .msi of http://python.org) and pip when
   # not already installed.
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:DAILY_SKIP -eq "true") {
+      if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:DAILY_SKIP -eq "true")) {
         exit 0
       }
   - "powershell ./appveyor/install.ps1"
@@ -121,7 +121,7 @@ build: false
 
 test_script:
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:DAILY_SKIP -eq "true") {
+      if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:DAILY_SKIP -eq "true")) {
         exit 0
       }
   # Remove the source dir to make sure we run the tests on the
@@ -143,7 +143,7 @@ artifacts:
 
 on_success:
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:DAILY_SKIP -eq "true") {
+      if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:DAILY_SKIP -eq "true")) {
         exit 0
       }
   # Upload the generated wheel package to Rackspace
