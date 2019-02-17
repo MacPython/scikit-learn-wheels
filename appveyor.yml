@@ -9,15 +9,17 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script interpreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C ..\\appveyor\\run_with_env.cmd"
-    WHEELHOUSE_UPLOADER_USERNAME: sklearn-appveyor
-    WHEELHOUSE_UPLOADER_SECRET:
-      secure: P1/NpWGueg+26XlcS0P6kIKO1KbRw67S6ltwEjxb+vgf0F+zfNT6FRaMPKfHSXiR
+    WHEELHOUSE_UPLOADER_USERNAME: thomasjpfan
+    # WHEELHOUSE_UPLOADER_SECRET:
+    #   secure: P1/NpWGueg+26XlcS0P6kIKO1KbRw67S6ltwEjxb+vgf0F+zfNT6FRaMPKfHSXiR
 
     # Make sure we don't download large datasets when running the test on
     # continuous integration platform
     SKLEARN_SKIP_NETWORK_TESTS: 1
     # Minimum numpy version
     NP_BUILD_DEP: "1.10.4"
+    BUILD_COMMIT: master
+    DAILY_COMMIT: master
 
   matrix:
     - PYTHON: "C:\\Python27"
@@ -64,6 +66,17 @@ environment:
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.14.5"
 
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
+  - ps: >-
+      if ($env:APPVEYOR_REPO_BRANCH -eq "nightly") {
+        $env:CONTAINER = "my-pre-release"
+        if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
+      } else {
+        $env:CONTAINER = "wheels"
+        $env:UPLOAD_ARGS = "--no-update-index"
+      }
 
 install:
   # Install Python (from the official .msi of http://python.org) and pip when
@@ -118,7 +131,11 @@ on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
-  - "python -m wheelhouse_uploader upload --no-update-index --no-ssl-check --local-folder=dist wheels"
+  - python -m wheelhouse_uploader upload
+    --no-ssl-check
+    --local-folder=dist
+    %UPLOAD_ARGS%
+    %CONTAINER%
 
 cache:
   # Use the appveyor cache to avoid re-downloading large archives such
