@@ -6,7 +6,6 @@ env:
       - UNICODE_WIDTH=32
       - NP_BUILD_DEP="numpy==1.8.2"
       - NP_TEST_DEP="numpy==1.13.1"
-      - CYTHON_BUILD_DEP="cython==0.28.5"
       - SCIPY_BUILD_DEP="scipy"
       - SCIPY_TEST_DEP="scipy"
       - DAILY_COMMIT=master
@@ -123,7 +122,7 @@ before_install:
         CONTAINER=wheels;
         UPLOAD_ARGS="--no-update-index";
       fi
-    - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
+    - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.5 $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP pytest $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
