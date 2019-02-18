@@ -74,7 +74,7 @@ environment:
 
 matrix:
   allow_failures:
-    - APPVEYOR_REPO_BRANCH: master
+    - APPVEYOR_REPO_BRANCH: "master"
       DAILY_SKIP: "true"
 
 init:
