@@ -140,8 +140,7 @@ install:
     - build_wheel $REPO_DIR $PLAT
 
 script:
-    # - install_run $PLAT
-    - echo "PASS"
+    - install_run $PLAT
 
 after_success:
     # Upload wheels to Rackspace container
