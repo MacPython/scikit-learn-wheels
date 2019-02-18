@@ -80,7 +80,10 @@ init:
       if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
         $env:CONTAINER = "my-pre-release"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
-        if ($env:DAILY_SKIP -eq "true") { Exit-AppveyorBuild }
+        if ($env:DAILY_SKIP -eq "true") {
+          $env:APPVEYOR_SKIP_FINALIZE_ON_EXIT = true
+          Exit-AppveyorBuild
+        }
       } else {
         $env:CONTAINER = "wheels"
         $env:UPLOAD_ARGS = "--no-update-index"
