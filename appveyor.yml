@@ -130,7 +130,7 @@ test_script:
   # time of the release, that is the version of numpy that users are most
   # likely to use.
   - "%CMD_IN_ENV% pip install -U --timeout=60 numpy"
-  # - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
+  - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
 
 artifacts:
   # Archive the generated wheel package in the ci.appveyor.com build report.
