@@ -119,7 +119,7 @@ matrix:
 
 before_install:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
-        CONTAINER="my-pre-release";
+        CONTAINER="pre-release";
         BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
         if [ "$DAILY_SKIP" == "true" ]; then
           exit 0;

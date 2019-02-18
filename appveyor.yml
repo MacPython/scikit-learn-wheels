@@ -79,7 +79,7 @@ init:
   - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
   - ps: >-
       if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
-        $env:CONTAINER = "my-pre-release"
+        $env:CONTAINER = "pre-release"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
         if ($env:DAILY_SKIP -eq "true") { Exit-AppveyorBuild }
       } else {
