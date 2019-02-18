@@ -135,9 +135,6 @@ before_install:
     - before_install
 
 install:
-    - if [ "$TRAVIS_BRANCH" == "master" && "$DAILY_SKIP" == "true" ]; then
-        exit 0;
-      fi
     # Maybe get and clean and patch source
     - clean_code $REPO_DIR $BUILD_COMMIT
     - build_wheel $REPO_DIR $PLAT
@@ -147,9 +144,6 @@ script:
     - echo "PASS"
 
 after_success:
-    - if [ "$TRAVIS_BRANCH" == "master" && "$DAILY_SKIP" == "true" ]; then
-        exit 0;
-      fi
     # Upload wheels to Rackspace container
     - pip install wheelhouse-uploader
     - python -m wheelhouse_uploader upload --local-folder
