@@ -6,6 +6,7 @@ env:
       - UNICODE_WIDTH=32
       - NP_BUILD_DEP="numpy==1.8.2"
       - NP_TEST_DEP="numpy==1.13.1"
+      - CYTHON_BUILD_DEP="cython==0.28.5"
       - SCIPY_BUILD_DEP="scipy"
       - SCIPY_TEST_DEP="scipy"
       - DAILY_COMMIT=master
@@ -14,7 +15,6 @@ env:
       # Following generated with
       # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
       # - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
-    #   - secure: gRemmWg6xE4JQJBZbGppXla6PD31zIgjDwiU+di9wYBEM7AQPF+f1kEaSzfy0V/zPyZ7/emSqphRQ3+9cLg7UYDUNT/ibLLZDRG5UL/1Nxys/4ST4WtKUGEkNbmAZ9taAP6h9qn6pBfqpsiE6OatrTiJvANMhZ2lxfPRMUOM6cxIJ/NuG65ivkudF+JYemdXvNVIhV8u47kajaZrhoelrbb5ZDBp66HQVQKFaBO+tYHS24JhVbahEHM+2LNkkPzZybn5Q6psdAdXtC8OuM5u+GjdBmFsU80c59oNL/ZtLrPehc2CzQCc0woLxlz8cSUdRy+gbKy/lYWSnrOjuKAGUlws/yAwCGQNoCMfPju5PORoBOqY20Bv9+P6EYZAcXDYzIvGYEZaCJaXqk67AwOHOsbSwn1Vnl7GOlGGJYUGVLzj1k6eiM32SkPFYyRwkdXovjPwKwOllS186Y6Sxw0Vovu+WrrXmlbpMkCuqdudW+ZRO3/7nltAcm3Eq1duwSIiXL1LCTZJhOxDYKfqvrLpDidk2QFseU2GOzXrQRb4+uceVEopBcg1v0ySKCEXXK8XJhkeSvNm6REpSh8GK41jXpj1O/wezC01cTCBxzxs3/HaQkNIQLP3tj6EEJT/AfZmlnrFeb4s72yFTgg82268JfiE7kwApD4zYJGuSk2Hdpw=
 
 language: python
 # Default Python version is usually 2.7
@@ -128,7 +128,7 @@ before_install:
         CONTAINER=wheels;
         UPLOAD_ARGS="--no-update-index";
       fi
-    - BUILD_DEPENDS="$NP_BUILD_DEP cython==0.28.5 $SCIPY_BUILD_DEP"
+    - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
     - TEST_DEPENDS="$NP_TEST_DEP pytest $SCIPY_TEST_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
