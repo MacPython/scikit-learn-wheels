@@ -80,10 +80,7 @@ init:
       if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
         $env:CONTAINER = "my-pre-release"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
-        if ($env:DAILY_SKIP -eq "true") {
-          $env:APPVEYOR_SKIP_FINALIZE_ON_EXIT = true
-          Exit-AppveyorBuild
-        }
+        if ($env:DAILY_SKIP -eq "true") { Exit-AppveyorBuild }
       } else {
         $env:CONTAINER = "wheels"
         $env:UPLOAD_ARGS = "--no-update-index"
@@ -142,6 +139,8 @@ on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
+  - ps: >-
+      if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:DAILY_SKIP -eq "true") { exit 0 }
   - python -m wheelhouse_uploader upload
     --no-ssl-check
     --local-folder=dist
