@@ -17,6 +17,7 @@ environment:
     # Make sure we don't download large datasets when running the test on
     # continuous integration platform
     SKLEARN_SKIP_NETWORK_TESTS: 1
+    APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
     # Minimum numpy version
     NP_BUILD_DEP: "1.10.4"
     DAILY_COMMIT: master
@@ -139,8 +140,6 @@ on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
-  - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:DAILY_SKIP -eq "true") { exit 0 }
   - python -m wheelhouse_uploader upload
     --no-ssl-check
     --local-folder=dist
