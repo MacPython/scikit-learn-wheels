@@ -1,21 +1,21 @@
 env:
   global:
-      - REPO_DIR="scikit-learn"
-      - BUILD_COMMIT=0.20.2
-      - PLAT=x86_64
-      - UNICODE_WIDTH=32
-      - NP_BUILD_DEP="numpy==1.8.2"
-      - NP_TEST_DEP="numpy==1.13.1"
-      - CYTHON_BUILD_DEP="cython==0.28.5"
-      - CYTHON_TEST_DEP="cython"
-      - SCIPY_BUILD_DEP="scipy"
-      - SCIPY_TEST_DEP="scipy"
-      - DAILY_COMMIT=master
-      - DAILY_BUILD=false
-      - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
-      # Following generated with
-      # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
-      - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
+    - REPO_DIR="scikit-learn"
+    - BUILD_COMMIT=0.20.2
+    - PLAT=x86_64
+    - UNICODE_WIDTH=32
+    - NP_BUILD_DEP="numpy==1.8.2"
+    - NP_TEST_DEP="numpy==1.13.1"
+    - CYTHON_BUILD_DEP="cython==0.28.5"
+    - CYTHON_TEST_DEP="cython"
+    - SCIPY_BUILD_DEP="scipy"
+    - SCIPY_TEST_DEP="scipy"
+    - DAILY_COMMIT=master
+    - DAILY_BUILD=false
+    - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+    # Following generated with
+    # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
+    - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
 
 language: python
 # Default Python version is usually 2.7
@@ -25,8 +25,8 @@ dist: trusty
 
 matrix:
   exclude:
-      # Exclude the default Python 3.5 build
-      - python: 3.5
+    # Exclude the default Python 3.5 build
+    - python: 3.5
   include:
     - os: linux
       env:
@@ -114,34 +114,34 @@ matrix:
         - DAILY_BUILD=true
 
 before_install:
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then
-        CONTAINER="pre-release";
-        BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
-        if [ "$DAILY_BUILD" == "false" ]; then
-          exit 0;
-        fi
-      else
-        CONTAINER=wheels;
-        UPLOAD_ARGS="--no-update-index";
-      fi
-    - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
-    - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
-    - source multibuild/common_utils.sh
-    - source multibuild/travis_steps.sh
-    - before_install
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    CONTAINER="pre-release";
+    BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+    if [ "$DAILY_BUILD" == "false" ]; then
+    exit 0;
+    fi
+    else
+    CONTAINER=wheels;
+    UPLOAD_ARGS="--no-update-index";
+    fi
+  - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
+  - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
+  - source multibuild/common_utils.sh
+  - source multibuild/travis_steps.sh
+  - before_install
 
 install:
-    # Maybe get and clean and patch source
-    - clean_code $REPO_DIR $BUILD_COMMIT
-    - build_wheel $REPO_DIR $PLAT
+  # Maybe get and clean and patch source
+  - clean_code $REPO_DIR $BUILD_COMMIT
+  - build_wheel $REPO_DIR $PLAT
 
 script:
-    - install_run $PLAT
+  - install_run $PLAT
 
 after_success:
-    # Upload wheels to Rackspace container
-    - pip install wheelhouse-uploader
-    - python -m wheelhouse_uploader upload --local-folder
-          ${TRAVIS_BUILD_DIR}/wheelhouse/
-          $UPLOAD_ARGS
-          $CONTAINER
+  # Upload wheels to Rackspace container
+  - pip install wheelhouse-uploader
+  - python -m wheelhouse_uploader upload --local-folder
+    ${TRAVIS_BUILD_DIR}/wheelhouse/
+    $UPLOAD_ARGS
+    $CONTAINER
