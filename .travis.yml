@@ -112,15 +112,16 @@ matrix:
         - DAILY_BUILD=true
 
 before_install:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  - |
+    if [ "$TRAVIS_BRANCH" == "master" ]; then
         if [ "$DAILY_BUILD" != "true" ]; then
-            exit 0;
+            exit 0
         fi
-        CONTAINER="sklearn-nightly";
-        BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+        CONTAINER="sklearn-nightly"
+        BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT}
     else
-        CONTAINER=wheels;
-        UPLOAD_ARGS="--no-update-index";
+        CONTAINER=wheels
+        UPLOAD_ARGS="--no-update-index"
     fi
   - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
   - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
