@@ -113,10 +113,11 @@ matrix:
 
 before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
+        if [ "$DAILY_BUILD" != "true" ]; then
+            exit 0;
+        fi
         CONTAINER="sklearn-nightly";
         BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
-    if [ "$DAILY_BUILD"!= "true" ]; then
-        exit 0;
     else
         CONTAINER=wheels;
         UPLOAD_ARGS="--no-update-index";
