@@ -113,14 +113,13 @@ matrix:
 
 before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    CONTAINER="pre-release";
-    BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
-    if [ "$DAILY_BUILD" == "false" ]; then
-    exit 0;
-    fi
+        CONTAINER="sklearn-nightly";
+        BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+    if [ "$DAILY_BUILD"!= "true" ]; then
+        exit 0;
     else
-    CONTAINER=wheels;
-    UPLOAD_ARGS="--no-update-index";
+        CONTAINER=wheels;
+        UPLOAD_ARGS="--no-update-index";
     fi
   - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
   - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
@@ -140,6 +139,6 @@ after_success:
   # Upload wheels to Rackspace container
   - pip install wheelhouse-uploader
   - python -m wheelhouse_uploader upload --local-folder
-    ${TRAVIS_BUILD_DIR}/wheelhouse/
-    $UPLOAD_ARGS
-    $CONTAINER
+        ${TRAVIS_BUILD_DIR}/wheelhouse/
+        $UPLOAD_ARGS
+        $CONTAINER
