@@ -4,7 +4,7 @@
 
 environment:
   global:
-    BUILD_COMMIT: 0.20.2
+    BUILD_COMMIT: 0.20.3
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script interpreter
     # See: http://stackoverflow.com/a/13751649/163740
@@ -16,8 +16,11 @@ environment:
     # Make sure we don't download large datasets when running the test on
     # continuous integration platform
     SKLEARN_SKIP_NETWORK_TESTS: 1
+    APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
     # Minimum numpy version
-    NP_BUILD_DEP: "1.11.3"
+    NP_BUILD_DEP: "1.10.4"
+    DAILY_COMMIT: master
+    DAILY_BUILD: "false"
 
   matrix:
     - PYTHON: "C:\\Python35"
@@ -32,22 +35,38 @@ environment:
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "32"
       NP_BUILD_DEP: "1.12.1"
+      DAILY_BUILD: "true"
 
     - PYTHON: "C:\\Python36-x64"
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.12.1"
+      DAILY_BUILD: "true"
 
     - PYTHON: "C:\\Python37"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "32"
       NP_BUILD_DEP: "1.14.5"
+      DAILY_BUILD: "true"
 
     - PYTHON: "C:\\Python37-x64"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.14.5"
+      DAILY_BUILD: "true"
 
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
+  - ps: >-
+      if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
+        $env:CONTAINER = "sklearn-nightly"
+        if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
+        if ($env:DAILY_BUILD -eq "false") { Exit-AppveyorBuild }
+      } else {
+        $env:CONTAINER = "wheels"
+        $env:UPLOAD_ARGS = "--no-update-index"
+      }
 
 install:
   # Install Python (from the official .msi of http://python.org) and pip when
@@ -102,7 +121,11 @@ on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
-  - "python -m wheelhouse_uploader upload --no-update-index --no-ssl-check --local-folder=dist wheels"
+  - python -m wheelhouse_uploader upload
+    --no-ssl-check
+    --local-folder=dist
+    %UPLOAD_ARGS%
+    %CONTAINER%
 
 cache:
   # Use the appveyor cache to avoid re-downloading large archives such
