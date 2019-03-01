@@ -113,7 +113,7 @@ matrix:
 
 before_install:
   - |
-    if [ "$TRAVIS_BRANCH" == "master" ]; then
+    if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then
         if [ "$DAILY_BUILD" != "true" ]; then
             exit 0
         fi
