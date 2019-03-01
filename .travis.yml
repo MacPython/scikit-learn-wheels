@@ -130,6 +130,8 @@ before_install:
   - source multibuild/common_utils.sh
   - source multibuild/travis_steps.sh
   - before_install
+  # OpenMP is not present on osx by default
+  - if [[ $TRAVIS_OS_NAME = "osx" ]]; then enable_openmp; fi
 
 install:
   # Maybe get and clean and patch source
