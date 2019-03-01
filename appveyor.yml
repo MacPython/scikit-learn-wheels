@@ -75,7 +75,7 @@ init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
   - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "master") {
+      if ($env:APPVEYOR_SCHEDULED_BUILD -eq "True") {
         $env:CONTAINER = "sklearn-nightly"
         if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
         if ($env:DAILY_BUILD -eq "false") { Exit-AppveyorBuild }

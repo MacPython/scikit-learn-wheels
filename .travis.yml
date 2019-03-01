@@ -115,7 +115,7 @@ matrix:
 
 before_install:
   - |
-    if [ "$TRAVIS_BRANCH" == "master" ]; then
+    if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then
         if [ "$DAILY_BUILD" != "true" ]; then
             exit 0
         fi
@@ -125,6 +125,7 @@ before_install:
         CONTAINER=wheels
         UPLOAD_ARGS="--no-update-index"
     fi
+  - echo "Building scikit-learn-$BUILD_COMMIT"
   - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
   - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
   - source multibuild/common_utils.sh
