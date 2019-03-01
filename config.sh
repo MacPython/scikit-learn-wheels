@@ -12,3 +12,17 @@ function run_tests {
     python --version
     pytest -l --pyargs sklearn
 }
+
+ function enable_openmp {
+    # Install OpenMP
+    brew install libomp
+    export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
+    export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
+    export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
+    export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
+    export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
+}
+
+function disable_system_openmp {
+    brew uninstall libomp
+}
