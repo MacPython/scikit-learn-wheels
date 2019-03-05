@@ -1,0 +1,88 @@
+parameters:
+  name: ''
+  vmImage: ''
+  matrix: []
+
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  variables:
+    BUILD_COMMIT: '0.20.3'
+    SKLEARN_SKIP_NETWORK_TESTS: '1'
+    NP_BUILD_DEP: '1.10.4'
+    CYTHON_BUILD_DEP: '0.28.5'
+    SCIPY_BUILD_DEP: '1.1.0'
+    DAILY_COMMIT: 'master'
+    DAILY_BUILD: 'false'
+    PYTHON_ARCH: 'x64'
+  strategy:
+    matrix:
+      ${{ insert }}: ${{ parameters.matrix }}
+  steps:
+    - checkout: self
+      submodules: true
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: $(PYTHON_VERSION)
+        architecture: $(PYTHON_ARCH)
+      displayName: Set python version
+    - script: |
+        echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
+        echo Build Reason %BUILD_REASON%
+        python --version
+        python -c "import struct; print(struct.calcsize('P') * 8)"
+        pip --version
+      displayName: Check that we have the expected version and architecture for Python
+    - script: |
+        if "%BUILD_REASON%" == "Schedule" (
+          if NOT "%DAILY_BUILD%" == "true" (
+            exit 0
+          )
+          set BUILD_COMMIT = %DAILY_COMMIT%
+        )
+        pushd scikit-learn
+        git checkout %BUILD_COMMIT%
+        git clean -fxd
+        git reset --hard
+        popd
+      displayName: Checkout commit
+    - script: |
+        if "%BUILD_REASON%" == "Schedule" (
+          if NOT "%DAILY_BUILD%" == "true" (
+            exit 0
+          )
+        )
+        pip install --timeout=60 numpy==%NP_BUILD_DEP%
+        pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
+
+        pushd scikit-learn
+        python setup.py bdist_wheel
+        pip install --pre --no-index --find-links dist/ scikit-learn
+        popd
+
+        mkdir tmp
+        cd tmp
+
+        pip install -U --timeout=60 numpy
+        pytest -rs --pyargs sklearn
+      displayName: Build and Test
+    - script: |
+        if "%BUILD_REASON%" == "Schedule" (
+          if NOT "%DAILY_BUILD%" == "true" (
+            exit 0
+          )
+          set CONTAINER = "sklearn-nightly"
+        ) else (
+          set CONTAINER = "wheels"
+          set UPLOAD_ARGS = "--no-update-index"
+        )
+        pip install --timeout=60 wheelhouse_uploader
+        cd scikit-learn
+        python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist %UPLOAD_ARGS% %CONTAINER%
+      condition: and(succeeded(), not(contains(variables['Build.SourceVersionMessage'], '[no upload]')))
+      env:
+        WHEELHOUSE_UPLOADER_SECRET: $(WHEELHOUSE_UPLOADER_SECRET)
+        WHEELHOUSE_UPLOADER_USERNAME: $(WHEELHOUSE_UPLOADER_USERNAME)
+      displayName: Upload wheel
+
