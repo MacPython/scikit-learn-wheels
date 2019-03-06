@@ -54,8 +54,8 @@ jobs:
         popd
       displayName: Checkout commit
     - bash: |
+        ls "C:\Program Files"
         ls "C:\Program Files (x86)"
-        ls "C:\Program Files\Microsoft SDKs\Windows"
       displayName: See programs
     - script: |
         @echo on
