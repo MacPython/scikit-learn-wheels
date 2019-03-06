@@ -54,8 +54,10 @@ jobs:
         popd
       displayName: Checkout commit
     - bash: |
+        echo "studio"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0"
-        ls "C:\Program Files\Microsoft SDKs"
+        echo "sdks"
+        ls "C:\Program Files\Microsoft SDKs\Common7"
       displayName: See programs
     - script: |
         @echo on
