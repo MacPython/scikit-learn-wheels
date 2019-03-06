@@ -60,6 +60,12 @@ jobs:
             exit 0
           )
         )
+        ECHO %VS130COMNTOOLS%
+        ECHO %VS140COMNTOOLS%
+        ECHO %VS150COMNTOOLS%
+        ECHO %VS160COMNTOOLS%
+        ECHO %VS170COMNTOOLS%
+
         if "%PYTHON_VERSION%" == "3.4.x" (
           set VS100COMNTOOLS=%VS140COMNTOOLS%
         )
