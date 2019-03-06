@@ -64,9 +64,7 @@ jobs:
           )
         )
 
-        if "%PYTHON_VERSION%" == "3.4.x" (
-          set VS100COMNTOOLS="%VS140COMNTOOLS%"
-        )
+        echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
