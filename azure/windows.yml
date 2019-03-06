@@ -60,11 +60,8 @@ jobs:
             exit 0
           )
         )
-        if "%PYTHON_VERSION" == "2.7.x" (
-          SET VS90COMNTOOLS=%VS170COMNTOOLS%
-        )
         if "%PYTHON_VERSION" == "3.4.x" (
-          SET VS100COMNTOOLS=%VS170COMNTOOLS%
+          set VS100COMNTOOLS=%VS140COMNTOOLS%
         )
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
