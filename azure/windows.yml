@@ -33,6 +33,12 @@ jobs:
         Start-Process "VCForPython27.msi" /qn -Wait
       displayName: 'Install VC 9.0 only for Python 2.7'
       condition: eq(variables['PYTHON_VERSION'], '2.7.x')
+    - powershell: |
+        $wc = New-Object net.webclient
+        $wc.Downloadfile("https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe", "vcredist_x86.msi")
+        Start-Process "vcredist_x86.msi" /qn -Wait
+      displayName: 'Install Microsoft Visual C++ 2010 Redistributable Package only for Python 3.4 (x86)'
+      condition: and(eq(variables['PYTHON_VERSION'], '3.4.x'),eq(variables['PYTHON_ARCH'], 'x86'))
     - script: |
         echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
         echo Build Reason %BUILD_REASON%
@@ -60,12 +66,6 @@ jobs:
             exit 0
           )
         )
-
-        set A="%VS130COMNTOOLS%"
-        set A="%VS140COMNTOOLS%"
-        set A="%VS150COMNTOOLS%"
-        set A="%VS160COMNTOOLS%"
-        set A="%VS170COMNTOOLS%"
 
         if "%PYTHON_VERSION%" == "3.4.x" (
           set VS100COMNTOOLS="%VS140COMNTOOLS%"
