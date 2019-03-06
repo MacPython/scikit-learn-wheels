@@ -61,6 +61,12 @@ jobs:
           )
         )
 
+        set A="%VS130COMNTOOLS%"
+        set A="%VS140COMNTOOLS%"
+        set A="%VS150COMNTOOLS%"
+        set A="%VS160COMNTOOLS%"
+        set A="%VS170COMNTOOLS%"
+
         if "%PYTHON_VERSION%" == "3.4.x" (
           set VS100COMNTOOLS="%VS140COMNTOOLS%"
         )
