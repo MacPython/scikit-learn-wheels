@@ -81,8 +81,8 @@ jobs:
       # py_2.7_32:
       #   PYTHON_VERSION: '2.7.x'
       #   PYTHON_ARCH: 'x86'
-      py_2.7_64:
-        PYTHON_VERSION: '2.7.x'
+      # py_2.7_64:
+      #   PYTHON_VERSION: '2.7.x'
       # py_3.4_32:
       #   PYTHON_VERSION: '3.4.x'
       #   PYTHON_ARCH: 'x86'

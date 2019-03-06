@@ -60,7 +60,7 @@ jobs:
             exit 0
           )
         )
-        if "%PYTHON_VERSION" == "3.4.x" (
+        if "%PYTHON_VERSION%" == "3.4.x" (
           set VS100COMNTOOLS=%VS140COMNTOOLS%
         )
 
