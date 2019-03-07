@@ -54,17 +54,12 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        env
-        echo "-----------2017\Enterprise"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
-        echo "-----------2017\Enterprise\Common7\Tools"
+        set -ex
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools"
-        echo "-----------2017\Enterprise\Microsoft Azure Tools\Visual Studio 15.0"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Microsoft Azure Tools\Visual Studio 15.0"
-        echo "-----------2017\Enterprise\VSSDK\VisualStudioIntegration\Common"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Common"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Tools\Bin"
-        which cl.exe
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\"
       displayName: See programs
     # - script: |
     #     @echo on
