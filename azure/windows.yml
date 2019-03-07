@@ -53,9 +53,11 @@ jobs:
     #     git reset --hard
     #     popd
     #   displayName: Checkout commit
-    # - bash: |
-    #     cd "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
-    #   displayName: See programs
+    - bash: |
+        cd "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
+        cat "vsvars32.bat"
+        cp "vsvars32.bat" "vcvarsall.bat"
+      displayName: See programs
     - script: |
         @echo on
         if "%BUILD_REASON%" == "Schedule" (
@@ -63,10 +65,8 @@ jobs:
             exit 0
           )
         )
-        "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
 
-        set DISTUTILS_USE_SDK=1'
-        set MSSdk=1
+        set VS100COMNTOOLS="%VS140COMNTOOLS%"
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
