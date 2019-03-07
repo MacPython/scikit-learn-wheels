@@ -54,14 +54,16 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        echo "WATCH 2017\Enterprise"
+        echo "-----------2017\Enterprise"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
-        echo "WATCH Shared"
+        echo "-----------2017\Enterprise\VC"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC"
+        echo "-----------2017\Enterprise\VSSDK"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK"
+        echo "-----------Shared"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared"
-        echo "WATCH Shared\Common"
+        echo "-----------Shared\Common"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared\Common"
-        echo "WATCH Shared\Packages"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared\Packages"
         which cl.exe
       displayName: See programs
     # - script: |
