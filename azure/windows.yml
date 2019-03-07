@@ -57,9 +57,9 @@ jobs:
         echo "studio"
         echo $VS140COMNTOOLS
 
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\sdks"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
         echo "sdks"
-        ls "C:\Program Files\Microsoft SDKs\Azure"
+        ls "C:\Program Files\Microsoft SDKs\Azure\sdks"
       displayName: See programs
     # - script: |
     #     @echo on
