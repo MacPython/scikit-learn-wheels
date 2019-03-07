@@ -54,6 +54,7 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
+        cd "C:\"
         find . -name "cl.exe"
       displayName: See programs
     # - script: |
