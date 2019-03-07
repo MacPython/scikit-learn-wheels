@@ -54,11 +54,10 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        echo $VS140COMNTOOLS
-        echo "WOW studio 10.0"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
-        echo "WOW studio 14.0"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
+        pushd "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
+        ls
+        cat "vsvars32.bat"
+        which msvc
       displayName: See programs
     # - script: |
     #     @echo on
