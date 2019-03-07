@@ -53,6 +53,12 @@ jobs:
         git reset --hard
         popd
       displayName: Checkout commit
+    - bash: |
+        echo "studio"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0"
+        echo "sdks"
+        ls "C:\Program Files\Microsoft SDKs"
+      displayName: See programs
     - script: |
         @echo on
         if "%BUILD_REASON%" == "Schedule" (
@@ -60,9 +66,6 @@ jobs:
             exit 0
           )
         )
-
-        set DISTUTILS_USE_SDK=1
-        set MSSdk=1
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
