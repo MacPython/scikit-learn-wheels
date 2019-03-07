@@ -20,8 +20,8 @@ jobs:
     matrix:
       ${{ insert }}: ${{ parameters.matrix }}
   steps:
-    - checkout: self
-      submodules: true
+    # - checkout: self
+    #   submodules: true
     - task: UsePythonVersion@0
       inputs:
         versionSpec: $(PYTHON_VERSION)
@@ -54,8 +54,8 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        echo "S 10"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0"
+        echo "S 10 coomon7"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
         echo "COMMON7"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7"
         echo "TOOLS"
