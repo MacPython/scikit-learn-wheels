@@ -55,12 +55,11 @@ jobs:
     #   displayName: Checkout commit
     - bash: |
         set -ex
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Microsoft Azure Tools\Visual Studio 15.0"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Common"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Tools\Bin"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
       displayName: See programs
     # - script: |
     #     @echo on
