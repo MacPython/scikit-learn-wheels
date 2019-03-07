@@ -57,7 +57,7 @@ jobs:
         echo "studio"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0"
         echo "sdks"
-        ls "C:\Program Files\Microsoft SDKs\Common7"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7
       displayName: See programs
     - script: |
         @echo on
