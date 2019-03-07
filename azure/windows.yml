@@ -61,6 +61,12 @@ jobs:
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Tools\Bin"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
       displayName: See programs
+    - script: |
+        CALL "%VS140COMNTOOLS%/vsvars32.bat"
+        SET
+        cl.exe
+
+
     # - script: |
     #     @echo on
     #     if "%BUILD_REASON%" == "Schedule" (
