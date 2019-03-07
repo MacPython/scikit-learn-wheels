@@ -27,32 +27,32 @@ jobs:
         versionSpec: $(PYTHON_VERSION)
         architecture: $(PYTHON_ARCH)
       displayName: Set python version
-    - powershell: |
-        $wc = New-Object net.webclient
-        $wc.Downloadfile("https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi", "VCForPython27.msi")
-        Start-Process "VCForPython27.msi" /qn -Wait
-      displayName: 'Install VC 9.0 only for Python 2.7'
-      condition: eq(variables['PYTHON_VERSION'], '2.7.x')
-    - script: |
-        echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
-        echo Build Reason %BUILD_REASON%
-        python --version
-        python -c "import struct; print(struct.calcsize('P') * 8)"
-        pip --version
-      displayName: Check that we have the expected version and architecture for Python
-    - script: |
-        if "%BUILD_REASON%" == "Schedule" (
-          if NOT "%DAILY_BUILD%" == "true" (
-            exit 0
-          )
-          set BUILD_COMMIT=%DAILY_COMMIT%
-        )
-        pushd scikit-learn
-        git checkout %BUILD_COMMIT%
-        git clean -fxd
-        git reset --hard
-        popd
-      displayName: Checkout commit
+    # - powershell: |
+    #     $wc = New-Object net.webclient
+    #     $wc.Downloadfile("https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi", "VCForPython27.msi")
+    #     Start-Process "VCForPython27.msi" /qn -Wait
+    #   displayName: 'Install VC 9.0 only for Python 2.7'
+    #   condition: eq(variables['PYTHON_VERSION'], '2.7.x')
+    # - script: |
+    #     echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
+    #     echo Build Reason %BUILD_REASON%
+    #     python --version
+    #     python -c "import struct; print(struct.calcsize('P') * 8)"
+    #     pip --version
+    #   displayName: Check that we have the expected version and architecture for Python
+    # - script: |
+    #     if "%BUILD_REASON%" == "Schedule" (
+    #       if NOT "%DAILY_BUILD%" == "true" (
+    #         exit 0
+    #       )
+    #       set BUILD_COMMIT=%DAILY_COMMIT%
+    #     )
+    #     pushd scikit-learn
+    #     git checkout %BUILD_COMMIT%
+    #     git clean -fxd
+    #     git reset --hard
+    #     popd
+    #   displayName: Checkout commit
     - bash: |
         echo "studio"
         SET HELLO="%VS140COMNTOOLS%"
