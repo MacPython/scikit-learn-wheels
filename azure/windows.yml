@@ -54,12 +54,11 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        echo "studio"
         echo $VS140COMNTOOLS
-
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
-        echo "sdks"
-        ls "C:\Program Files\Microsoft SDKs\Azure\sdks"
+        echo "studio"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\sdks"
+        echo "Azure"
+        ls "C:\Program Files\Microsoft SDKs\Azure"
       displayName: See programs
     # - script: |
     #     @echo on
