@@ -54,12 +54,10 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        echo "S 10 common7\IDE"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio"
-        echo "COMMON7"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE"
-        echo "TOOLS"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
+        echo "WATCH 2017"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017"
+        echo "WATCH Shared"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared"
         which cl.exe
       displayName: See programs
     # - script: |
