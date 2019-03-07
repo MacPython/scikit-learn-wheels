@@ -20,8 +20,8 @@ jobs:
     matrix:
       ${{ insert }}: ${{ parameters.matrix }}
   steps:
-    - checkout: self
-      submodules: true
+    # - checkout: self
+    #   submodules: true
     - task: UsePythonVersion@0
       inputs:
         versionSpec: $(PYTHON_VERSION)
@@ -56,7 +56,7 @@ jobs:
     - bash: |
         echo $VS140COMNTOOLS
         echo "studio"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\sdks"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
         echo "Azure"
         ls "C:\Program Files\Microsoft SDKs\Azure"
       displayName: See programs
