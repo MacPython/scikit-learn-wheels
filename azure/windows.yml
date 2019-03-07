@@ -54,8 +54,17 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        cd "C:\Program Files (x86)\Microsoft Visual Studio"
-        find . -name "cl.exe"
+        echo "-----------2017\Enterprise"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
+        echo "-----------2017\Enterprise\Common7\Tools"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools"
+        echo "-----------2017\Enterprise\Microsoft Azure Tools\Visual Studio 15.0"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Microsoft Azure Tools\Visual Studio 15.0"
+        echo "-----------2017\Enterprise\VSSDK\VisualStudioIntegration\Common"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Common"
+        echo "-----------2017\Enterprise\VSSDK\VisualStudioIntegration\Tools"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Tools"
+        which cl.exe
       displayName: See programs
     # - script: |
     #     @echo on
