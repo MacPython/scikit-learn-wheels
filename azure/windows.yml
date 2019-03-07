@@ -60,7 +60,6 @@ jobs:
         ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE"
         echo "TOOLS"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
-
         which cl.exe
       displayName: See programs
     # - script: |
