@@ -56,14 +56,16 @@ jobs:
     - bash: |
         echo "-----------2017\Enterprise"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
-        echo "-----------2017\Enterprise\VC"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC"
+        echo "-----------2017\Enterprise\Common7"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7"
+        echo "-----------2017\Enterprise\SDK"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK"
+        echo "-----------2017\Enterprise\Microsoft Azure Tools"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Microsoft Azure Tools"
         echo "-----------2017\Enterprise\VSSDK"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK"
-        echo "-----------Shared"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared"
-        echo "-----------Shared\Common"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\Shared\Common"
+        echo "-----------2017\Enterprise\VSSDK\VisualStudioIntegration"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration"
         which cl.exe
       displayName: See programs
     # - script: |
