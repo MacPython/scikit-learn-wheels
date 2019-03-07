@@ -57,7 +57,7 @@ jobs:
         echo "studio"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0"
         echo "sdks"
-        ls "C:\Program Files\Microsoft SDKs"
+        ls "C:\Program Files\Microsoft SDKs\Azure"
       displayName: See programs
     - script: |
         @echo on
