@@ -54,9 +54,7 @@ jobs:
     #     popd
     #   displayName: Checkout commit
     - bash: |
-        cd "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
-        cp "vsvars32.bat" "vcvarsall.bat"
-        ls
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools"
       displayName: See programs
     - script: |
         @echo on
