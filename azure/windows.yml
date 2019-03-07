@@ -61,11 +61,12 @@ jobs:
           )
         )
 
-        set VS100COMNTOOLS="%VS140COMNTOOLS%"
-        CALL "%VS140COMNTOOLS%/vsvars32.bat"
+        if "%PYTHON_VERSION%" == "3.4.x" (
+          CALL "%VS140COMNTOOLS%/vsvars32.bat"
 
-        set DISTUTILS_USE_SDK=1
-        set MSSdk=1
+          set DISTUTILS_USE_SDK=1
+          set MSSdk=1
+        )
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
@@ -79,7 +80,7 @@ jobs:
         cd tmp
 
         pip install -U --timeout=60 numpy
-        @REM pytest -rs --pyargs sklearn
+        pytest -rs --pyargs sklearn
       displayName: Build and Test
     - script: |
         @echo on
