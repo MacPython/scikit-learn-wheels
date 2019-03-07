@@ -55,9 +55,9 @@ jobs:
     #   displayName: Checkout commit
     - bash: |
         echo "studio"
-        SET HELLO="%VS140COMNTOOLS%"
+        echo $VS140COMNTOOLS
 
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\sdks"
         echo "sdks"
         ls "C:\Program Files\Microsoft SDKs\Azure"
       displayName: See programs
