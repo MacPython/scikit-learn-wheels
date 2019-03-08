@@ -41,20 +41,22 @@ jobs:
         pip --version
       displayName: Check that we have the expected version and architecture for Python
     - script: |
+        @echo on
+
         if "%BUILD_REASON%" == "Schedule" (
           if NOT "%DAILY_BUILD%" == "true" (
             exit 0
           )
           set BUILD_COMMIT=%DAILY_COMMIT%
         )
-        pushd scikit-learn
+        cd scikit-learn
         git checkout %BUILD_COMMIT%
         git clean -fxd
         git reset --hard
-        popd
       displayName: Checkout commit
     - script: |
         @echo on
+
         if "%BUILD_REASON%" == "Schedule" (
           if NOT "%DAILY_BUILD%" == "true" (
             exit 0
@@ -71,19 +73,22 @@ jobs:
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
 
-        pushd scikit-learn
-        python setup.py bdist_wheel
-        pip install --pre --no-index --find-links dist/ scikit-learn || exit 1
-        popd
+        cd scikit-learn
+        python setup.py bdist_wheel || exit 1
+        pip install --pre --no-index --find-links dist/ scikit-learn
+      displayName: Build and install
+    - script: |
+        @echo on
 
         mkdir tmp
         cd tmp
 
         pip install -U --timeout=60 numpy
         pytest -rs --pyargs sklearn
-      displayName: Build and Test
+      displayName: Run tests
     - script: |
         @echo on
+
         if "%BUILD_REASON%" == "Schedule" (
           if NOT "%DAILY_BUILD%" == "true" (
             exit 0
@@ -93,6 +98,7 @@ jobs:
           set CONTAINER="wheels"
           set UPLOAD_ARGS="--no-update-index"
         )
+
         pip install --timeout=60 wheelhouse_uploader
         cd scikit-learn
         python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist %UPLOAD_ARGS% %CONTAINER%
