@@ -64,7 +64,11 @@ jobs:
         )
 
         if "%PYTHON_VERSION%" == "3.4.x" (
-          CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" "%PYTHON_ARCH%"
+          if "%PYTHON_ARCH%" == "x64" (
+            CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+          ) else (
+            CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+          )
 
           set DISTUTILS_USE_SDK=1
           set MSSdk=1
