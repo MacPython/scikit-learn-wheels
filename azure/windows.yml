@@ -73,19 +73,17 @@ jobs:
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
         pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
 
-        cd scikit-learn
+        pushd scikit-learn
         python setup.py bdist_wheel || exit 1
         pip install --pre --no-index --find-links dist/ scikit-learn
-      displayName: Build and install
-    - script: |
-        @echo on
+        popd
 
         mkdir tmp
         cd tmp
 
         pip install -U --timeout=60 numpy
         pytest -rs --pyargs sklearn
-      displayName: Run tests
+      displayName: Build, install, and test
     - script: |
         @echo on
 
