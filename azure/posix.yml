@@ -25,74 +25,72 @@ jobs:
       ${{ insert }}: ${{ parameters.matrix }}
 
   steps:
-    # - checkout: self
-    #   submodules: true
+    - checkout: self
+      submodules: true
     - task: UsePythonVersion@0
       inputs:
         versionSpec: $(MB_PYTHON_VERSION)
       displayName: Set python version
-    - bash: |
-        ls "C:\Program Files"
-    # - script: |
-    #     set -e
+    - script: |
+        set -e
 
-    #     if [ "$BUILD_REASON" == "Schedule" ]; then
-    #       if [ "$DAILY_BUILD" != "true" ]; then
-    #         exit 0
-    #       fi
-    #       BUILD_COMMIT=$DAILY_COMMIT
-    #     fi
-    #     echo "Building scikit-learn-$BUILD_COMMIT"
+        if [ "$BUILD_REASON" == "Schedule" ]; then
+          if [ "$DAILY_BUILD" != "true" ]; then
+            exit 0
+          fi
+          BUILD_COMMIT=$DAILY_COMMIT
+        fi
+        echo "Building scikit-learn-$BUILD_COMMIT"
 
-    #     pip install virtualenv
-    #     BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
-    #     TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
+        pip install virtualenv
+        BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
+        TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
 
-    #     if [ `uname` == 'Darwin' ]; then
-    #       TRAVIS_OS_NAME='osx'
-    #     else
-    #       TRAVIS_OS_NAME='linux'
-    #     fi
+        if [ `uname` == 'Darwin' ]; then
+          TRAVIS_OS_NAME='osx'
+        else
+          TRAVIS_OS_NAME='linux'
+        fi
 
-    #     source multibuild/common_utils.sh
-    #     source multibuild/travis_steps.sh
-    #     before_install
+        source multibuild/common_utils.sh
+        source multibuild/travis_steps.sh
+        before_install
 
-    #     # OpenMP is not present on osx by default
-    #     if [ $TRAVIS_OS_NAME == "osx" ]; then
-    #       enable_openmp
-    #     fi
+        # OpenMP is not present on osx by default
+        if [ $TRAVIS_OS_NAME == "osx" ]; then
+          enable_openmp
+        fi
 
-    #     clean_code $REPO_DIR $BUILD_COMMIT
-    #     build_wheel $REPO_DIR $PLAT
+        clean_code $REPO_DIR $BUILD_COMMIT
+        build_wheel $REPO_DIR $PLAT
 
-    #     if [ $TRAVIS_OS_NAME == "osx" ]; then
-    #       disable_system_openmp
-    #     fi
+        if [ $TRAVIS_OS_NAME == "osx" ]; then
+          disable_system_openmp
+        fi
 
-    #     install_run $PLAT
-    #   displayName: Build, install, and test
-    # - script: |
-    #     set -e
+        install_run $PLAT
+      displayName: Build, install, and test
+    - script: |
+        set -e
 
-    #     if [ "$BUILD_REASON" == "Schedule" ]; then
-    #       if [ "$DAILY_BUILD" != "true" ]; then
-    #         exit 0
-    #       fi
-    #       CONTAINER="sklearn-nightly"
-    #       BUILD_COMMIT="$DAILY_COMMIT"
-    #     else
-    #       CONTAINER="wheels"
-    #       UPLOAD_ARGS="--no-update-index"
-    #     fi
-    #     pip install wheelhouse-uploader
-    #     python -m wheelhouse_uploader upload --local-folder \
-    #       $BUILD_REPOSITORY_LOCALPATH/wheelhouse/ \
-    #       $UPLOAD_ARGS \
-    #       $CONTAINER
-    #   condition: and(succeeded(), not(contains(variables['Build.SourceVersionMessage'], '[no upload]')))
-    #   env:
-    #     WHEELHOUSE_UPLOADER_SECRET: $(WHEELHOUSE_UPLOADER_SECRET)
-    #     WHEELHOUSE_UPLOADER_USERNAME: $(WHEELHOUSE_UPLOADER_USERNAME)
-    #   displayName: Upload wheel
+        if [ "$BUILD_REASON" == "Schedule" ]; then
+          if [ "$DAILY_BUILD" != "true" ]; then
+            exit 0
+          fi
+          CONTAINER="sklearn-nightly"
+          BUILD_COMMIT="$DAILY_COMMIT"
+        else
+          CONTAINER="wheels"
+          UPLOAD_ARGS="--no-update-index"
+        fi
+        pip install wheelhouse-uploader
+        python -m wheelhouse_uploader upload --local-folder \
+          $BUILD_REPOSITORY_LOCALPATH/wheelhouse/ \
+          $UPLOAD_ARGS \
+          $CONTAINER
+      condition: and(succeeded(), not(contains(variables['Build.SourceVersionMessage'], '[no upload]')))
+      env:
+        WHEELHOUSE_UPLOADER_SECRET: $(WHEELHOUSE_UPLOADER_SECRET)
+        WHEELHOUSE_UPLOADER_USERNAME: $(WHEELHOUSE_UPLOADER_USERNAME)
+      displayName: Upload wheel
 
