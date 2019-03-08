@@ -32,6 +32,8 @@ jobs:
         versionSpec: $(MB_PYTHON_VERSION)
       displayName: Set python version
     - script: |
+        set -e
+
         if [ "$BUILD_REASON" == "Schedule" ]; then
           if [ "$DAILY_BUILD" != "true" ]; then
             exit 0
@@ -67,8 +69,10 @@ jobs:
         fi
 
         install_run $PLAT
-      displayName: Build and Test
+      displayName: Build, install, and test
     - script: |
+        set -e
+
         if [ "$BUILD_REASON" == "Schedule" ]; then
           if [ "$DAILY_BUILD" != "true" ]; then
             exit 0
