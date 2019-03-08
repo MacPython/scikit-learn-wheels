@@ -1,77 +1,77 @@
 jobs:
-# - template: azure/posix.yml
-#   parameters:
-#     name: linux
-#     vmImage: ubuntu-16.04
-#     matrix:
-#       py_2.7_64_uni_32:
-#         MB_PYTHON_VERSION: '2.7'
-#       py_2.7_64_uni_16:
-#         MB_PYTHON_VERSION: '2.7'
-#         UNICODE_WIDTH: '16'
-#       py_2.7_32_uni_32:
-#         MB_PYTHON_VERSION: '2.7'
-#         PLAT: 'i686'
-#       py_2.7_32_uni_16:
-#         MB_PYTHON_VERSION: '2.7'
-#         PLAT: 'i686'
-#         UNICODE_WIDTH: '16'
-#       py_3.4_64:
-#         MB_PYTHON_VERSION: '3.4'
-#         NP_BUILD_DEP: 'numpy==1.9.3'
-#       py_3.4_32:
-#         MB_PYTHON_VERSION: '3.4'
-#         PLAT: 'i686'
-#         NP_BUILD_DEP: 'numpy==1.9.3'
-#       py_3.5_64:
-#         MB_PYTHON_VERSION: '3.5'
-#         NP_BUILD_DEP: 'numpy==1.9.3'
-#       py_3.5_32:
-#         MB_PYTHON_VERSION: '3.5'
-#         PLAT: 'i686'
-#         NP_BUILD_DEP: 'numpy==1.9.3'
-#       py_3.6_64:
-#         MB_PYTHON_VERSION: '3.6'
-#         NP_BUILD_DEP: 'numpy==1.11.3'
-#         DAILY_BUILD: 'true'
-#       py_3.6_32:
-#         MB_PYTHON_VERSION: '3.6'
-#         PLAT: 'i686'
-#         NP_BUILD_DEP: 'numpy==1.11.3'
-#         DAILY_BUILD: 'true'
-#       py_3.7_64:
-#         MB_PYTHON_VERSION: '3.7'
-#         NP_BUILD_DEP: 'numpy==1.14.5'
-#         NP_TEST_DEP: 'numpy==1.14.5'
-#         DAILY_BUILD: 'true'
-#       py_3.7_32:
-#         MB_PYTHON_VERSION: '3.7'
-#         PLAT: 'i686'
-#         NP_BUILD_DEP: 'numpy==1.14.5'
-#         NP_TEST_DEP: 'numpy==1.14.5'
-#         DAILY_BUILD: 'true'
+- template: azure/posix.yml
+  parameters:
+    name: linux
+    vmImage: ubuntu-16.04
+    matrix:
+      py_2.7_64_uni_32:
+        MB_PYTHON_VERSION: '2.7'
+      py_2.7_64_uni_16:
+        MB_PYTHON_VERSION: '2.7'
+        UNICODE_WIDTH: '16'
+      py_2.7_32_uni_32:
+        MB_PYTHON_VERSION: '2.7'
+        PLAT: 'i686'
+      py_2.7_32_uni_16:
+        MB_PYTHON_VERSION: '2.7'
+        PLAT: 'i686'
+        UNICODE_WIDTH: '16'
+      py_3.4_64:
+        MB_PYTHON_VERSION: '3.4'
+        NP_BUILD_DEP: 'numpy==1.9.3'
+      py_3.4_32:
+        MB_PYTHON_VERSION: '3.4'
+        PLAT: 'i686'
+        NP_BUILD_DEP: 'numpy==1.9.3'
+      py_3.5_64:
+        MB_PYTHON_VERSION: '3.5'
+        NP_BUILD_DEP: 'numpy==1.9.3'
+      py_3.5_32:
+        MB_PYTHON_VERSION: '3.5'
+        PLAT: 'i686'
+        NP_BUILD_DEP: 'numpy==1.9.3'
+      py_3.6_64:
+        MB_PYTHON_VERSION: '3.6'
+        NP_BUILD_DEP: 'numpy==1.11.3'
+        DAILY_BUILD: 'true'
+      py_3.6_32:
+        MB_PYTHON_VERSION: '3.6'
+        PLAT: 'i686'
+        NP_BUILD_DEP: 'numpy==1.11.3'
+        DAILY_BUILD: 'true'
+      py_3.7_64:
+        MB_PYTHON_VERSION: '3.7'
+        NP_BUILD_DEP: 'numpy==1.14.5'
+        NP_TEST_DEP: 'numpy==1.14.5'
+        DAILY_BUILD: 'true'
+      py_3.7_32:
+        MB_PYTHON_VERSION: '3.7'
+        PLAT: 'i686'
+        NP_BUILD_DEP: 'numpy==1.14.5'
+        NP_TEST_DEP: 'numpy==1.14.5'
+        DAILY_BUILD: 'true'
 
-# - template: azure/posix.yml
-#   parameters:
-#     name: macOS
-#     vmImage: xcode9-macos10.13
-#     matrix:
-#       py_2.7_64:
-#         MB_PYTHON_VERSION: '2.7'
-#       py_3.4_64:
-#         MB_PYTHON_VERSION: '3.4'
-#       py_3.5_64:
-#         MB_PYTHON_VERSION: '3.5'
-#         NP_BUILD_DEP: 'numpy==1.9.3'
-#       py_3.6_64:
-#         MB_PYTHON_VERSION: '3.6'
-#         NP_BUILD_DEP: 'numpy==1.11.3'
-#         DAILY_BUILD: 'true'
-#       py_3.7_64:
-#         MB_PYTHON_VERSION: '3.7'
-#         NP_BUILD_DEP: 'numpy==1.14.5'
-#         NP_TEST_DEP: 'numpy==1.14.5'
-#         DAILY_BUILD: 'true'
+- template: azure/posix.yml
+  parameters:
+    name: macOS
+    vmImage: xcode9-macos10.13
+    matrix:
+      py_2.7_64:
+        MB_PYTHON_VERSION: '2.7'
+      py_3.4_64:
+        MB_PYTHON_VERSION: '3.4'
+      py_3.5_64:
+        MB_PYTHON_VERSION: '3.5'
+        NP_BUILD_DEP: 'numpy==1.9.3'
+      py_3.6_64:
+        MB_PYTHON_VERSION: '3.6'
+        NP_BUILD_DEP: 'numpy==1.11.3'
+        DAILY_BUILD: 'true'
+      py_3.7_64:
+        MB_PYTHON_VERSION: '3.7'
+        NP_BUILD_DEP: 'numpy==1.14.5'
+        NP_TEST_DEP: 'numpy==1.14.5'
+        DAILY_BUILD: 'true'
 
 
 - template: azure/windows.yml
@@ -79,36 +79,36 @@ jobs:
     name: windows
     vmImage: vs2017-win2016
     matrix:
-      # py_2.7_32:
-      #   PYTHON_VERSION: '2.7.x'
-      #   PYTHON_ARCH: 'x86'
-      # py_2.7_64:
-      #   PYTHON_VERSION: '2.7.x'
+      py_2.7_32:
+        PYTHON_VERSION: '2.7.x'
+        PYTHON_ARCH: 'x86'
+      py_2.7_64:
+        PYTHON_VERSION: '2.7.x'
       py_3.4_32:
         PYTHON_VERSION: '3.4.x'
         PYTHON_ARCH: 'x86'
       py_3.4_64:
         PYTHON_VERSION: '3.4.x'
-      # py_3.5_32:
-      #   PYTHON_VERSION: '3.5.x'
-      #   PYTHON_ARCH: 'x86'
-      # py_3.5_64:
-      #   PYTHON_VERSION: '3.5.x'
-      # py_3.6_32:
-      #   PYTHON_VERSION: '3.6.x'
-      #   PYTHON_ARCH: 'x86'
-      #   NP_BUILD_DEP: '1.12.1'
-      #   DAILY_BUILD: 'true'
-      # py_3.6_64:
-      #   PYTHON_VERSION: '3.6.x'
-      #   NP_BUILD_DEP: '1.12.1'
-      #   DAILY_BUILD: 'true'
-      # py_3.7_32:
-      #   PYTHON_VERSION: '3.7.x'
-      #   PYTHON_ARCH: 'x86'
-      #   NP_BUILD_DEP: '1.14.5'
-      #   DAILY_BUILD: 'true'
-      # py_3.7_64:
-      #   PYTHON_VERSION: '3.7.x'
-      #   NP_BUILD_DEP: '1.14.5'
-      #   DAILY_BUILD: 'true'
+      py_3.5_32:
+        PYTHON_VERSION: '3.5.x'
+        PYTHON_ARCH: 'x86'
+      py_3.5_64:
+        PYTHON_VERSION: '3.5.x'
+      py_3.6_32:
+        PYTHON_VERSION: '3.6.x'
+        PYTHON_ARCH: 'x86'
+        NP_BUILD_DEP: '1.12.1'
+        DAILY_BUILD: 'true'
+      py_3.6_64:
+        PYTHON_VERSION: '3.6.x'
+        NP_BUILD_DEP: '1.12.1'
+        DAILY_BUILD: 'true'
+      py_3.7_32:
+        PYTHON_VERSION: '3.7.x'
+        PYTHON_ARCH: 'x86'
+        NP_BUILD_DEP: '1.14.5'
+        DAILY_BUILD: 'true'
+      py_3.7_64:
+        PYTHON_VERSION: '3.7.x'
+        NP_BUILD_DEP: '1.14.5'
+        DAILY_BUILD: 'true'
