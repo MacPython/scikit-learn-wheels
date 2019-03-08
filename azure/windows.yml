@@ -28,8 +28,8 @@ jobs:
         architecture: $(PYTHON_ARCH)
       displayName: Set python version
     - bash: |
-        ls "C:\Program Files\MSBuild\Microsoft"
         ls "$VS140COMNTOOLS"
+        cat "$VS140COMNTOOLS/VCVarsQueryRegistry.bat"
     # - powershell: |
     #     $wc = New-Object net.webclient
     #     $wc.Downloadfile("https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi", "VCForPython27.msi")
