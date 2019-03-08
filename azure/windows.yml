@@ -30,7 +30,7 @@ jobs:
     - bash: |
         set -ex
         ls "$VS140COMNTOOLS"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0"
+        ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC"
         ls "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7"
     # - powershell: |
     #     $wc = New-Object net.webclient
