@@ -5,7 +5,7 @@ env:
     - PLAT=x86_64
     - UNICODE_WIDTH=32
     - NP_BUILD_DEP="numpy==1.11.0"
-    - NP_TEST_DEP="numpy==1.16.1"
+    - NP_TEST_DEP="numpy"
     - CYTHON_BUILD_DEP="cython==0.29.7"
     - CYTHON_TEST_DEP="cython"
     - SCIPY_BUILD_DEP="scipy==0.17.0"
