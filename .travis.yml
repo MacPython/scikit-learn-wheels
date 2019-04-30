@@ -45,7 +45,7 @@ matrix:
       language: generic
       env:
         - MB_PYTHON_VERSION=3.5
-        - SCIPY_BUILD_DEP==0.17.0
+        - SCIPY_BUILD_DEP scipy==0.17.0
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
