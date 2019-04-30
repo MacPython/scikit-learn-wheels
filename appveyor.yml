@@ -46,13 +46,13 @@ environment:
     - PYTHON: "C:\\Python37"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "32"
-      NP_BUILD_DEP: "1.16.0"
+      NP_BUILD_DEP: "1.14.5"
       DAILY_BUILD: "true"
 
     - PYTHON: "C:\\Python37-x64"
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "64"
-      NP_BUILD_DEP: "1.16.0"
+      NP_BUILD_DEP: "1.14.5"
       DAILY_BUILD: "true"
 
 init:
