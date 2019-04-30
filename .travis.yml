@@ -8,7 +8,7 @@ env:
     - NP_TEST_DEP="numpy"
     - CYTHON_BUILD_DEP="cython==0.29.7"
     - CYTHON_TEST_DEP="cython"
-    - SCIPY_BUILD_DEP="scipy==0.17.0"
+    - SCIPY_BUILD_DEP="scipy"
     - SCIPY_TEST_DEP="scipy"
     - JOBLIB_BUILD_DEP="joblib==0.11"
     - JOBLIB_TEST_DEP="joblib"
