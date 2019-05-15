@@ -1,49 +1,4 @@
 jobs:
-- template: azure/posix.yml
-  parameters:
-    name: linux
-    vmImage: ubuntu-16.04
-    matrix:
-      py_3.5_64:
-        MB_PYTHON_VERSION: '3.5'
-      py_3.5_32:
-        MB_PYTHON_VERSION: '3.5'
-        PLAT: 'i686'
-      py_3.6_64:
-        MB_PYTHON_VERSION: '3.6'
-        DAILY_BUILD: 'true'
-      py_3.6_32:
-        MB_PYTHON_VERSION: '3.6'
-        PLAT: 'i686'
-        DAILY_BUILD: 'true'
-      py_3.7_64:
-        MB_PYTHON_VERSION: '3.7'
-        NP_BUILD_DEP: 'numpy==1.14.5'
-        DAILY_BUILD: 'true'
-      py_3.7_32:
-        MB_PYTHON_VERSION: '3.7'
-        PLAT: 'i686'
-        NP_BUILD_DEP: 'numpy==1.14.5'
-        DAILY_BUILD: 'true'
-
-- template: azure/posix.yml
-  parameters:
-    name: macOS
-    vmImage: xcode9-macos10.13
-    matrix:
-      py_3.5_64:
-        MB_PYTHON_VERSION: '3.5'
-        SCIPY_BUILD_DEP: 'scipy==0.17.1'
-      py_3.6_64:
-        MB_PYTHON_VERSION: '3.6'
-        NP_BUILD_DEP: 'numpy==1.11.3'
-        DAILY_BUILD: 'true'
-      py_3.7_64:
-        MB_PYTHON_VERSION: '3.7'
-        NP_BUILD_DEP: 'numpy==1.14.5'
-        DAILY_BUILD: 'true'
-
-
 - template: azure/windows.yml
   parameters:
     name: windows
@@ -72,3 +27,47 @@ jobs:
         PYTHON_VERSION: '3.7.x'
         NP_BUILD_DEP: '1.14.5'
         DAILY_BUILD: 'true'
+
+# - template: azure/posix.yml
+#   parameters:
+#     name: linux
+#     vmImage: ubuntu-16.04
+#     matrix:
+#       py_3.5_64:
+#         MB_PYTHON_VERSION: '3.5'
+#       py_3.5_32:
+#         MB_PYTHON_VERSION: '3.5'
+#         PLAT: 'i686'
+#       py_3.6_64:
+#         MB_PYTHON_VERSION: '3.6'
+#         DAILY_BUILD: 'true'
+#       py_3.6_32:
+#         MB_PYTHON_VERSION: '3.6'
+#         PLAT: 'i686'
+#         DAILY_BUILD: 'true'
+#       py_3.7_64:
+#         MB_PYTHON_VERSION: '3.7'
+#         NP_BUILD_DEP: 'numpy==1.14.5'
+#         DAILY_BUILD: 'true'
+#       py_3.7_32:
+#         MB_PYTHON_VERSION: '3.7'
+#         PLAT: 'i686'
+#         NP_BUILD_DEP: 'numpy==1.14.5'
+#         DAILY_BUILD: 'true'
+
+# - template: azure/posix.yml
+#   parameters:
+#     name: macOS
+#     vmImage: xcode9-macos10.13
+#     matrix:
+#       py_3.5_64:
+#         MB_PYTHON_VERSION: '3.5'
+#         SCIPY_BUILD_DEP: 'scipy==0.17.1'
+#       py_3.6_64:
+#         MB_PYTHON_VERSION: '3.6'
+#         NP_BUILD_DEP: 'numpy==1.11.3'
+#         DAILY_BUILD: 'true'
+#       py_3.7_64:
+#         MB_PYTHON_VERSION: '3.7'
+#         NP_BUILD_DEP: 'numpy==1.14.5'
+#         DAILY_BUILD: 'true'
