@@ -8,10 +8,10 @@ jobs:
   pool:
     vmImage: ${{ parameters.vmImage }}
   variables:
-    BUILD_COMMIT: '0.20.3'
+    BUILD_COMMIT: '0.21.1'
     SKLEARN_SKIP_NETWORK_TESTS: '1'
-    NP_BUILD_DEP: '1.10.4'
-    CYTHON_BUILD_DEP: '0.28.5'
+    NP_BUILD_DEP: '1.11.0'
+    CYTHON_BUILD_DEP: '0.29.7'
     SCIPY_BUILD_DEP: '1.1.0'
     DAILY_COMMIT: 'master'
     DAILY_BUILD: 'false'
@@ -75,7 +75,7 @@ jobs:
         )
 
         pip install --timeout=60 numpy==%NP_BUILD_DEP%
-        pip install --timeout=60 pytest wheel scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
+        pip install --timeout=60 pytest wheel joblib scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
 
         pushd scikit-learn
         python setup.py bdist_wheel || exit 1
