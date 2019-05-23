@@ -37,40 +37,37 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.5
         - PLAT=i686
-    - os: osx
-      language: generic
+    - os: linux
       env:
-        - MB_PYTHON_VERSION=3.5
+        - MB_PYTHON_VERSION=3.6
+        - DAILY_BUILD=true
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - PLAT=i686
+        - DAILY_BUILD=true
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - NP_BUILD_DEP=numpy==1.14.5
+        - DAILY_BUILD=true
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.14.5
+        - DAILY_BUILD=true
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.5
         - SCIPY_BUILD_DEP=scipy==0.17.1
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - DAILY_BUILD=true
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-        - DAILY_BUILD=true
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=numpy==1.14.5
-        - DAILY_BUILD=true
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.14.5
-        - DAILY_BUILD=true
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP=numpy==1.11.3
+        - SCIPY_BUILD_DEP=scipy==0.17.1
         - DAILY_BUILD=true
     - os: osx
       language: generic
