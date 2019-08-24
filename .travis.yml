@@ -15,6 +15,7 @@ env:
     - DAILY_COMMIT=master
     - DAILY_BUILD=false
     - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+    - MANIFEST_BLACKLIST="benchmarks/*,benchmarks,build_tools/*,build_tools,Makefile,maint_tools/*,maint_tools,.mailmap,.circleci,.circleci/*,*.yml,*.md,.coveragerc,*.in"
     # Following generated with
     # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
     - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
@@ -93,6 +94,7 @@ before_install:
         UPLOAD_ARGS="--no-update-index"
     fi
   - echo "Building scikit-learn-$BUILD_COMMIT"
+  - check_manifest -v --ignore $MANIFEST_BLACKLIST
   - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP $JOBLIB_BUILD_DEP"
   - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP $JOBLIB_TEST_DEP"
   - source multibuild/common_utils.sh
