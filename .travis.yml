@@ -57,7 +57,18 @@ matrix:
         - DAILY_BUILD=true
     - os: linux
       env:
+        - MB_PYTHON_VERSION=3.8
+        - NP_BUILD_DEP=numpy==1.14.5
+        - DAILY_BUILD=true
+    - os: linux
+      env:
         - MB_PYTHON_VERSION=3.7
+        - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.14.5
+        - DAILY_BUILD=true
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.8
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.14.5
         - DAILY_BUILD=true
@@ -77,6 +88,12 @@ matrix:
       language: generic
       env:
         - MB_PYTHON_VERSION=3.7
+        - NP_BUILD_DEP=numpy==1.14.5
+        - DAILY_BUILD=true
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=numpy==1.14.5
         - DAILY_BUILD=true
 
