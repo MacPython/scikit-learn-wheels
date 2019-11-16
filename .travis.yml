@@ -6,10 +6,10 @@ env:
     - UNICODE_WIDTH=32
     - NP_BUILD_DEP="numpy==1.11.0"
     - NP_TEST_DEP="numpy==1.16.3"
-    - CYTHON_BUILD_DEP="cython==0.29.7"
+    - CYTHON_BUILD_DEP="cython==0.29.13"
     - CYTHON_TEST_DEP="cython"
     - SCIPY_BUILD_DEP="scipy"
-    - SCIPY_TEST_DEP="scipy==1.3.0"
+    - SCIPY_TEST_DEP="scipy==1.3.2"
     - JOBLIB_BUILD_DEP="joblib==0.11"
     - JOBLIB_TEST_DEP="joblib"
     - DAILY_COMMIT=master
@@ -30,83 +30,74 @@ matrix:
     # Exclude the default Python 3.5 build
     - python: 3.5
   include:
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - PLAT=i686
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - DAILY_BUILD=true
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-        - DAILY_BUILD=true
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=numpy==1.14.5
-        - DAILY_BUILD=true
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - PLAT=i686
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - DAILY_BUILD=true
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - PLAT=i686
+    #     - DAILY_BUILD=true
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - NP_BUILD_DEP=numpy==1.14.5
+    #     - DAILY_BUILD=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=numpy==1.17.4
-          # use latest scipy for 3.8 support
-        - SCIPY_TEST_DEP=scipy
-          # recommened by numpy to support 3.8
-        - CYTHON_BUILD_DEP=cython==0.29.13
+        - NP_TEST_DEP=numpy==1.17.4
         - DAILY_BUILD=true
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - PLAT=i686
-        - NP_BUILD_DEP=numpy==1.14.5
-        - DAILY_BUILD=true
+    # - os: linux
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - PLAT=i686
+    #     - NP_BUILD_DEP=numpy==1.14.5
+    #     - DAILY_BUILD=true
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.8
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.17.4
-          # use latest scipy for 3.8 support
-        - SCIPY_TEST_DEP=scipy
-          # recommened by numpy to support 3.8
-        - CYTHON_BUILD_DEP=cython==0.29.13
+        - NP_TEST_DEP=numpy==1.17.4
         - DAILY_BUILD=true
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP=numpy==1.11.3
-        - DAILY_BUILD=true
-        - SCIPY_BUILD_DEP="scipy==0.18.1"
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=numpy==1.14.5
-        - DAILY_BUILD=true
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - NP_BUILD_DEP=numpy==1.11.3
+    #     - DAILY_BUILD=true
+    #     - SCIPY_BUILD_DEP="scipy==0.18.1"
+    # - os: osx
+    #   language: generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - NP_BUILD_DEP=numpy==1.14.5
+    #     - DAILY_BUILD=true
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=numpy==1.17.4
-          # use latest scipy for 3.8 support
-        - SCIPY_TEST_DEP=scipy
-          # recommened by numpy to support 3.8
-        - CYTHON_BUILD_DEP=cython==0.29.13
+        - NP_TEST_DEP=numpy==1.17.4
         - DAILY_BUILD=true
 
 before_install:
