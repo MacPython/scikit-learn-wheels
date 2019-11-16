@@ -59,8 +59,8 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=numpy==1.17.4
-          # min scipy support 3.8
-        - SCIPY_BUILD_DEP=scipy==1.3.2
+          # use latest scipy for 3.8 support
+        - SCIPY_TEST_DEP=scipy
           # recommened by numpy to support 3.8
         - CYTHON_BUILD_DEP=cython==0.29.13
         - DAILY_BUILD=true
@@ -75,10 +75,10 @@ matrix:
         - MB_PYTHON_VERSION=3.8
         - PLAT=i686
         - NP_BUILD_DEP=numpy==1.17.4
-          # min scipy support 3.8
-        - SCIPY_BUILD_DEP=scipy==1.3.2
-        - CYTHON_BUILD_DEP=cython==0.29.13
+          # use latest scipy for 3.8 support
+        - SCIPY_TEST_DEP=scipy
           # recommened by numpy to support 3.8
+        - CYTHON_BUILD_DEP=cython==0.29.13
         - DAILY_BUILD=true
     - os: osx
       language: generic
@@ -103,8 +103,8 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=numpy==1.17.4
-          # support 3.8
-        - SCIPY_BUILD_DEP=scipy==1.3.2
+          # use latest scipy for 3.8 support
+        - SCIPY_TEST_DEP=scipy
           # recommened by numpy to support 3.8
         - CYTHON_BUILD_DEP=cython==0.29.13
         - DAILY_BUILD=true
