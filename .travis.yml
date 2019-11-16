@@ -143,6 +143,6 @@ after_success:
   # Upload wheels to Rackspace container
   - pip install wheelhouse-uploader
   - python -m wheelhouse_uploader upload --local-folder
-    ${TRAVIS_BUILD_DIR}/wheelhouse/
-    $UPLOAD_ARGS
-    $CONTAINER
+        ${TRAVIS_BUILD_DIR}/wheelhouse/
+        $UPLOAD_ARGS
+        $CONTAINER
