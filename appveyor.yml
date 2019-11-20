@@ -104,6 +104,7 @@ install:
   - "%CMD_IN_ENV% pip install --timeout=60 -r ../appveyor/requirements.txt"
   - "%CMD_IN_ENV% python setup.py bdist_wheel"
   - ps: "ls dist"
+  - "%CMD_IN_ENV% twine check dist/*"
 
   # Install the generated wheel package to test it
   - "pip install --pre --no-index --find-links dist/ scikit-learn"

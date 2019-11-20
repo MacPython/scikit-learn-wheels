@@ -132,7 +132,8 @@ script:
 
 after_success:
   # Upload wheels to Rackspace container
-  - pip install wheelhouse-uploader
+  - pip install wheelhouse-uploader twine
+  - python -m twine check ${TRAVIS_BUILD_DIR}/wheelhouse/
   - python -m wheelhouse_uploader upload --local-folder
         ${TRAVIS_BUILD_DIR}/wheelhouse/
         $UPLOAD_ARGS
