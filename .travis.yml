@@ -94,7 +94,6 @@ before_install:
         UPLOAD_ARGS="--no-update-index"
     fi
   - echo "Building scikit-learn-$BUILD_COMMIT"
-  - check_manifest -v --ignore $MANIFEST_BLACKLIST
   - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP $JOBLIB_BUILD_DEP"
   - TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP $JOBLIB_TEST_DEP"
   - source multibuild/common_utils.sh
@@ -113,6 +112,8 @@ script:
   - install_run $PLAT
 
 after_success:
+  - pip install check-manifest
+  - check_manifest -v --ignore $MANIFEST_BLACKLIST
   # Upload wheels to Rackspace container
   - pip install wheelhouse-uploader
   - python -m wheelhouse_uploader upload --local-folder
