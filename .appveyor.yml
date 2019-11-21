@@ -70,7 +70,7 @@ environment:
 
 init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
-  - 'ECHO "%APPVEYOR_SCHEDULED_BUILD%"'
+  - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
   - ps: >-
       if ($env:APPVEYOR_SCHEDULED_BUILD -eq "True") {
         $env:CONTAINER = "sklearn-nightly"
@@ -90,7 +90,7 @@ install:
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
-  - 'python -c "import struct; print(struct.calcsize(''P'') * 8)"'
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
   - "pip --version"
 
   # Checkout the request scikit-learn version in the submodule
@@ -116,7 +116,7 @@ build: false
 test_script:
   # Remove the source dir to make sure we run the tests on the
   # installed library.
-  - 'rd /s /q "sklearn"'
+  - "rd /s /q \"sklearn\""
   # remove setup.cfg so as to not force --doctest-modules
   - "del setup.cfg"
   # Install the newest version of numpy for the tests: the goal is to ensure
