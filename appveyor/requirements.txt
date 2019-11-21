@@ -4,3 +4,4 @@ joblib
 pytest
 wheel
 wheelhouse_uploader
+twine
