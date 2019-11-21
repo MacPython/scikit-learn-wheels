@@ -15,7 +15,7 @@ env:
     - DAILY_COMMIT=master
     - DAILY_BUILD=false
     - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
-    - MANIFEST_BLACKLIST="benchmarks/*,benchmarks,build_tools/*,build_tools,Makefile,maint_tools/*,maint_tools,.binder/*,conftest.py,site.cfg,sklearn/externals/README,.mailmap,.circleci,.circleci/*,*.yml,*.md,.coveragerc,*.in"
+    - MANIFEST_BLACKLIST="benchmarks/*,benchmarks,build_tools/*,build_tools,Makefile,maint_tools/*,maint_tools,.binder,.binder/*,conftest.py,site.cfg,sklearn/externals/README,.mailmap,.circleci,.circleci/*,*.yml,*.md,.coveragerc,*.in"
     # Following generated with
     # travis encrypt -r MacPython/scikit-learn-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
     - secure: "Lyhm6qFtf/hY5D3UHMANNhh8Ar/PARF1nH/ebArWLtb24prrSYt+AAVJqZ81I58AdQK12Kn8mmuZVyVJT+FrRd8q6OyMijQ/wKrsx8EH+lDTTgUueBJtLql01KsaMRTDpAd04bREh1MppIsFFCHKVNxY2mW17XwsNQ+MUka4Bos="
