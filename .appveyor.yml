@@ -4,7 +4,7 @@
 
 environment:
   global:
-    BUILD_COMMIT: 0.19.1
+    BUILD_COMMIT: 0.22rc2.post1
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script interpreter
     # See: http://stackoverflow.com/a/13751649/163740
@@ -16,24 +16,13 @@ environment:
     # Make sure we don't download large datasets when running the test on
     # continuous integration platform
     SKLEARN_SKIP_NETWORK_TESTS: 1
+    APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
+    # Minimum numpy version
+    NP_BUILD_DEP: "1.11.0"
+    DAILY_COMMIT: master
+    DAILY_BUILD: "false"
 
   matrix:
-    - PYTHON: "C:\\Python27"
-      PYTHON_VERSION: "2.7.11"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Python27-x64"
-      PYTHON_VERSION: "2.7.11"
-      PYTHON_ARCH: "64"
-
-    - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4.5"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4.5"
-      PYTHON_ARCH: "64"
-
     - PYTHON: "C:\\Python35"
       PYTHON_VERSION: "3.5.2"
       PYTHON_ARCH: "32"
@@ -45,11 +34,39 @@ environment:
     - PYTHON: "C:\\Python36"
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "32"
+      NP_BUILD_DEP: "1.12.1"
+      DAILY_BUILD: "true"
 
     - PYTHON: "C:\\Python36-x64"
       PYTHON_VERSION: "3.6.0"
       PYTHON_ARCH: "64"
+      NP_BUILD_DEP: "1.12.1"
+      DAILY_BUILD: "true"
 
+    - PYTHON: "C:\\Python37"
+      PYTHON_VERSION: "3.7.0"
+      PYTHON_ARCH: "32"
+      NP_BUILD_DEP: "1.14.5"
+      DAILY_BUILD: "true"
+
+    - PYTHON: "C:\\Python37-x64"
+      PYTHON_VERSION: "3.7.0"
+      PYTHON_ARCH: "64"
+      NP_BUILD_DEP: "1.14.5"
+      DAILY_BUILD: "true"
+
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
+  - ps: >-
+      if ($env:APPVEYOR_SCHEDULED_BUILD -eq "True") {
+        $env:CONTAINER = "sklearn-nightly"
+        if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
+        if ($env:DAILY_BUILD -eq "false") { Exit-AppveyorBuild }
+      } else {
+        $env:CONTAINER = "wheels"
+        $env:UPLOAD_ARGS = "--no-update-index"
+      }
 
 install:
   # Install Python (from the official .msi of http://python.org) and pip when
@@ -71,7 +88,8 @@ install:
   - "git reset --hard"
 
   # Install the build and runtime dependencies of the project.
-  - "%CMD_IN_ENV% pip install --timeout=60 --trusted-host 28daf2247a33ed269873-7b1aad3fab3cc330e1fd9d109892382a.r6.cf2.rackcdn.com -r ../appveyor/requirements.txt"
+  - "%CMD_IN_ENV% pip install --timeout=60 numpy==%NP_BUILD_DEP%"
+  - "%CMD_IN_ENV% pip install --timeout=60 -r ../appveyor/requirements.txt"
   - "%CMD_IN_ENV% python setup.py bdist_wheel"
   - ps: "ls dist"
 
@@ -82,15 +100,18 @@ install:
 build: false
 
 test_script:
-  # Change to a non-source folder to make sure we run the tests on the
+  # Remove the source dir to make sure we run the tests on the
   # installed library.
-  - "mkdir empty_folder"
-  - "cd empty_folder"
-
-  - "python -c \"import nose; nose.main()\" --with-timer --timer-top-n 20 -s -v sklearn"
-
-  # Move back to the project folder
-  - "cd .."
+  - "rd /s /q \"sklearn\""
+  # remove setup.cfg so as to not force --doctest-modules
+  - "del setup.cfg"
+  # Install the newest version of numpy for the tests: the goal is to ensure
+  # that the scikit-learn wheels are binary compatible both with the old numpy
+  # version against which they were built and the newest numpy version at the
+  # time of the release, that is the version of numpy that users are most
+  # likely to use.
+  - "%CMD_IN_ENV% pip install -U --timeout=60 numpy"
+  - "%CMD_IN_ENV% pytest -rs --pyargs sklearn"
 
 artifacts:
   # Archive the generated wheel package in the ci.appveyor.com build report.
@@ -100,7 +121,11 @@ on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
-  - "python -m wheelhouse_uploader upload --no-update-index --no-ssl-check --local-folder=dist wheels"
+  - python -m wheelhouse_uploader upload
+    --no-ssl-check
+    --local-folder=dist
+    %UPLOAD_ARGS%
+    %CONTAINER%
 
 cache:
   # Use the appveyor cache to avoid re-downloading large archives such
