@@ -113,7 +113,7 @@ script:
 
 after_success:
   - pip install check-manifest
-  - check_manifest -v --ignore $MANIFEST_BLACKLIST
+  - check-manifest -v --ignore $MANIFEST_BLACKLIST
   # Upload wheels to Rackspace container
   - pip install wheelhouse-uploader
   - python -m wheelhouse_uploader upload --local-folder
