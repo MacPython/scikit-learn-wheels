@@ -4,7 +4,8 @@
 
 environment:
   global:
-    BUILD_COMMIT: 0.22rc2.post1
+    # BUILD_COMMIT: 0.22rc2.post1
+    BUILD_COMMIT: master
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script interpreter
     # See: http://stackoverflow.com/a/13751649/163740
@@ -53,6 +54,18 @@ environment:
       PYTHON_VERSION: "3.7.0"
       PYTHON_ARCH: "64"
       NP_BUILD_DEP: "1.14.5"
+      DAILY_BUILD: "true"
+
+    - PYTHON: "C:\\Python38"
+      PYTHON_VERSION: "3.8.0"
+      PYTHON_ARCH: "32"
+      NP_BUILD_DEP: "1.17.4"
+      DAILY_BUILD: "true"
+
+    - PYTHON: "C:\\Python38-x64"
+      PYTHON_VERSION: "3.8.0"
+      PYTHON_ARCH: "64"
+      NP_BUILD_DEP: "1.17.4"
       DAILY_BUILD: "true"
 
 init:
