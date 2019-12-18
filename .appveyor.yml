@@ -102,6 +102,8 @@ install:
   # Install the build and runtime dependencies of the project.
   - "%CMD_IN_ENV% pip install --timeout=60 numpy==%NP_BUILD_DEP%"
   - "%CMD_IN_ENV% pip install --timeout=60 -r ../appveyor/requirements.txt"
+  - "%CMD_IN_ENV% python setup.py build"
+  - "%CMD_IN_ENV% python ../appveyor/vendor_vcomp140.py"
   - "%CMD_IN_ENV% python setup.py bdist_wheel"
   - ps: "ls dist"
   - "%CMD_IN_ENV% twine check dist/*"
