@@ -42,7 +42,7 @@ def make_distributor_init(sklearn_dirname, dll_filename):
                 dll_path = op.join(op.dirname(__file__), '.libs', '{}')
                 WinDLL(op.abspath(dll_path))
 
-    """.format(dll_filename)))
+        """.format(dll_filename)))
     return op.abspath(distributor_init)
 
 
