@@ -53,7 +53,7 @@ def main():
     if not os.path.exists(VCOMP140_SRC_PATH):
         raise ValueError("Could not find %r" % VCOMP140_SRC_PATH)
 
-    if not os.path.isdir("build"):
+    if not op.isdir("build"):
         raise RuntimeError("Could not find ./build/ folder. "
                            "Run 'python setup.py build' first")
     target_folders = glob(TARGET_FOLDER_GLOB_PATTERN)
