@@ -50,7 +50,7 @@ def main():
     # TODO: use threadpoolctl to dynamically locate the right vcomp dll
     # instead? This would require first in-place building scikit-learn
     # to make it "importable".
-    if not os.path.exists(VCOMP140_SRC_PATH):
+    if not op.exists(VCOMP140_SRC_PATH):
         raise ValueError("Could not find %r" % VCOMP140_SRC_PATH)
 
     if not op.isdir("build"):
