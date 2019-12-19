@@ -1,4 +1,4 @@
-"""Embed the vcomp dll before generating the scikit-lern Windows wheel.
+"""Embed the vcomp dll before generating the scikit-learn Windows wheel.
 
 This script should be run from the root of the scikit-learn source tree,
 after running the `python setup.py build` command and before running
