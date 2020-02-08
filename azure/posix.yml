@@ -65,7 +65,7 @@ jobs:
           fi
 
           clean_code $REPO_DIR $BUILD_COMMIT
-          build_wheel $REPO_DIR $PLAT
+          # build_wheel $REPO_DIR $PLAT
 
           if [ $TRAVIS_OS_NAME == "osx" ]; then
             disable_system_openmp
@@ -82,7 +82,8 @@ jobs:
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
-          twine upload -r "sklearn-release" --config-file $(PYPIRC_PATH) \
-          wheelhouse/*
+          cat .pypirc
+        #   twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
+        #   wheelhouse/*
         displayName: Upload to sklearn-release azure artifact feed
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        # condition: ne(variables['Build.Reason'], 'PullRequest')
