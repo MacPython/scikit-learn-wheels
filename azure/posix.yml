@@ -71,5 +71,5 @@ jobs:
             disable_system_openmp
           fi
 
-          install_run $PLAT
+          # install_run $PLAT
         displayName: Build, install, and test

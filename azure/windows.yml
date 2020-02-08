@@ -27,12 +27,6 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           architecture: $(PYTHON_ARCH)
         displayName: Set python version
-      - powershell: |
-          $wc = New-Object net.webclient
-          $wc.Downloadfile("https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi", "VCForPython27.msi")
-          Start-Process "VCForPython27.msi" /qn -Wait
-        displayName: "Install VC 9.0 only for Python 2.7"
-        condition: eq(variables['PYTHON_VERSION'], '2.7.x')
       - script: |
           echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
           echo Build Reason %BUILD_REASON%
@@ -63,17 +57,6 @@ jobs:
             )
           )
 
-          if "%PYTHON_VERSION%" == "3.4.x" (
-            if "%PYTHON_ARCH%" == "x64" (
-              CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-            ) else (
-              CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-            )
-
-            set DISTUTILS_USE_SDK=1
-            set MSSdk=1
-          )
-
           pip install --timeout=60 numpy==%NP_BUILD_DEP%
           pip install --timeout=60 pytest wheel joblib scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
 
@@ -85,6 +68,6 @@ jobs:
           mkdir tmp
           cd tmp
 
-          pip install -U --timeout=60 numpy
-          pytest -rs --pyargs sklearn
+          # pip install -U --timeout=60 numpy
+          # pytest -rs --pyargs sklearn
         displayName: Build, install, and test
