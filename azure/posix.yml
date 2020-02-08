@@ -73,3 +73,11 @@ jobs:
 
           # install_run $PLAT
         displayName: Build, install, and test
+      - script: pip install twine
+        displayName: Install twine
+      - task: TwineAuthenticate@0
+        inputs:
+          artifactFeeds: "sklearn-nightly"
+        displayName: Authenticate twine with artifact feed
+      - script: |
+          twine upload -r sklearn-nightly dist/'
