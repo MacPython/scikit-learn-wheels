@@ -14,7 +14,7 @@ jobs:
       UNICODE_WIDTH: "32"
       NP_BUILD_DEP: "numpy==1.11.0"
       NP_TEST_DEP: "numpy"
-      CYTHON_BUILD_DEP: "cython==0.29.15"
+      CYTHON_BUILD_DEP: "cython==0.29.14"
       CYTHON_TEST_DEP: "cython"
       SCIPY_BUILD_DEP: "scipy"
       SCIPY_TEST_DEP: "scipy"
