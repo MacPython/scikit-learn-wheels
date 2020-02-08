@@ -73,7 +73,7 @@ jobs:
 
           # install_run $PLAT
         displayName: Build, install, and test
-      - script: pip install twine wheel
+      - script: pip install twine wheel keyring artifacts-keyring
         displayName: Install twine and wheel
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: TwineAuthenticate@1
