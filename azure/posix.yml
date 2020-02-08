@@ -76,7 +76,7 @@ jobs:
       - script: pip install twine wheel
         displayName: Install twine and wheel
         condition: ne(variables['Build.Reason'], 'PullRequest')
-      - task: TwineAuthenticate@0
+      - task: TwineAuthenticate@1
         inputs:
           artifactFeeds: sklearn-release
         displayName: Authenticate twine with artifact feed
