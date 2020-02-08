@@ -78,10 +78,12 @@ jobs:
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: TwineAuthenticate@1
         inputs:
-          artifactFeed: sklearn-release
+          artifactFeed: sklearn-wheels-testing
+/sklearn-release
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
+          cat $(PYPIRC_PATH)
           twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
           wheelhouse/*
         displayName: Upload to sklearn-release azure artifact feed
