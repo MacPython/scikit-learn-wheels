@@ -68,6 +68,6 @@ jobs:
           mkdir tmp
           cd tmp
 
-          # pip install -U --timeout=60 numpy
-          # pytest -rs --pyargs sklearn
+          REM pip install -U --timeout=60 numpy
+          REM pytest -rs --pyargs sklearn
         displayName: Build, install, and test
