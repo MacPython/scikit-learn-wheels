@@ -82,6 +82,7 @@ jobs:
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
+          ls dist/
           twine upload -r "sklearn-release" --config-file $(PYPIRC_PATH) dist/
         displayName: Upload to sklearn-release azure artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
