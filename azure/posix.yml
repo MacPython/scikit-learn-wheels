@@ -78,7 +78,7 @@ jobs:
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: TwineAuthenticate@1
         inputs:
-          artifactFeeds: sklearn-release
+          artifactFeed: sklearn-release
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
