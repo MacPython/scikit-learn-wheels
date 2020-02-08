@@ -72,6 +72,7 @@ jobs:
           fi
 
           ls
+          ls wheelhouse
 
           # install_run $PLAT
         displayName: Build, install, and test
