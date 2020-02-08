@@ -80,4 +80,4 @@ jobs:
           artifactFeeds: "sklearn-nightly"
         displayName: Authenticate twine with artifact feed
       - script: |
-          twine upload -r sklearn-nightly dist/'
+          twine upload -r sklearn-wheels-testing/_packaging/sklearn-nightly/pypi/simple/ dist/
