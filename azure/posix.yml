@@ -75,9 +75,13 @@ jobs:
         displayName: Build, install, and test
       - script: pip install twine wheel
         displayName: Install twine and wheel
+        condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: TwineAuthenticate@0
         inputs:
           artifactFeeds: sklearn-release
         displayName: Authenticate twine with artifact feed
+        condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
-          twine upload -r "sklearn-release" --config-file $(PYPIRC_PATH) dist/*.whl
+          twine upload -r "sklearn-release" --config-file $(PYPIRC_PATH) dist/
+        displayName: Upload to sklearn-release azure artifact feed
+        condition: ne(variables['Build.Reason'], 'PullRequest')
