@@ -72,16 +72,16 @@ jobs:
 
       - script: pip install twine wheel keyring artifacts-keyring
         displayName: Install twine and wheel
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - task: TwineAuthenticate@1
         inputs:
           artifactFeed: sklearn-wheels-testing/sklearn-release
         displayName: Authenticate twine with artifact feed
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - script: |
-          twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
-          wheelhouse/*
+          twine upload -r sklearn-release --config-file $PYPIRC_PATH \
+          wheelhouse/* || exit 0
         displayName: Upload to sklearn-release azure artifact feed
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))

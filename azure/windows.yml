@@ -86,7 +86,6 @@ jobs:
         displayName: Build, install, and test
 
       - bash: |
-          set -xe
           pip install wheel keyring artifacts-keyring
         displayName: Install wheel keyring and artifacts-keyring
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -98,6 +97,6 @@ jobs:
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - bash: |
-          twine upload -r sklearn-release --config-file $PYPIRC_PATH scikit-learn/dist/*
+          twine upload -r sklearn-release --config-file $PYPIRC_PATH scikit-learn/dist/* || exit 0
         displayName: Upload to sklearn-release azure artifact feed
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
