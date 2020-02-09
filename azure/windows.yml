@@ -48,38 +48,50 @@ jobs:
           git clean -fxd
           git reset --hard
         displayName: Checkout commit
-      - script: |
-          @echo on
+      - bash: |
+          set -e
 
-          if "%BUILD_REASON%" == "Schedule" (
-            if NOT "%DAILY_BUILD%" == "true" (
+          if [ "$BUILD_REASON" == "Schedule" ]; then
+            if [ "$DAILY_BUILD" != "true" ]; then
               exit 0
-            )
-          )
+            fi
+            BUILD_COMMIT=$DAILY_COMMIT
+          fi
+          echo "Building scikit-learn-$BUILD_COMMIT"
 
           pip install --timeout=60 numpy==%NP_BUILD_DEP%
           pip install --timeout=60 pytest wheel joblib scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
+          pip install twine wheel
 
           pushd scikit-learn
+          python setup.py build || exit 1
+          python appveyor/vendor_vcomp140.py || exit 1
           python setup.py bdist_wheel || exit 1
+          ls dist
+          twine check dist/*
           pip install --pre --no-index --find-links dist/ scikit-learn
           popd
 
           mkdir tmp
           cd tmp
 
-          REM pip install -U --timeout=60 numpy
-          REM pytest -rs --pyargs sklearn
+          # Install the newest version of numpy for the tests: the goal is to ensure
+          # REM that the scikit-learn wheels are binary compatible both with the old numpy
+           version against which they were built and the newest numpy version at the
+          # time of the release, that is the version of numpy that users are most
+          # likely to use.
+          # pip install -U --timeout=60 numpy
+          # pytest -rs --pyargs sklearn
         displayName: Build, install, and test
-      - script: pip install twine wheel keyring artifacts-keyring
-        displayName: Install twine and wheel
+      - script: pip install keyring artifacts-keyring
+        displayName: Install keyring and artifacts-keyring
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - task: TwineAuthenticate@1
         inputs:
           artifactFeed: sklearn-wheels-testing/sklearn-release
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
-      - script: |
+      - bash: |
           twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
           dist/*
         displayName: Upload to sklearn-release azure artifact feed
