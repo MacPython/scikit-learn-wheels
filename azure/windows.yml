@@ -35,7 +35,7 @@ jobs:
           pip --version
         displayName: Check that we have the expected version and architecture for Python
       - bash: |
-          set -e
+          set -xe
 
           if [ "$BUILD_REASON" == "Schedule" ]; then
             if [ "$DAILY_BUILD" != "true" ]; then
@@ -50,7 +50,7 @@ jobs:
           git reset --hard
         displayName: Checkout commit
       - bash: |
-          set -e
+          set -xe
 
           if [ "$BUILD_REASON" == "Schedule" ]; then
             if [ "$DAILY_BUILD" != "true" ]; then
@@ -62,7 +62,7 @@ jobs:
 
           pip install --timeout=60 numpy==$NP_BUILD_DEP
           pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
-          pip install twine wheel
+          pip install twine
 
           pushd scikit-learn
           python setup.py build
@@ -84,14 +84,18 @@ jobs:
           # pip install -U --timeout=60 numpy
           # pytest -rs --pyargs sklearn
         displayName: Build, install, and test
-      - script: pip install keyring artifacts-keyring
-        displayName: Install keyring and artifacts-keyring
+      - bash: |
+          set -xe
+          pip install twine wheel keyring artifacts-keyring
+        displayName: Install twine keyring and artifacts-keyring
         condition: ne(variables['Build.Reason'], 'PullRequest')
+
       - task: TwineAuthenticate@1
         inputs:
           artifactFeed: sklearn-wheels-testing/sklearn-release
         displayName: Authenticate twine with artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
+
       - bash: |
           twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
           dist/*
