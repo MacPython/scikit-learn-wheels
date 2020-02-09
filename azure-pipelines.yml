@@ -35,6 +35,7 @@ jobs:
         py_3.8_64:
           PYTHON_VERSION: "3.8.x"
           NP_BUILD_DEP: "1.17.3"
+          SCIPY_BUILD_DEP: "1.2.3"
           DAILY_BUILD: "true"
   # - template: azure/posix.yml
   #   parameters:
