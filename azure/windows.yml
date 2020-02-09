@@ -27,24 +27,25 @@ jobs:
           versionSpec: $(PYTHON_VERSION)
           architecture: $(PYTHON_ARCH)
         displayName: Set python version
-      - script: |
-          echo PYTHON %PYTHON_VERSION% %PYTHON_ARCH%
-          echo Build Reason %BUILD_REASON%
+      - bash: |
+          echo PYTHON $PYTHON_VERSION $PYTHON_ARCH
+          echo Build Reason $BUILD_REASON
           python --version
           python -c "import struct; print(struct.calcsize('P') * 8)"
           pip --version
         displayName: Check that we have the expected version and architecture for Python
-      - script: |
-          @echo on
+      - bash: |
+          set -e
 
-          if "%BUILD_REASON%" == "Schedule" (
-            if NOT "%DAILY_BUILD%" == "true" (
+          if [ "$BUILD_REASON" == "Schedule" ]; then
+            if [ "$DAILY_BUILD" != "true" ]; then
               exit 0
-            )
-            set BUILD_COMMIT=%DAILY_COMMIT%
-          )
+            fi
+            BUILD_COMMIT=$DAILY_COMMIT
+          fi
+
           cd scikit-learn
-          git checkout %BUILD_COMMIT%
+          git checkout $BUILD_COMMIT
           git clean -fxd
           git reset --hard
         displayName: Checkout commit
@@ -59,14 +60,14 @@ jobs:
           fi
           echo "Building scikit-learn-$BUILD_COMMIT"
 
-          pip install --timeout=60 numpy==%NP_BUILD_DEP%
-          pip install --timeout=60 pytest wheel joblib scipy==%SCIPY_BUILD_DEP% Cython==%CYTHON_BUILD_DEP%
+          pip install --timeout=60 numpy==$NP_BUILD_DEP
+          pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
           pip install twine wheel
 
           pushd scikit-learn
-          python setup.py build || exit 1
-          python appveyor/vendor_vcomp140.py || exit 1
-          python setup.py bdist_wheel || exit 1
+          python setup.py build
+          python appveyor/vendor_vcomp140.py
+          python setup.py bdist_wheel
           ls dist
           twine check dist/*
           pip install --pre --no-index --find-links dist/ scikit-learn
