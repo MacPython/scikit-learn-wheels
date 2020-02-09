@@ -49,41 +49,41 @@ jobs:
           git clean -fxd
           git reset --hard
         displayName: Checkout commit
-      - bash: |
-          set -xe
+      # - bash: |
+      #     set -xe
 
-          if [ "$BUILD_REASON" == "Schedule" ]; then
-            if [ "$DAILY_BUILD" != "true" ]; then
-              exit 0
-            fi
-            BUILD_COMMIT=$DAILY_COMMIT
-          fi
-          echo "Building scikit-learn-$BUILD_COMMIT"
+      #     if [ "$BUILD_REASON" == "Schedule" ]; then
+      #       if [ "$DAILY_BUILD" != "true" ]; then
+      #         exit 0
+      #       fi
+      #       BUILD_COMMIT=$DAILY_COMMIT
+      #     fi
+      #     echo "Building scikit-learn-$BUILD_COMMIT"
 
-          pip install --timeout=60 numpy==$NP_BUILD_DEP
-          pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
-          pip install twine
+      #     pip install --timeout=60 numpy==$NP_BUILD_DEP
+      #     pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
+      #     pip install twine
 
-          pushd scikit-learn
-          python setup.py build
-          python ../appveyor/vendor_vcomp140.py
-          python setup.py bdist_wheel
-          ls dist
-          twine check dist/*
-          pip install --pre --no-index --find-links dist/ scikit-learn
-          popd
+      #     pushd scikit-learn
+      #     python setup.py build
+      #     python ../appveyor/vendor_vcomp140.py
+      #     python setup.py bdist_wheel
+      #     ls dist
+      #     twine check dist/*
+      #     pip install --pre --no-index --find-links dist/ scikit-learn
+      #     popd
 
-          mkdir tmp
-          cd tmp
+      #     mkdir tmp
+      #     cd tmp
 
-          # Install the newest version of numpy for the tests: the goal is to ensure
-          # that the scikit-learn wheels are binary compatible both with the old numpy
-          # version against which they were built and the newest numpy version at the
-          # time of the release, that is the version of numpy that users are most
-          # likely to use.
-          # pip install -U --timeout=60 numpy
-          # pytest -rs --pyargs sklearn
-        displayName: Build, install, and test
+      #     # Install the newest version of numpy for the tests: the goal is to ensure
+      #     # that the scikit-learn wheels are binary compatible both with the old numpy
+      #     # version against which they were built and the newest numpy version at the
+      #     # time of the release, that is the version of numpy that users are most
+      #     # likely to use.
+      #     # pip install -U --timeout=60 numpy
+      #     # pytest -rs --pyargs sklearn
+      #   displayName: Build, install, and test
       - bash: |
           set -xe
           pip install twine wheel keyring artifacts-keyring
@@ -97,7 +97,8 @@ jobs:
         condition: ne(variables['Build.Reason'], 'PullRequest')
 
       - bash: |
-          twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
+          cat $PYPIRC_PATH
+          twine upload -r sklearn-release --config-file $PYPIRC_PATH \
           dist/*
         displayName: Upload to sklearn-release azure artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
