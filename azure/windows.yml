@@ -71,3 +71,16 @@ jobs:
           REM pip install -U --timeout=60 numpy
           REM pytest -rs --pyargs sklearn
         displayName: Build, install, and test
+      - script: pip install twine wheel keyring artifacts-keyring
+        displayName: Install twine and wheel
+        condition: ne(variables['Build.Reason'], 'PullRequest')
+      - task: TwineAuthenticate@1
+        inputs:
+          artifactFeed: sklearn-wheels-testing/sklearn-release
+        displayName: Authenticate twine with artifact feed
+        condition: ne(variables['Build.Reason'], 'PullRequest')
+      - script: |
+          twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
+          wheelhouse/*
+        displayName: Upload to sklearn-release azure artifact feed
+        condition: ne(variables['Build.Reason'], 'PullRequest')
