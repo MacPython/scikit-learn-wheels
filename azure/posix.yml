@@ -85,6 +85,7 @@ jobs:
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - script: |
+          # If wheel was already uploaded then the twine command will error
           twine upload -r sklearn-release --config-file $PYPIRC_PATH \
           wheelhouse/* || exit 0
         displayName: Upload to sklearn-release azure artifact feed
