@@ -81,6 +81,6 @@ jobs:
         condition: ne(variables['Build.Reason'], 'PullRequest')
       - script: |
           twine upload -r sklearn-release --config-file $(PYPIRC_PATH) \
-          wheelhouse/*
+          dist/*
         displayName: Upload to sklearn-release azure artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
