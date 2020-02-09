@@ -84,6 +84,7 @@ jobs:
           # pip install -U --timeout=60 numpy
           # pytest -rs --pyargs sklearn
         displayName: Build, install, and test
+
       - bash: |
           set -xe
           pip install twine wheel keyring artifacts-keyring
@@ -97,10 +98,6 @@ jobs:
         condition: ne(variables['Build.Reason'], 'PullRequest')
 
       - bash: |
-          cat $PYPIRC_PATH
-          ls dist
-
-          twine upload -r sklearn-release --config-file $PYPIRC_PATH \
-          dist/*
+          twine upload -r sklearn-release --config-file $PYPIRC_PATH scikit-learn/dist/*
         displayName: Upload to sklearn-release azure artifact feed
         condition: ne(variables['Build.Reason'], 'PullRequest')
