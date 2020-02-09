@@ -77,8 +77,8 @@ jobs:
           cd tmp
 
           # Install the newest version of numpy for the tests: the goal is to ensure
-          # REM that the scikit-learn wheels are binary compatible both with the old numpy
-           version against which they were built and the newest numpy version at the
+          # that the scikit-learn wheels are binary compatible both with the old numpy
+          # version against which they were built and the newest numpy version at the
           # time of the release, that is the version of numpy that users are most
           # likely to use.
           # pip install -U --timeout=60 numpy
