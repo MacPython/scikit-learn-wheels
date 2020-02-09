@@ -81,8 +81,8 @@ jobs:
           # version against which they were built and the newest numpy version at the
           # time of the release, that is the version of numpy that users are most
           # likely to use.
-          # pip install -U --timeout=60 numpy
-          # pytest -rs --pyargs sklearn
+          pip install -U --timeout=60 numpy
+          pytest -rs --pyargs sklearn
         displayName: Build, install, and test
 
       - bash: |
