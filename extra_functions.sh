@@ -23,8 +23,11 @@ function setup_test_venv {
     if [ $(uname) != "Linux" ]; then
         deactivate || echo ""
         python -m venv test_venv
-        source test_venv/bin/activate
-        python --version # just to check
+        if [ $(uname) == "Windows" ]; then
+            source test_venv/Scripts/activate
+        else
+            source test_venv/bin/activate
+        fi
         pip install --upgrade pip wheel
         pip install $TEST_DEPENDS
     fi
