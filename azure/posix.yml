@@ -95,8 +95,7 @@ jobs:
 
       - script: sudo chown -R $USER $CONDA
         displayName: Take ownership of conda installation
-        condition: eq(variables['uname'], 'Darwin')
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: and(eq(variables['uname'], 'Darwin'), succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - script: |
           conda install -y anaconda-client
