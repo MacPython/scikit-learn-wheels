@@ -107,7 +107,9 @@ jobs:
             echo "Undefined secret token for organization: $ANACONDA_ORG"
             exit 1
           fi
-          anaconda -t $TOKEN upload -u $ANACONDA_ORG wheelhouse/*.whl
+          # The --force option forces a replacement if the remote file already
+          # exists.
+          anaconda -t $TOKEN upload --force -u $ANACONDA_ORG wheelhouse/*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         env:
           # Secret variables need to mapped to env variables explicitly:

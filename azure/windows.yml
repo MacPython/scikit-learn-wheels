@@ -109,7 +109,9 @@ jobs:
             echo "Undefined anaconda secret upload token for $ANACONDA_ORG"
             exit 1
           fi
-          anaconda -t $TOKEN upload -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
+          # The --force option forces a replacement if the remote file already
+          # exists.
+          anaconda -t $TOKEN upload --force -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         env:
           # Secret variables need to mapped to env variables explicitly:
