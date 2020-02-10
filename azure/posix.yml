@@ -31,7 +31,7 @@ jobs:
           versionSpec: $(MB_PYTHON_VERSION)
         displayName: Set python version
 
-      - script: |
+      - bash: |
           set -e
 
           if [ "$BUILD_REASON" == "Schedule" ]; then
@@ -54,7 +54,7 @@ jobs:
           echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Define build env variables
 
-      - script: |
+      - bash: |
           set -e
           pip install virtualenv
           BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
@@ -74,7 +74,7 @@ jobs:
         displayName: Build wheel
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
-      - script: |
+      - bash: |
           set -e
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
@@ -85,17 +85,17 @@ jobs:
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
-      - script: echo "##vso[task.prependpath]$CONDA/bin"
+      - bash: echo "##vso[task.prependpath]$CONDA/bin"
         displayName: Add conda to PATH
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-      - script: sudo chown -R $USER $CONDA
+      - bash: sudo chown -R $USER $CONDA
         displayName: Take ownership of conda installation
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-      - script: |
+      - bash: |
           set -xe
-          conda install -y anaconda-client
+          conda install -q -y anaconda-client
           if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
             TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"

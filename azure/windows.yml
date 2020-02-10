@@ -91,17 +91,13 @@ jobs:
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
-      - script: echo "##vso[task.prependpath]$CONDA/Scripts"
+      - bash: echo "##vso[task.prependpath]$CONDA/Scripts"
         displayName: Add conda to PATH
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-      - script: |
+      - bash: |
           set -xe
-          ls $CONDA
-          ls $CONDA/Scripts
-          echo $PATH
-          hash -r
-          conda install -y anaconda-client
+          conda install -q -y anaconda-client
           if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
             TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
@@ -119,5 +115,5 @@ jobs:
           # Secret variables need to mapped to env variables explicitly:
           SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
           SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
-          displayName: Upload to anaconda.org
-          condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        displayName: Upload to anaconda.org
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
