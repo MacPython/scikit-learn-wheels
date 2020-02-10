@@ -15,8 +15,8 @@ jobs:
       CYTHON_BUILD_DEP: "cython==0.29.14"
       SCIPY_BUILD_DEP: "scipy"
       JOBLIB_BUILD_DEP: "joblib==0.11"
-      DAILY_COMMIT: "master"
-      DAILY_BUILD: "false"
+      NIGHTLY_BUILD_COMMIT: "master"
+      NIGHTLY_BUILD: "false"
       TEST_DEPENDS: "pytest"
     strategy:
       matrix:
@@ -33,11 +33,16 @@ jobs:
 
       - script: |
           set -e
+
+          EFFECTIVE_NIGHTLY_BUILD=NIGHTLY_BUILD
+
           if [ "$BUILD_REASON" == "Schedule" ]; then
-            BUILD_COMMIT=$DAILY_COMMIT
+            BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
+            EFFECTIVE_NIGHTLY_BUILD=$NIGHTLY_BUILD
           fi
           echo "Building scikit-learn-$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=EFFECTIVE_NIGHTLY_BUILD]$EFFECTIVE_NIGHTLY_BUILD"
 
           # Platform variables used in multibuild scripts
           if [ `uname` == 'Darwin' ]; then
@@ -84,19 +89,24 @@ jobs:
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
-      - script: pip install twine wheel keyring artifacts-keyring
-        displayName: Install twine and wheel
+      - script: echo "##vso[task.prependpath]$CONDA/bin"
+        displayName: Add conda to PATH
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-      - task: TwineAuthenticate@1
-        inputs:
-          artifactFeed: sklearn-wheels-testing/sklearn-release
-        displayName: Authenticate twine with artifact feed
+      - script: sudo chown -R $USER $CONDA
+        displayName: Take ownership of conda installation
+        condition: eq(variables['uname'], 'Darwin')
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - script: |
-          # If wheel was already uploaded then the twine command will error
-          twine upload -r sklearn-release --config-file $PYPIRC_PATH \
-          wheelhouse/* || exit 0
-        displayName: Upload to sklearn-release azure artifact feed
+          conda install -y anaconda-client
+          if [ "$EFFECTIVE_NIGHTLY_BUILD" == "true" ]; then
+            ANACONDA_ORG="scipy-wheels-nightly"
+            TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
+          else
+            ANACONDA_ORG="scikit-learn-wheels-staging"
+            TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
+          fi
+          anaconda -t $TOKEN upload --user $ANACONDA_ORG wheelhouse/*.whl
+        displayName: Upload to anaconda.org
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
