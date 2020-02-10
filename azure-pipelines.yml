@@ -3,7 +3,7 @@ schedules:
   displayName: Nighthly build (test)
   branches:
     include:
-    - master
+    - azure_pipelines_pr_2_ogrisel
   always: true
 
 jobs:
