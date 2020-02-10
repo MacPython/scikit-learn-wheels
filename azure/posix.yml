@@ -18,7 +18,7 @@ jobs:
       CYTHON_TEST_DEP: "cython"
       SCIPY_BUILD_DEP: "scipy"
       SCIPY_TEST_DEP: "scipy"
-      JOBLIB_BUILD_DEP: "joblb==0.11"
+      JOBLIB_BUILD_DEP: "joblib==0.11"
       JOBLIB_TEST_DEP: "joblib"
       DAILY_COMMIT: "master"
       DAILY_BUILD: "false"
