@@ -34,6 +34,11 @@ jobs:
           python --version
           python -c "import struct; print(struct.calcsize('P') * 8)"
           pip --version
+
+          # Store original Python path to be able to create test_venv pointing
+          # to same Python version.
+          PYTHON_EXE=`which python`
+          echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Check that we have the expected version and architecture for Python
       - bash: |
           set -xe

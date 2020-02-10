@@ -22,7 +22,7 @@ function setup_test_venv {
     # Linux the tests are run in a Docker container.
     if [ $(uname) != "Linux" ]; then
         deactivate || echo ""
-        python -m venv test_venv
+        $PYTHON_EXE -m venv test_venv
         if [ $(uname) == "Darwin" ]; then
             source test_venv/bin/activate
         else
