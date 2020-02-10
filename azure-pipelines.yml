@@ -13,11 +13,9 @@ jobs:
         #   PYTHON_VERSION: "3.6.x"
         #   PYTHON_ARCH: "x86"
         #   NP_BUILD_DEP: "1.12.1"
-        #   DAILY_BUILD: "true"
         # py_3.6_64:
         #   PYTHON_VERSION: "3.6.x"
         #   NP_BUILD_DEP: "1.12.1"
-        #   DAILY_BUILD: "true"
         # py_3.7_32:
         #   PYTHON_VERSION: "3.7.x"
         #   PYTHON_ARCH: "x86"
@@ -52,10 +50,8 @@ jobs:
         # py_3.6_32:
         #   MB_PYTHON_VERSION: "3.6"
         #   PLAT: "i686"
-        #   DAILY_BUILD: "true"
         # py_3.6_64:
         #   MB_PYTHON_VERSION: "3.6"
-        #   DAILY_BUILD: "true"
         py_3.7_32:
           MB_PYTHON_VERSION: "3.7"
           PLAT: "i686"
@@ -86,7 +82,6 @@ jobs:
         # py_3.6_64:
         #   MB_PYTHON_VERSION: "3.6"
         #   NP_BUILD_DEP: "numpy==1.13.3"
-        #   DAILY_BUILD: "true"
         py_3.7_64:
           MB_PYTHON_VERSION: "3.7"
           NP_BUILD_DEP: "numpy==1.14.5"
