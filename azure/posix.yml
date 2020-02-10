@@ -18,6 +18,8 @@ jobs:
       NIGHTLY_BUILD_COMMIT: "master"
       NIGHTLY_BUILD: "false"
       TEST_DEPENDS: "pytest"
+      JUNITXML: "test-data.xml"
+      TEST_DIR: '$(Agent.WorkFolder)/tmp_for_test'
     strategy:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}
@@ -84,6 +86,13 @@ jobs:
           teardown_test_venv
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
+
+      # - task: PublishTestResults@2
+      #   inputs:
+      #     testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
+      #     testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
+      #   displayName: 'Publish Test Results'
+      #   condition: succeededOrFailed()
 
       - bash: echo "##vso[task.prependpath]$CONDA/bin"
         displayName: Add conda to PATH

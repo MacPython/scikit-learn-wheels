@@ -1,3 +1,11 @@
+schedules:
+- cron: "*/5 * * * *"
+  displayName: Nighthly build (test)
+  branches:
+    include:
+    - master
+  always: true
+
 jobs:
   - template: azure/windows.yml
     parameters:
