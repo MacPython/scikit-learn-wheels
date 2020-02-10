@@ -22,7 +22,7 @@ function setup_test_venv {
     # Linux the tests are run in a Docker container.
     if [ $(uname) != "Linux" ]; then
         deactivate || echo ""
-        virtualenv --python=python test_venv
+        python -m venv test_venv
         source test_venv/bin/activate
         python --version # just to check
         pip install --upgrade pip wheel
