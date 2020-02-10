@@ -40,28 +40,36 @@ jobs:
           python --version
           python -c "import struct; print(struct.calcsize('P') * 8)"
           pip --version
-
-          # Store original Python path to be able to create test_venv pointing
-          # to same Python version.
-          PYTHON_EXE=`which python`
-          echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Check that we have the expected version and architecture for Python
 
       - bash: |
           set -e
 
+          SKIP_BUILD="false"
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
+            if [ "NIGHTLY_BUILD" != "true" ]; then
+              SKIP_BUILD="true"
+            fi
           fi
           echo "Building scikit-learn@$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=SKIP_BUILD]$SKIP_BUILD"
 
+          # Store original Python path to be able to create test_venv pointing
+          # to same Python version.
+          PYTHON_EXE=`which python`
+          echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
+        displayName: Define build env variables
+
+      - bash: |
+          set -e
           cd scikit-learn
           git checkout $BUILD_COMMIT
           git clean -fxd
           git reset --hard
-        displayName: Checkout commit
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
+        displayName: Checkout scikit-learn commit
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
           set -e
@@ -78,7 +86,7 @@ jobs:
           twine check dist/*
           popd
         displayName: Build wheel
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
           set -e
@@ -91,14 +99,14 @@ jobs:
           popd
           teardown_test_venv
         displayName: Install wheel and test
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - task: PublishTestResults@2
-      #   inputs:
-      #     testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
-      #     testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
-      #   displayName: 'Publish Test Results'
-      #   condition: succeededOrFailed()
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
+          testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
+        displayName: 'Publish Test Results'
+        condition: succeededOrFailed()
 
       - bash: echo "##vso[task.prependpath]$CONDA/Scripts"
         displayName: Add conda to PATH
