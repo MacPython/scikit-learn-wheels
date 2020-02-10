@@ -15,8 +15,8 @@ Linux and OSX for various versions of Python (both 32 bit and 64 bit).
 
 If the tests pass, the resulting wheels should show up on:
 
-  - https://test.pypi.org for release wheels staging;
-  - https://anaconda.org/scipy-wheels-nighly for nightly builds.
+  - https://anaconda.org/scikit-learn-wheels-staging for release wheels staging;
+  - https://anaconda.org/scipy-wheels-nightly for nightly builds.
 
 The following tool can be useful to download all the wheels for a specific
 release:
