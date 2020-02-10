@@ -102,9 +102,12 @@ jobs:
         displayName: Take ownership of conda installation
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
+      - bash: conda install -q -y anaconda-client
+        displayName: Install anaconda-client
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
       - bash: |
-          set -xe
-          conda install -q -y anaconda-client
+          set -e
           if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
             TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
