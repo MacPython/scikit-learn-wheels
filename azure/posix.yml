@@ -110,5 +110,9 @@ jobs:
           anaconda -t $TOKEN upload -u $ANACONDA_ORG wheelhouse/*.whl
           echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
+        env:
+          # Secret variables need to mapped to env variables explicitly:
+          SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
+          SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
         displayName: Upload to anaconda.org
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))

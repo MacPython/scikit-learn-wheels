@@ -23,11 +23,13 @@ jobs:
     steps:
       - checkout: self
         submodules: true
+
       - task: UsePythonVersion@0
         inputs:
           versionSpec: $(PYTHON_VERSION)
           architecture: $(PYTHON_ARCH)
         displayName: Set python version
+
       - bash: |
           set -e
 
@@ -42,6 +44,7 @@ jobs:
           PYTHON_EXE=`which python`
           echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Check that we have the expected version and architecture for Python
+
       - bash: |
           set -e
 
@@ -109,5 +112,9 @@ jobs:
           anaconda -t $TOKEN upload -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
           echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
-        displayName: Upload to anaconda.org
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        env:
+          # Secret variables need to mapped to env variables explicitly:
+          SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
+          SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
+          displayName: Upload to anaconda.org
+          condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
