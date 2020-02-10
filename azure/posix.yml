@@ -28,49 +28,55 @@ jobs:
         inputs:
           versionSpec: $(MB_PYTHON_VERSION)
         displayName: Set python version
+
       - script: |
           set -e
-
           if [ "$BUILD_REASON" == "Schedule" ]; then
-            if [ "$DAILY_BUILD" != "true" ]; then
-              exit 0
-            fi
             BUILD_COMMIT=$DAILY_COMMIT
           fi
           echo "Building scikit-learn-$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
 
+          # Platform variables used in multibuild scripts
+          if [ `uname` == 'Darwin' ]; then
+            echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]osx"
+            echo "##vso[task.setvariable variable=MACOSX_DEPLOYMENT_TARGET]10.9"
+          else
+            echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]linux"
+          fi
+        displayName: Define build env variables
+
+      - script: |
+          set -e
           pip install virtualenv
           BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
-          TEST_DEPENDS="pytest"
-
-          if [ `uname` == 'Darwin' ]; then
-            TRAVIS_OS_NAME='osx'
-            export MACOSX_DEPLOYMENT_TARGET=10.9
-          else
-            TRAVIS_OS_NAME='linux'
-          fi
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           source extra_functions.sh
-          before_install
-        displayName: Install build environment
 
-      - script: |
-          set -e
-          # OpenMP is not present on osx by default
+          # Setup build dependencies
+          before_install
+
+          # OpenMP is not present on macOS by default
           setup_compiler
           clean_code $REPO_DIR $BUILD_COMMIT
           build_wheel $REPO_DIR $PLAT
           teardown_compiler
         displayName: Build wheel
+        condition: ne(variables['Daily.Build'], 'false')
 
       - script: |
           set -e
+          TEST_DEPENDS="pytest"
+          source multibuild/common_utils.sh
+          source multibuild/travis_steps.sh
+          source extra_functions.sh
           setup_test_venv
           install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
+        condition: ne(variables['Daily.Build'], 'false')
 
       - script: pip install twine wheel keyring artifacts-keyring
         displayName: Install twine and wheel
