@@ -16,6 +16,7 @@ jobs:
       DAILY_COMMIT: "master"
       DAILY_BUILD: "false"
       PYTHON_ARCH: "x64"
+      TEST_DEPENDS: "pytest"
     strategy:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}

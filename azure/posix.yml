@@ -17,6 +17,7 @@ jobs:
       JOBLIB_BUILD_DEP: "joblib==0.11"
       DAILY_COMMIT: "master"
       DAILY_BUILD: "false"
+      TEST_DEPENDS: "pytest"
     strategy:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}
@@ -68,7 +69,6 @@ jobs:
 
       - script: |
           set -e
-          TEST_DEPENDS="pytest"
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           source extra_functions.sh
