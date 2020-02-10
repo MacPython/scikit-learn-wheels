@@ -63,21 +63,21 @@ jobs:
           python setup.py bdist_wheel
           ls dist
           twine check dist/*
-          pip install --pre --no-index --find-links dist/ scikit-learn
           popd
+        displayName: Build wheel
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
+      - bash: |
+          set -xe
           source extra_functions.sh
+          setup_test_env
+          pip install --pre --no-index --find-links scikit-learn/dist/ scikit-learn
           mkdir tmp
-          cd tmp
-
-          # Install the newest version of numpy for the tests: the goal is to ensure
-          # that the scikit-learn wheels are binary compatible both with the old numpy
-          # version against which they were built and the newest numpy version at the
-          # time of the release, that is the version of numpy that users are most
-          # likely to use.
-          pip install -U --timeout=60 numpy
+          pushd tmp
           pytest -rs --pyargs sklearn
-        displayName: Build, install, and test
+          popd
+          teardown_test_env
+        displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - bash: |
