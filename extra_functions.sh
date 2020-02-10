@@ -41,6 +41,8 @@ function setup_test_venv {
 function teardown_test_venv {
     if [ $(uname) != "Linux" ]; then
         deactivate || echo ""
-        source venv/bin/activate
+        if [ $(uname) == "Darwin" ]; then
+            source venv/bin/activate
+        fi
     fi
 }
