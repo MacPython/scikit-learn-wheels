@@ -48,7 +48,7 @@ jobs:
           git clean -fxd
           git reset --hard
         displayName: Checkout commit
-        condition: ne(variables['Daily.Build'], 'false')
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - bash: |
           set -xe
@@ -78,7 +78,7 @@ jobs:
           pip install -U --timeout=60 numpy
           pytest -rs --pyargs sklearn
         displayName: Build, install, and test
-        condition: ne(variables['Daily.Build'], 'false')
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - bash: |
           pip install wheel keyring artifacts-keyring

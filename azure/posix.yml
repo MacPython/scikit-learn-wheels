@@ -64,7 +64,7 @@ jobs:
           build_wheel $REPO_DIR $PLAT
           teardown_compiler
         displayName: Build wheel
-        condition: ne(variables['Daily.Build'], 'false')
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - script: |
           set -e
@@ -76,7 +76,7 @@ jobs:
           install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
-        condition: ne(variables['Daily.Build'], 'false')
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - script: pip install twine wheel keyring artifacts-keyring
         displayName: Install twine and wheel
