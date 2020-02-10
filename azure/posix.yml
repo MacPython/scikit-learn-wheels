@@ -84,7 +84,7 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           setup_test_venv
-          install_run $PLAT
+          # install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
@@ -95,9 +95,10 @@ jobs:
 
       - script: sudo chown -R $USER $CONDA
         displayName: Take ownership of conda installation
-        condition: and(eq(variables['uname'], 'Darwin'), succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
       - script: |
+          set -xe
           conda install -y anaconda-client
           if [ "$EFFECTIVE_NIGHTLY_BUILD" == "true" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
@@ -106,6 +107,8 @@ jobs:
             ANACONDA_ORG="scikit-learn-wheels-staging"
             TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
           fi
-          anaconda -t $TOKEN upload --user $ANACONDA_ORG wheelhouse/*.whl
+          anaconda -t $TOKEN upload -u $ANACONDA_ORG wheelhouse/*.whl
+          echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
+          echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         displayName: Upload to anaconda.org
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))

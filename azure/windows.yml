@@ -82,25 +82,28 @@ jobs:
           pip install scikit-learn/dist/scikit_learn-*.whl
           mkdir tmp
           pushd tmp
-          pytest -rs --pyargs sklearn
+          # pytest -rs --pyargs sklearn
           popd
           teardown_test_venv
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
-      - bash: |
-          pip install wheel keyring artifacts-keyring
-        displayName: Install wheel keyring and artifacts-keyring
+      - script: echo "##vso[task.prependpath]$CONDA/Scripts"
+        displayName: Add conda to PATH
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-      - task: TwineAuthenticate@1
-        inputs:
-          artifactFeed: sklearn-wheels-testing/sklearn-release
-        displayName: Authenticate twine with artifact feed
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-      - bash: |
-          # If wheel was already uploaded then the twine command will error
-          twine upload -r sklearn-release --config-file $PYPIRC_PATH scikit-learn/dist/* || exit 0
-        displayName: Upload to sklearn-release azure artifact feed
+      - script: |
+          set -xe
+          conda install -y anaconda-client
+          if [ "$EFFECTIVE_NIGHTLY_BUILD" == "true" ]; then
+            ANACONDA_ORG="scipy-wheels-nightly"
+            TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
+          else
+            ANACONDA_ORG="scikit-learn-wheels-staging"
+            TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
+          fi
+          anaconda -t $TOKEN upload -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
+          echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
+          echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
+        displayName: Upload to anaconda.org
         condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
