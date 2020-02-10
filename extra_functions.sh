@@ -11,7 +11,7 @@
     fi
 }
 
-function disable_system_openmp {
+function teardown_compiler {
     if [ $(uname) == "Darwin" ]; then
         brew uninstall libomp
     fi
