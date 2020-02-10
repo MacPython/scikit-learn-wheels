@@ -102,6 +102,10 @@ jobs:
             ANACONDA_ORG="scikit-learn-wheels-staging"
             TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
           fi
+          if [ "$TOKEN" == "" ]; then
+            echo "Undefined anaconda secret upload token for $ANACONDA_ORG"
+            exit 1
+          fi
           anaconda -t $TOKEN upload -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
           echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
