@@ -70,13 +70,13 @@ jobs:
       - bash: |
           set -xe
           source extra_functions.sh
-          setup_test_env
+          setup_test_venv
           pip install --pre --no-index --find-links scikit-learn/dist/ scikit-learn
           mkdir tmp
           pushd tmp
           pytest -rs --pyargs sklearn
           popd
-          teardown_test_env
+          teardown_test_venv
         displayName: Install wheel and test
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
