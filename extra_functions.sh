@@ -28,7 +28,10 @@ function setup_test_venv {
         else
             source test_venv/Scripts/activate
         fi
-        pip install --upgrade pip wheel
+        # Note: the idiom "python -m pip install ..." is necessary to upgrade
+        # pip itself on Windows. Otherwise one would get a permission error on
+        # pip.exe.
+        python -m pip install --upgrade pip wheel
         pip install $TEST_DEPENDS
     fi
 }
