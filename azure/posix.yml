@@ -12,13 +12,9 @@ jobs:
       BUILD_COMMIT: "0.22.1"
       PLAT: "x86_64"
       NP_BUILD_DEP: "numpy==1.11.0"
-      NP_TEST_DEP: "numpy"
       CYTHON_BUILD_DEP: "cython==0.29.14"
-      CYTHON_TEST_DEP: "cython"
       SCIPY_BUILD_DEP: "scipy"
-      SCIPY_TEST_DEP: "scipy"
       JOBLIB_BUILD_DEP: "joblib==0.11"
-      JOBLIB_TEST_DEP: "joblib"
       DAILY_COMMIT: "master"
       DAILY_BUILD: "false"
     strategy:
@@ -45,7 +41,7 @@ jobs:
 
           pip install virtualenv
           BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
-          TEST_DEPENDS="$NP_TEST_DEP pytest $CYTHON_TEST_DEP $SCIPY_TEST_DEP"
+          TEST_DEPENDS="pytest"
 
           if [ `uname` == 'Darwin' ]; then
             TRAVIS_OS_NAME='osx'
@@ -70,7 +66,9 @@ jobs:
             disable_system_openmp
           fi
 
+          setup_test_venv
           install_run $PLAT
+          teardown_test_venv
         displayName: Build, install, and test
 
       - script: pip install twine wheel keyring artifacts-keyring
