@@ -48,7 +48,7 @@ jobs:
           SKIP_BUILD="false"
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
-            if [ "NIGHTLY_BUILD" != "true" ]; then
+            if [ "$NIGHTLY_BUILD" != "true" ]; then
               SKIP_BUILD="true"
             fi
           fi
