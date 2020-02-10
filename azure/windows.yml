@@ -34,7 +34,7 @@ jobs:
           set -e
 
           echo PYTHON $PYTHON_VERSION $PYTHON_ARCH
-          echo Build Reason $BUILD_REASON
+          echo Build Reason: $BUILD_REASON
           python --version
           python -c "import struct; print(struct.calcsize('P') * 8)"
           pip --version
@@ -51,7 +51,7 @@ jobs:
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
           fi
-          echo "Building scikit-learn-$BUILD_COMMIT"
+          echo "Building scikit-learn@$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
 
           cd scikit-learn
@@ -97,6 +97,10 @@ jobs:
 
       - script: |
           set -xe
+          ls $CONDA
+          ls $CONDA/Scripts
+          echo $PATH
+          hash -r
           conda install -y anaconda-client
           if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
@@ -110,7 +114,6 @@ jobs:
             exit 1
           fi
           anaconda -t $TOKEN upload -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
-          echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         env:
           # Secret variables need to mapped to env variables explicitly:

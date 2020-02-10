@@ -37,7 +37,7 @@ jobs:
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
           fi
-          echo "Building scikit-learn-$BUILD_COMMIT"
+          echo "Building scikit-learn@$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
 
           # Platform variables used in multibuild scripts
@@ -104,11 +104,10 @@ jobs:
             TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
           fi
           if [ "$TOKEN" == "" ]; then
-            echo "Undefined anaconda secret upload token for $ANACONDA_ORG"
+            echo "Undefined secret token for organization: $ANACONDA_ORG"
             exit 1
           fi
           anaconda -t $TOKEN upload -u $ANACONDA_ORG wheelhouse/*.whl
-          echo "Uploaded to https://anaconda.org/$ANACONDA_ORG/scikit-learn"
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         env:
           # Secret variables need to mapped to env variables explicitly:
