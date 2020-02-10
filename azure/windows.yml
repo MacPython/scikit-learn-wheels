@@ -106,15 +106,15 @@ jobs:
           testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
           testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
         displayName: 'Publish Test Results'
-        condition: succeededOrFailed()
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: echo "##vso[task.prependpath]$CONDA/Scripts"
         displayName: Add conda to PATH
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
 
       - bash: conda install -q -y anaconda-client
         displayName: Install anaconda-client
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
 
       - bash: |
           set -e
@@ -138,4 +138,4 @@ jobs:
           SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
           SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
         displayName: Upload to anaconda.org
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
