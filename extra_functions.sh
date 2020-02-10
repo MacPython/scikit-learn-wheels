@@ -32,7 +32,9 @@ function setup_test_venv {
         # pip itself on Windows. Otherwise one would get a permission error on
         # pip.exe.
         python -m pip install --upgrade pip wheel
-        pip install $TEST_DEPENDS
+        if [ "$TEST_DEPENDS" != "" ]; then
+            pip install $TEST_DEPENDS
+        fi
     fi
 }
 
