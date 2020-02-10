@@ -52,19 +52,14 @@ jobs:
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
+          source extra_functions.sh
           before_install
 
           # OpenMP is not present on osx by default
-          if [ $TRAVIS_OS_NAME == "osx" ]; then
-            enable_openmp
-          fi
-
+          setup_compiler
           clean_code $REPO_DIR $BUILD_COMMIT
           build_wheel $REPO_DIR $PLAT
-
-          if [ $TRAVIS_OS_NAME == "osx" ]; then
-            disable_system_openmp
-          fi
+          teardown_compiler
 
           setup_test_venv
           install_run $PLAT
