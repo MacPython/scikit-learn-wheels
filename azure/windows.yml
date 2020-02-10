@@ -29,6 +29,8 @@ jobs:
           architecture: $(PYTHON_ARCH)
         displayName: Set python version
       - bash: |
+          set -e
+
           echo PYTHON $PYTHON_VERSION $PYTHON_ARCH
           echo Build Reason $BUILD_REASON
           python --version
@@ -41,7 +43,7 @@ jobs:
           echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Check that we have the expected version and architecture for Python
       - bash: |
-          set -xe
+          set -e
 
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$DAILY_COMMIT
@@ -57,7 +59,7 @@ jobs:
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - bash: |
-          set -xe
+          set -e
 
           pip install --timeout=60 numpy==$NP_BUILD_DEP
           pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
@@ -74,7 +76,7 @@ jobs:
         condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
 
       - bash: |
-          set -xe
+          set -e
           source extra_functions.sh
           setup_test_venv
           pip install scikit-learn/dist/scikit_learn-*.whl
