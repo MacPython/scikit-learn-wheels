@@ -71,7 +71,7 @@ jobs:
           set -xe
           source extra_functions.sh
           setup_test_venv
-          pip install --pre --no-index --find-links scikit-learn/dist/ scikit-learn
+          pip install scikit-learn/dist/scikit_learn-*.whl
           mkdir tmp
           pushd tmp
           pytest -rs --pyargs sklearn
