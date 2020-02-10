@@ -1,6 +1,6 @@
 schedules:
 - cron: "*/5 * * * *"
-  displayName: Nighthly build (test)
+  displayName: Nighthly build
   branches:
     include:
     - azure_pipelines_pr_2_ogrisel
@@ -12,11 +12,11 @@ jobs:
       name: windows
       vmImage: vs2017-win2016
       matrix:
-        # py_3.5_32:
-        #   PYTHON_VERSION: "3.5.x"
-        #   PYTHON_ARCH: "x86"
-        # py_3.5_64:
-        #   PYTHON_VERSION: "3.5.x"
+        py_3.5_32:
+          PYTHON_VERSION: "3.5.x"
+          PYTHON_ARCH: "x86"
+        py_3.5_64:
+          PYTHON_VERSION: "3.5.x"
         # py_3.6_32:
         #   PYTHON_VERSION: "3.6.x"
         #   PYTHON_ARCH: "x86"
