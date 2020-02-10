@@ -54,17 +54,23 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           before_install
+        displayName: Install build environment
 
+      - script: |
+          set -e
           # OpenMP is not present on osx by default
           setup_compiler
           clean_code $REPO_DIR $BUILD_COMMIT
           build_wheel $REPO_DIR $PLAT
           teardown_compiler
+        displayName: Build wheel
 
+      - script: |
+          set -e
           setup_test_venv
           install_run $PLAT
           teardown_test_venv
-        displayName: Build, install, and test
+        displayName: Install wheel and test
 
       - script: pip install twine wheel keyring artifacts-keyring
         displayName: Install twine and wheel
