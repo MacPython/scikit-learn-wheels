@@ -34,15 +34,11 @@ jobs:
       - script: |
           set -e
 
-          EFFECTIVE_NIGHTLY_BUILD=NIGHTLY_BUILD
-
           if [ "$BUILD_REASON" == "Schedule" ]; then
             BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
-            EFFECTIVE_NIGHTLY_BUILD=$NIGHTLY_BUILD
           fi
           echo "Building scikit-learn-$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
-          echo "##vso[task.setvariable variable=EFFECTIVE_NIGHTLY_BUILD]$EFFECTIVE_NIGHTLY_BUILD"
 
           # Platform variables used in multibuild scripts
           if [ `uname` == 'Darwin' ]; then
@@ -76,7 +72,7 @@ jobs:
           build_wheel $REPO_DIR $PLAT
           teardown_compiler
         displayName: Build wheel
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
       - script: |
           set -e
@@ -87,7 +83,7 @@ jobs:
           # install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
       - script: echo "##vso[task.prependpath]$CONDA/bin"
         displayName: Add conda to PATH
@@ -100,7 +96,7 @@ jobs:
       - script: |
           set -xe
           conda install -y anaconda-client
-          if [ "$EFFECTIVE_NIGHTLY_BUILD" == "true" ]; then
+          if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
             TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
           else

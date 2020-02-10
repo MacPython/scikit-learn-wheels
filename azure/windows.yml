@@ -13,8 +13,8 @@ jobs:
       NP_BUILD_DEP: "1.11.0"
       CYTHON_BUILD_DEP: "0.29.14"
       SCIPY_BUILD_DEP: "1.1.0"
-      DAILY_COMMIT: "master"
-      DAILY_BUILD: "false"
+      NIGHTLY_BUILD_COMMIT: "master"
+      NIGHTLY_BUILD: "false"
       PYTHON_ARCH: "x64"
       TEST_DEPENDS: "pytest"
     strategy:
@@ -46,7 +46,7 @@ jobs:
           set -e
 
           if [ "$BUILD_REASON" == "Schedule" ]; then
-            BUILD_COMMIT=$DAILY_COMMIT
+            BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
           fi
           echo "Building scikit-learn-$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
@@ -56,7 +56,7 @@ jobs:
           git clean -fxd
           git reset --hard
         displayName: Checkout commit
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
       - bash: |
           set -e
@@ -73,7 +73,7 @@ jobs:
           twine check dist/*
           popd
         displayName: Build wheel
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
       - bash: |
           set -e
@@ -86,7 +86,7 @@ jobs:
           popd
           teardown_test_venv
         displayName: Install wheel and test
-        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Daily.Build'], 'false'))
+        condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['Nightly.Build'], 'false'))
 
       - script: echo "##vso[task.prependpath]$CONDA/Scripts"
         displayName: Add conda to PATH
@@ -95,7 +95,7 @@ jobs:
       - script: |
           set -xe
           conda install -y anaconda-client
-          if [ "$EFFECTIVE_NIGHTLY_BUILD" == "true" ]; then
+          if [ "$BUILD_REASON" == "Schedule" ]; then
             ANACONDA_ORG="scipy-wheels-nightly"
             TOKEN="$SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN"
           else
