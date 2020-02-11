@@ -87,7 +87,7 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           setup_test_venv
-          # install_run $PLAT
+          install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
         condition: eq(variables['SKIP_BUILD'], 'false')
