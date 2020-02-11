@@ -133,4 +133,4 @@ jobs:
           SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
           SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
         displayName: Upload to anaconda.org
-        condition: ne(variables['TOKEN'], ''))
+        condition: ne(variables['TOKEN'], '')
