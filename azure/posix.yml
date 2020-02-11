@@ -99,12 +99,10 @@ jobs:
         displayName: 'Publish Test Results'
         condition: eq(variables['SKIP_BUILD'], 'false')
 
-      - bash: echo "##vso[task.prependpath]$CONDA/bin"
+      - bash: |
+          echo "##vso[task.prependpath]$CONDA/bin"
+          sudo chown -R $USER $CONDA
         displayName: Add conda to PATH
-        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
-
-      - bash: sudo chown -R $USER $CONDA
-        displayName: Take ownership of conda installation
         condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
 
       - bash: conda install -q -y anaconda-client
@@ -120,10 +118,12 @@ jobs:
             ANACONDA_ORG="scikit-learn-wheels-staging"
             TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
           fi
-          if [ "$TOKEN" == "" ]; then
-            echo "Undefined secret token for organization: $ANACONDA_ORG"
-            exit 1
-          fi
+          echo "##vso[task.setvariable variable=TOKEN]$TOKEN"
+        displayName: Retrieve secret upload token
+        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
+
+      - bash: |
+          set -e
           # The --force option forces a replacement if the remote file already
           # exists.
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG wheelhouse/*.whl
@@ -133,4 +133,4 @@ jobs:
           SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
           SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
         displayName: Upload to anaconda.org
-        condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: ne(variables['TOKEN'], ''))
