@@ -19,7 +19,7 @@ jobs:
       NIGHTLY_BUILD: "false"
       TEST_DEPENDS: "pytest"
       JUNITXML: "test-data.xml"
-      TEST_DIR: '$(Agent.WorkFolder)/tmp_for_test'
+      TEST_DIR: "tmp_for_test"
     strategy:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}
@@ -89,6 +89,8 @@ jobs:
           setup_test_venv
           install_run $PLAT
           teardown_test_venv
+          ls
+          ls $TEST_DIR
         displayName: Install wheel and test
         condition: eq(variables['SKIP_BUILD'], 'false')
 
