@@ -121,6 +121,10 @@ jobs:
           echo "##vso[task.setvariable variable=TOKEN]$TOKEN"
         displayName: Retrieve secret upload token
         condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
+        env:
+          # Secret variables need to mapped to env variables explicitly:
+          SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
+          SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
 
       - bash: |
           set -e
@@ -128,9 +132,5 @@ jobs:
           # exists.
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG wheelhouse/*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
-        env:
-          # Secret variables need to mapped to env variables explicitly:
-          SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
-          SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
         displayName: Upload to anaconda.org
         condition: ne(variables['TOKEN'], '')
