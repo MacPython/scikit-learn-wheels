@@ -126,6 +126,7 @@ jobs:
             TOKEN="$SCIKIT_LEARN_STAGING_UPLOAD_TOKEN"
           fi
           echo "##vso[task.setvariable variable=TOKEN]$TOKEN"
+          echo "##vso[task.setvariable variable=ANACONDA_ORG]$ANACONDA_ORG"
         displayName: Retrieve secret upload token
         condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'))
         env:
@@ -139,5 +140,5 @@ jobs:
           # exists.
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
-        displayName: Upload to anaconda.org
+        displayName: Upload to anaconda.org (only if secret token is retrieved)
         condition: ne(variables['TOKEN'], '')
