@@ -87,7 +87,7 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           setup_test_venv
-          install_run $PLAT
+          # install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
         condition: eq(variables['SKIP_BUILD'], 'false')
@@ -130,6 +130,7 @@ jobs:
           set -e
           # The --force option forces a replacement if the remote file already
           # exists.
+          ls wheelhouse/*.whl
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG wheelhouse/*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         displayName: Upload to anaconda.org
