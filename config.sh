@@ -7,22 +7,10 @@ function pre_build {
     :
 }
 
+# XXX: test-data.xml is hard-coded because the JUNITXML env variable
+# is not forwarded to the docker container environment.
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
-    pytest -l --pyargs sklearn
-}
-
- function enable_openmp {
-    # Install OpenMP
-    brew install libomp
-    export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
-    export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
-    export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
-    export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
-    export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
-}
-
-function disable_system_openmp {
-    brew uninstall libomp
+    pytest -l --junitxml=test-data.xml --pyargs sklearn
 }

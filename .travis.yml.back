@@ -135,6 +135,6 @@ after_success:
   - pip install wheelhouse-uploader twine
   - python -m twine check ${TRAVIS_BUILD_DIR}/wheelhouse/*
   - python -m wheelhouse_uploader upload --local-folder
-        ${TRAVIS_BUILD_DIR}/wheelhouse/
-        $UPLOAD_ARGS
-        $CONTAINER
+    ${TRAVIS_BUILD_DIR}/wheelhouse/
+    $UPLOAD_ARGS
+    $CONTAINER
