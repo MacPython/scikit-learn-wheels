@@ -12,5 +12,5 @@ function pre_build {
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
-    pytest -l -k isotonic --junitxml=test-data.xml --pyargs sklearn
+    pytest -l --junitxml=test-data.xml --pyargs sklearn
 }
