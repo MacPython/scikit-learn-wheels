@@ -7,8 +7,10 @@ function pre_build {
     :
 }
 
+# XXX: test-data.xml is hard-coded because the JUNITXML env variable
+# is not forwarded to the docker container environment.
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
-    pytest -l -k isotonic --junitxml=$JUNITXML --pyargs sklearn
+    pytest -l -k isotonic --junitxml=test-data.xml --pyargs sklearn
 }
