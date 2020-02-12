@@ -1,4 +1,5 @@
-TODO: add Azure Pipelines badge here
+.. image:: https://dev.azure.com/ogrisel2/scikit-learn-wheels/_apis/build/status/MacPython.scikit-learn-wheels?branchName=master
+    :target: https://dev.azure.com/ogrisel2/scikit-learn-wheels/_build/latest?definitionId=3&branchName=master
 
 ##########################
 Scikit-learn wheel builder
