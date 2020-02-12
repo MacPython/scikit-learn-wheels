@@ -82,7 +82,7 @@ jobs:
         condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
-          set -e
+          set -xe
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           source extra_functions.sh
@@ -91,6 +91,7 @@ jobs:
           teardown_test_venv
           ls
           ls $TEST_DIR
+          ls tmp_for_test
         displayName: Install wheel and test
         condition: eq(variables['SKIP_BUILD'], 'false')
 

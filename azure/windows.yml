@@ -95,7 +95,7 @@ jobs:
           pip install scikit-learn/dist/scikit_learn-*.whl
           mkdir $TEST_DIR
           pushd $TEST_DIR
-          pytest -rs -l --junitxml=$JUNITXML --pyargs sklearn
+          pytest -k isotonic -rs -l --junitxml=$JUNITXML --pyargs sklearn
           popd
           teardown_test_venv
         displayName: Install wheel and test
