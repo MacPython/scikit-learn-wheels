@@ -9,7 +9,7 @@ jobs:
       vmImage: ${{ parameters.vmImage }}
     variables:
       REPO_DIR: "scikit-learn"
-      BUILD_COMMIT: "0.22.1-release-branch"
+      BUILD_COMMIT: "0.22.2-release-branch"
       PLAT: "x86_64"
       NP_BUILD_DEP: "numpy==1.11.0"
       CYTHON_BUILD_DEP: "cython==0.29.14"
