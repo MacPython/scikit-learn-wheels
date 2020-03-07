@@ -41,7 +41,6 @@ jobs:
   #         NP_BUILD_DEP: "1.17.3"
   #         SCIPY_BUILD_DEP: "1.4.1"
   #         NIGHTLY_BUILD: "true"
-
   # - template: azure/posix.yml
   #   parameters:
   #     name: linux
@@ -70,7 +69,6 @@ jobs:
   #         MB_PYTHON_VERSION: "3.8"
   #         NP_BUILD_DEP: "numpy==1.17.3"
   #         NIGHTLY_BUILD: "true"
-
   # - template: azure/posix.yml
   #   parameters:
   #     name: macOS
