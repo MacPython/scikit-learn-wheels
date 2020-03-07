@@ -7,6 +7,9 @@ schedules:
     - master
   always: true
 
+variables:
+  BUILD_COMMIT: "0.22.2.post1"
+
 jobs:
   - template: azure/posix-sdist.yml
   # - template: azure/windows.yml

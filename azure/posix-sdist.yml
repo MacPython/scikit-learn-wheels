@@ -26,7 +26,6 @@ jobs:
               SKIP_BUILD="true"
             fi
           fi
-          BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
 
           echo "Building scikit-learn@$BUILD_COMMIT"
           echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
@@ -68,7 +67,7 @@ jobs:
 
           # Uses pep 517
           pip install scikit-learn/dist/*.tar.gz
-        displayName: Create test venv and install
+        displayName: Create test venv and install using source dist
 
       - bash: |
           set -e
@@ -79,7 +78,7 @@ jobs:
 
           python -m pip install pytest
           pytest -l --junitxml=$JUNITXML --pyargs sklearn
-        displayName: Install scikit-learn using source dist
+        displayName: Runs tests
 
       - task: PublishTestResults@2
         inputs:

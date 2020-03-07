@@ -8,7 +8,6 @@ jobs:
     pool:
       vmImage: ${{ parameters.vmImage }}
     variables:
-      BUILD_COMMIT: "0.22.2.post1"
       SKLEARN_SKIP_NETWORK_TESTS: "1"
       NP_BUILD_DEP: "1.11.0"
       CYTHON_BUILD_DEP: "0.29.14"
