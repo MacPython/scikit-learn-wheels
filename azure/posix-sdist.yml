@@ -1,5 +1,5 @@
 jobs:
-  - job: Linux Source Distrubution
+  - job: Linux_Source_Dist
     pool:
       vmImage: ubuntu-16.04
     variables:
@@ -69,6 +69,6 @@ jobs:
       - task: PublishTestResults@2
         inputs:
           testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
-          testRunTitle: ${{ format('{0}-$(Agent.JobName)', 'Linux Source') }}
+          testRunTitle: ${{ format('{0}-$(Agent.JobName)', 'Linux_Source_Dist') }}
         displayName: "Publish Test Results"
         condition: eq(variables['SKIP_BUILD'], 'false')
