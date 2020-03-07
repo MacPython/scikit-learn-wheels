@@ -48,8 +48,8 @@ jobs:
       - bash: |
           set -e
 
-          python -m venv $TEST_ENV
-          source $TEST_ENV/bin/activate
+          python -m venv $TEST_VENV
+          source $TEST_VENV/bin/activate
 
           # Uses pep 517
           pip install scikit-learn/dist/*.tar.gz
@@ -57,7 +57,7 @@ jobs:
 
       - bash: |
           set -e
-          source $TEST_ENV/bin/activate
+          source $TEST_VENV/bin/activate
 
           mkdir $TEST_DIR
           cd $TEST_DIR
