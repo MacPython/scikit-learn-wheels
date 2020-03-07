@@ -35,7 +35,6 @@ jobs:
       - bash: |
           set -e
 
-          python -m pip install -U pip
           python -m venv build_env
           source build_env/bin/activate
           python -m pip install numpy scipy Cython
@@ -48,8 +47,17 @@ jobs:
       - bash: |
           set -e
 
+          source build_env/bin/activate
+          python -m pip install twine
+
+          twine check scikit-learn/dist/*
+        displayName: Twine check
+      - bash: |
+          set -e
+
           python -m venv $TEST_VENV
           source $TEST_VENV/bin/activate
+          python -m pip install -U pip
 
           # Uses pep 517
           pip install scikit-learn/dist/*.tar.gz
