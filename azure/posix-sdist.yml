@@ -3,7 +3,6 @@ jobs:
     pool:
       vmImage: ubuntu-16.04
     variables:
-      BUILD_COMMIT: "0.22.2.post1"
       NIGHTLY_BUILD_COMMIT: "master"
       NIGHTLY_BUILD: "true"
       JUNITXML: "test-data.xml"
