@@ -59,8 +59,8 @@ jobs:
           python --version
           python -m pip install -U pip
 
-          # For now only master and >=0.23 contains project.toml
-          if [ "$BUILD_COMMIT" != "$NIGHTLY_BUILD_COMMIT" ]; then
+          # pyproject.toml will be released with >=0.23
+          if [[ "$BUILD_COMMIT" =~ "^0.22" ]]; then
             python -m pip install Cython
           fi
 
