@@ -57,7 +57,13 @@ jobs:
 
           python -m venv $TEST_VENV
           source $TEST_VENV/bin/activate
+          python --version
           python -m pip install -U pip
+
+          # For now only master and >=0.23 contains project.toml
+          if [ "$BUILD_COMMIT" != "$NIGHTLY_BUILD_COMMIT" ]; then
+            python -m pip install Cython
+          fi
 
           # Uses pep 517
           pip install scikit-learn/dist/*.tar.gz
