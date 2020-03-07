@@ -1,0 +1,74 @@
+jobs:
+  - job: Linux Source Distrubution
+    pool:
+      vmImage: ubuntu-16.04
+    variables:
+      BUILD_COMMIT: "0.22.2.post1"
+      NIGHTLY_BUILD_COMMIT: "master"
+      NIGHTLY_BUILD: "true"
+      JUNITXML: "test-data.xml"
+      TEST_DIR: "tmp_for_test"
+      TEST_VENV: "test_env"
+      MB_PYTHON_VERSION: "3.8"
+    steps:
+      - checkout: self
+        submodules: true
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(MB_PYTHON_VERSION)
+        displayName: Set python version
+      - bash: |
+          set -e
+          SKIP_BUILD="false"
+          if [ "$BUILD_REASON" == "Schedule" ]; then
+            BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
+            if [ "$NIGHTLY_BUILD" != "true" ]; then
+              SKIP_BUILD="true"
+            fi
+          fi
+
+          echo "Building scikit-learn@$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=SKIP_BUILD]$SKIP_BUILD"
+        displayName: Define build env variables
+
+      - bash: |
+          set -e
+
+          python -m pip install -U pip
+          python -m venv build_env
+          source build_env/bin/activate
+          python -m pip install numpy scipy Cython
+
+          cd scikit-learn
+          git checkout $BUILD_COMMIT
+          python setup.py sdist
+        displayName: Create build venv with build dependices and build source dist
+
+      - bash: |
+          set -e
+
+          python -m venv $TEST_ENV
+          source $TEST_ENV/bin/activate
+
+          # Uses pep 517
+          pip install scikit-learn/dist/*.tar.gz
+        displayName: Create test venv and install
+
+      - bash: |
+          set -e
+          source $TEST_ENV/bin/activate
+
+          mkdir $TEST_DIR
+          cd $TEST_DIR
+
+          python -m pip install pytest
+          pytest -l --junitxml=$JUNITXML --pyargs sklearn
+        displayName: Install scikit-learn using source dist
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
+          testRunTitle: ${{ format('{0}-$(Agent.JobName)', 'Linux Source') }}
+        displayName: "Publish Test Results"
+        condition: eq(variables['SKIP_BUILD'], 'false')
