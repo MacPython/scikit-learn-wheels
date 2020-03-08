@@ -76,7 +76,7 @@ jobs:
           cd $TEST_DIR
 
           python -m pip install pytest
-          # pytest -l --junitxml=$JUNITXML --pyargs sklearn
+          pytest -l --junitxml=$JUNITXML --pyargs sklearn
         displayName: Runs tests
 
       - task: PublishTestResults@2
