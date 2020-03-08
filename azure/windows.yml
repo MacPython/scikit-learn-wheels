@@ -144,4 +144,4 @@ jobs:
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         displayName: Upload to anaconda.org (only if secret token is retrieved)
-        condition: ne(variables['TOKEN'], '')
+        condition: and(ne(variables['TOKEN'], ''), ne(variables['Build.Reason'], 'PullRequest'))
