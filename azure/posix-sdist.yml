@@ -60,7 +60,7 @@ jobs:
           python -m pip install -U pip
 
           # pyproject.toml will be released with >=0.23
-          if [[ "$BUILD_COMMIT" =~ "^0.22" ]]; then
+          if [[ "$BUILD_COMMIT" =~ ^0.22* ]]; then
             python -m pip install Cython
           fi
 
@@ -125,4 +125,4 @@ jobs:
           anaconda -t $TOKEN upload --force -u $ANACONDA_ORG scikit-learn/dist/*.tar.gz
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         displayName: Upload to anaconda.org (only if secret token is retrieved)
-        condition: and(ne(variables['TOKEN'], ''), ne(variables['Build.Reason'], 'PullRequest'))
+        condition: ne(variables['TOKEN'], '')
