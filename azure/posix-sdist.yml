@@ -36,6 +36,8 @@ jobs:
 
           python -m venv build_env
           source build_env/bin/activate
+
+          # Need because setup.py enforces these to be installed
           python -m pip install numpy scipy Cython
 
           cd scikit-learn
