@@ -23,24 +23,24 @@ jobs:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}
     steps:
-      # - checkout: self
-      #   submodules: true
+      - checkout: self
+        submodules: true
 
-      # - task: UsePythonVersion@0
-      #   inputs:
-      #     versionSpec: $(PYTHON_VERSION)
-      #     architecture: $(PYTHON_ARCH)
-      #   displayName: Set python version
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(PYTHON_VERSION)
+          architecture: $(PYTHON_ARCH)
+        displayName: Set python version
 
-      # - bash: |
-      #     set -e
+      - bash: |
+          set -e
 
-      #     echo PYTHON $PYTHON_VERSION $PYTHON_ARCH
-      #     echo Build Reason: $BUILD_REASON
-      #     python --version
-      #     python -c "import struct; print(struct.calcsize('P') * 8)"
-      #     pip --version
-      #   displayName: Check that we have the expected version and architecture for Python
+          echo PYTHON $PYTHON_VERSION $PYTHON_ARCH
+          echo Build Reason: $BUILD_REASON
+          python --version
+          python -c "import struct; print(struct.calcsize('P') * 8)"
+          pip --version
+        displayName: Check that we have the expected version and architecture for Python
 
       - bash: |
           set -e
@@ -62,51 +62,51 @@ jobs:
           echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
         displayName: Define build env variables
 
-      # - bash: |
-      #     set -e
-      #     cd scikit-learn
-      #     git checkout $BUILD_COMMIT
-      #     git clean -fxd
-      #     git reset --hard
-      #   displayName: Checkout scikit-learn commit
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+      - bash: |
+          set -e
+          cd scikit-learn
+          git checkout $BUILD_COMMIT
+          git clean -fxd
+          git reset --hard
+        displayName: Checkout scikit-learn commit
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - bash: |
-      #     set -e
+      - bash: |
+          set -e
 
-      #     pip install --timeout=60 numpy==$NP_BUILD_DEP
-      #     pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
-      #     pip install twine
+          pip install --timeout=60 numpy==$NP_BUILD_DEP
+          pip install --timeout=60 pytest wheel joblib scipy==$SCIPY_BUILD_DEP Cython==$CYTHON_BUILD_DEP
+          pip install twine
 
-      #     pushd scikit-learn
-      #     python setup.py build
-      #     python ../azure/vendor_vcomp140.py
-      #     python setup.py bdist_wheel
-      #     ls dist
-      #     twine check dist/*
-      #     popd
-      #   displayName: Build wheel
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+          pushd scikit-learn
+          python setup.py build
+          python ../azure/vendor_vcomp140.py
+          python setup.py bdist_wheel
+          ls dist
+          twine check dist/*
+          popd
+        displayName: Build wheel
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - bash: |
-      #     set -e
-      #     source extra_functions.sh
-      #     setup_test_venv
-      #     pip install scikit-learn/dist/scikit_learn-*.whl
-      #     mkdir $TEST_DIR
-      #     pushd $TEST_DIR
-      #     pytest -rs -l --junitxml=$JUNITXML --pyargs sklearn
-      #     popd
-      #     teardown_test_venv
-      #   displayName: Install wheel and test
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+      - bash: |
+          set -e
+          source extra_functions.sh
+          setup_test_venv
+          pip install scikit-learn/dist/scikit_learn-*.whl
+          mkdir $TEST_DIR
+          pushd $TEST_DIR
+          pytest -rs -l --junitxml=$JUNITXML --pyargs sklearn
+          popd
+          teardown_test_venv
+        displayName: Install wheel and test
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - task: PublishTestResults@2
-      #   inputs:
-      #     testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
-      #     testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
-      #   displayName: "Publish Test Results"
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
+          testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
+        displayName: "Publish Test Results"
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
           set -e

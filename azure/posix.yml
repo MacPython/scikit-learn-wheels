@@ -25,13 +25,13 @@ jobs:
         ${{ insert }}: ${{ parameters.matrix }}
 
     steps:
-      # - checkout: self
-      #   submodules: true
+      - checkout: self
+        submodules: true
 
-      # - task: UsePythonVersion@0
-      #   inputs:
-      #     versionSpec: $(MB_PYTHON_VERSION)
-      #   displayName: Set python version
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(MB_PYTHON_VERSION)
+        displayName: Set python version
 
       - bash: |
           set -e
@@ -55,49 +55,49 @@ jobs:
             echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]linux"
           fi
 
-      #     # Store original Python path to be able to create test_venv pointing
-      #     # to same Python version.
-      #     PYTHON_EXE=`which python`
-      #     echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
-      #   displayName: Define build env variables
+          # Store original Python path to be able to create test_venv pointing
+          # to same Python version.
+          PYTHON_EXE=`which python`
+          echo "##vso[task.setvariable variable=PYTHON_EXE]$PYTHON_EXE"
+        displayName: Define build env variables
 
-      # - bash: |
-      #     set -e
-      #     pip install virtualenv
-      #     BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
+      - bash: |
+          set -e
+          pip install virtualenv
+          BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP $SCIPY_BUILD_DEP"
 
-      #     source multibuild/common_utils.sh
-      #     source multibuild/travis_steps.sh
-      #     source extra_functions.sh
+          source multibuild/common_utils.sh
+          source multibuild/travis_steps.sh
+          source extra_functions.sh
 
-      #     # Setup build dependencies
-      #     before_install
+          # Setup build dependencies
+          before_install
 
-      #     # OpenMP is not present on macOS by default
-      #     setup_compiler
-      #     clean_code $REPO_DIR $BUILD_COMMIT
-      #     build_wheel $REPO_DIR $PLAT
-      #     teardown_compiler
-      #   displayName: Build wheel
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+          # OpenMP is not present on macOS by default
+          setup_compiler
+          clean_code $REPO_DIR $BUILD_COMMIT
+          build_wheel $REPO_DIR $PLAT
+          teardown_compiler
+        displayName: Build wheel
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - bash: |
-      #     set -xe
-      #     source multibuild/common_utils.sh
-      #     source multibuild/travis_steps.sh
-      #     source extra_functions.sh
-      #     setup_test_venv
-      #     install_run $PLAT
-      #     teardown_test_venv
-      #   displayName: Install wheel and test
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+      - bash: |
+          set -xe
+          source multibuild/common_utils.sh
+          source multibuild/travis_steps.sh
+          source extra_functions.sh
+          setup_test_venv
+          install_run $PLAT
+          teardown_test_venv
+        displayName: Install wheel and test
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
-      # - task: PublishTestResults@2
-      #   inputs:
-      #     testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
-      #     testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
-      #   displayName: "Publish Test Results"
-      #   condition: eq(variables['SKIP_BUILD'], 'false')
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
+          testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
+        displayName: "Publish Test Results"
+        condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
           set -e
