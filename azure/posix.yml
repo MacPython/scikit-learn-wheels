@@ -33,27 +33,27 @@ jobs:
       #     versionSpec: $(MB_PYTHON_VERSION)
       #   displayName: Set python version
 
-      # - bash: |
-      #     set -e
+      - bash: |
+          set -e
 
-      #     SKIP_BUILD="false"
-      #     if [ "$BUILD_REASON" == "Schedule" ]; then
-      #       BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
-      #       if [ "$NIGHTLY_BUILD" != "true" ]; then
-      #         SKIP_BUILD="true"
-      #       fi
-      #     fi
-      #     echo "Building scikit-learn@$BUILD_COMMIT"
-      #     echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
-      #     echo "##vso[task.setvariable variable=SKIP_BUILD]$SKIP_BUILD"
+          SKIP_BUILD="false"
+          if [ "$BUILD_REASON" == "Schedule" ]; then
+            BUILD_COMMIT=$NIGHTLY_BUILD_COMMIT
+            if [ "$NIGHTLY_BUILD" != "true" ]; then
+              SKIP_BUILD="true"
+            fi
+          fi
+          echo "Building scikit-learn@$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=BUILD_COMMIT]$BUILD_COMMIT"
+          echo "##vso[task.setvariable variable=SKIP_BUILD]$SKIP_BUILD"
 
-      #     # Platform variables used in multibuild scripts
-      #     if [ `uname` == 'Darwin' ]; then
-      #       echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]osx"
-      #       echo "##vso[task.setvariable variable=MACOSX_DEPLOYMENT_TARGET]10.9"
-      #     else
-      #       echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]linux"
-      #     fi
+          # Platform variables used in multibuild scripts
+          if [ `uname` == 'Darwin' ]; then
+            echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]osx"
+            echo "##vso[task.setvariable variable=MACOSX_DEPLOYMENT_TARGET]10.9"
+          else
+            echo "##vso[task.setvariable variable=TRAVIS_OS_NAME]linux"
+          fi
 
       #     # Store original Python path to be able to create test_venv pointing
       #     # to same Python version.
