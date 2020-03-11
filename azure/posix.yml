@@ -94,9 +94,9 @@ jobs:
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
+          testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
           testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
-        displayName: "Publish Test Results"
+        displayName: 'Publish Test Results'
         condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
@@ -129,8 +129,8 @@ jobs:
           set -e
           # The --force option forces a replacement if the remote file already
           # exists.
-          ls scikit-learn/dist/scikit_learn-*.whl
-          anaconda -t $TOKEN upload --force -u $ANACONDA_ORG scikit-learn/dist/scikit_learn-*.whl
+          ls wheelhouse/*.whl
+          anaconda -t $TOKEN upload --force -u $ANACONDA_ORG wheelhouse/*.whl
           echo "PyPI-style index: https://pypi.anaconda.org/$ANACONDA_ORG/simple"
         displayName: Upload to anaconda.org (only if secret token is retrieved)
         condition: variables['TOKEN']

@@ -18,7 +18,7 @@ jobs:
       PYTHON_ARCH: "x64"
       TEST_DEPENDS: "pytest"
       JUNITXML: "test-data.xml"
-      TEST_DIR: "$(Agent.WorkFolder)/tmp_for_test"
+      TEST_DIR: '$(Agent.WorkFolder)/tmp_for_test'
     strategy:
       matrix:
         ${{ insert }}: ${{ parameters.matrix }}
@@ -103,9 +103,9 @@ jobs:
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFiles: "$(TEST_DIR)/$(JUNITXML)"
+          testResultsFiles: '$(TEST_DIR)/$(JUNITXML)'
           testRunTitle: ${{ format('{0}-$(Agent.JobName)', parameters.name) }}
-        displayName: "Publish Test Results"
+        displayName: 'Publish Test Results'
         condition: eq(variables['SKIP_BUILD'], 'false')
 
       - bash: |
