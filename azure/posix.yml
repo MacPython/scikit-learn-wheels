@@ -117,7 +117,9 @@ jobs:
           SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN: $(SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN)
           SCIKIT_LEARN_STAGING_UPLOAD_TOKEN: $(SCIKIT_LEARN_STAGING_UPLOAD_TOKEN)
 
-      - bash: echo "##vso[task.prependpath]$CONDA/bin"
+      - bash: |
+          echo "##vso[task.prependpath]$CONDA/bin"
+          sudo chown -R $USER $CONDA
         displayName: Add conda to PATH
         condition: and(succeeded(), eq(variables['SKIP_BUILD'], 'false'), ne(variables['Build.Reason'], 'PullRequest'), variables['TOKEN'])
 
