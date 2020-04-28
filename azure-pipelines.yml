@@ -8,7 +8,7 @@ schedules:
   always: true
 
 variables:
-  MANYLINUX_URL: https://pypi.anaconda.org/multibuild-wheels-staging/simple/
+  MANYLINUX_URL: " "
 
 jobs:
   - template: azure/windows.yml
