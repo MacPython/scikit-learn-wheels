@@ -11,6 +11,7 @@ jobs:
       REPO_DIR: "scikit-learn"
       BUILD_COMMIT: "0.23.0rc1"
       PLAT: "x86_64"
+      CYTHON_BUILD_DEP: "cython==0.29.14"
       NIGHTLY_BUILD_COMMIT: "master"
       NIGHTLY_BUILD: "false"
       TEST_DEPENDS: "pytest"
@@ -60,6 +61,7 @@ jobs:
       - bash: |
           set -e
           pip install virtualenv
+          BUILD_DEPENDS="$CYTHON_BUILD_DEP"
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
@@ -82,7 +84,7 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           setup_test_venv
-          install_run $PLAT
+          # install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
         condition: eq(variables['SKIP_BUILD'], 'false')
