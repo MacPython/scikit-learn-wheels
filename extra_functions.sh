@@ -49,9 +49,3 @@ function teardown_test_venv {
         fi
     fi
 }
-
-function pip_wheel_cmd {
-    local abs_wheelhouse=$1
-    echo "HELLO WOLRD"
-    pip wheel $(pip_opts) -w $abs_wheelhouse .
-}
