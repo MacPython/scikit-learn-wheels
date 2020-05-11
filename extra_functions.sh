@@ -28,6 +28,9 @@ function setup_test_venv {
         else
             source test_venv/Scripts/activate
         fi
+        # Defined python to be within this env
+        PYTHON_EXE=`which python`
+        PIP_CMD="$PYTHON_EXE -mpip"
         # Note: the idiom "python -m pip install ..." is necessary to upgrade
         # pip itself on Windows. Otherwise one would get a permission error on
         # pip.exe.
