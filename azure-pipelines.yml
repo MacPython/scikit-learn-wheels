@@ -8,9 +8,11 @@ schedules:
   always: true
 
 variables:
+  BUILD_COMMIT: "0.23.0rc1"
   MANYLINUX_URL: "https://pypi.python.org/simple"
 
 jobs:
+  - template: azure/posix-sdist.yml
   - template: azure/windows.yml
     parameters:
       name: windows
