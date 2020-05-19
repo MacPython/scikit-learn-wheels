@@ -8,7 +8,7 @@ schedules:
   always: true
 
 variables:
-  BUILD_COMMIT: "0.23.0"
+  BUILD_COMMIT: "0.23.1"
   MANYLINUX_URL: "https://pypi.python.org/simple"
 
 jobs:
