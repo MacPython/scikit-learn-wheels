@@ -4,7 +4,7 @@
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
-    python -m pip upgrade pip
+    python -m pip install --upgrade pip
 }
 
 # XXX: test-data.xml is hard-coded because the JUNITXML env variable
