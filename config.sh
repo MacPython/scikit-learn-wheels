@@ -14,29 +14,3 @@ function run_tests {
     python --version
     pytest -l --junitxml=test-data.xml --pyargs sklearn
 }
-
-
-function install_wheel {
-    # Install test dependencies and built wheel
-    #
-    # Pass any input flags to pip install steps
-    #
-    # Depends on:
-    #     WHEEL_SDIR  (optional, default "wheelhouse")
-    #     TEST_DEPENDS  (optional, default "")
-    #     MANYLINUX_URL (optional, default "") (via pip_opts function)
-    #
-    # XXX:
-    # Override install_wheel from common_utils.sh to force upgrade pip
-    # prior to installing test dependencies in the docker environment.
-    python -m pip install --upgrade pip
-    local wheelhouse=$(abspath ${WHEEL_SDIR:-wheelhouse})
-    if [ -n "$TEST_DEPENDS" ]; then
-        while read TEST_DEPENDENCY; do
-            pip install $(pip_opts) $@ $TEST_DEPENDENCY
-        done <<< "$TEST_DEPENDS"
-    fi
-    # Install compatible wheel
-    pip install $(pip_opts) $@ \
-        $(python $MULTIBUILD_DIR/supported_wheels.py $wheelhouse/*.whl)
-}
