@@ -86,6 +86,7 @@ jobs:
           source multibuild/travis_steps.sh
           source extra_functions.sh
           setup_test_venv
+          before_install
           install_run $PLAT
           teardown_test_venv
         displayName: Install wheel and test
