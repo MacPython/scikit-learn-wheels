@@ -36,12 +36,12 @@ jobs:
       uses: pypa/gh-action-pypi-publish@186232109eade3d22bfe1bca29ac9a1312598511
       with:
         user: __token__
-        password: ${{ secrets.TEST_PYPI_PASSWORD }}
+        password: ${{ secrets.TEST_PYPI_TOKEN }}
         repository_url: https://test.pypi.org/legacy/
       if: ${{ github.event.inputs.pypi_repo }} == 'testpypi'
     - name: Publish package to PyPI
       uses: pypa/gh-action-pypi-publish@186232109eade3d22bfe1bca29ac9a1312598511
       with:
         user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+        password: ${{ secrets.PYPI_TOKEN }}
       if: ${{ github.event.inputs.pypi_repo }} == 'pypi'
