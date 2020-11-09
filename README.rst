@@ -8,10 +8,10 @@ Scikit-learn wheel builder
 
 
 **DEPRECATION NOTICE:** the scikit-learn wheel-building infrastructure
-has been [moved to the main repo](
-https://github.com/scikit-learn/scikit-learn/blob/master/.github/workflows/wheels.yml).
-It now uses the [cibuildwheel](https://github.com/joerick/cibuildwheel)
-system instead of the [multibuild](https://github.com/matthew-brett/multibuild/)
+has been `moved to the main repo 
+<https://github.com/scikit-learn/scikit-learn/blob/master/.github/workflows/wheels.yml>`_.
+It now uses the `cibuildwheel <https://github.com/joerick/cibuildwheel>`_
+system instead of the `multibuild <https://github.com/matthew-brett/multibuild/>`_
 system.
 
 Repository to build scikit-learn wheels.
