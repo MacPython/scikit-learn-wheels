@@ -6,6 +6,14 @@
 Scikit-learn wheel builder
 ##########################
 
+
+**DEPRECATION NOTICE:** the scikit-learn wheel-building infrastructure
+has been [moved to the main repo](
+https://github.com/scikit-learn/scikit-learn/blob/master/.github/workflows/wheels.yml).
+It now uses the [cibuildwheel](https://github.com/joerick/cibuildwheel)
+system instead of the [multibuild](https://github.com/matthew-brett/multibuild/)
+system.
+
 Repository to build scikit-learn wheels.
 
 Edit `azure/windows.yml` and `azure/posix.yml` to change the `BUILD_COMMIT`
